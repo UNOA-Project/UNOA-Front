@@ -4,13 +4,15 @@
 @theme {
   /* Color Design Tokens */
   --color-primary-pink: #ff5acd;
-  --color-primary-purple: #7b61ff;
+  --color-primary-purple: #543ed9;
   --color-primary-blue: #1e90ff;
 
   --color-sub-mint: #00c9a7;
   --color-sub-lightpink: #ffc1de;
   --color-sub-lilac: #b28dff;
   --color-sub-skyblue: #6ec9ff;
+
+  --color-kakao: #fee500;
 
   --color-success: #48bb78;
   --color-warning: #ecc94b;
@@ -122,7 +124,6 @@ li {
 button {
   cursor: pointer;
   outline: none;
-  background-color: transparent;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
