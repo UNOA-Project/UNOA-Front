@@ -1,38 +1,38 @@
 .filterGroup {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .filterLabel {
-    color: #374151;
-    font-weight: 500;
-    margin-bottom: 12px;
-    font-size: 16px;
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 12px;
+  font-size: 16px;
 }
 
 .buttonGroup {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .filterOption {
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 2px solid transparent;
-    background-color: #f3f4f6;
-    color: #6b7280;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  background-color: #f3f4f6;
+  color: #6b7280;
 }
 
 .filterOption:hover {
-    background-color: #e5e7eb;
+  background-color: #e5e7eb;
 }
 
 .filterOption.selected {
-    background-color: #dbeafe;
-    color: #2563eb;
-    border-color: #93c5fd;
+  background-color: #dbeafe;
+  color: #2563eb;
+  border-color: #93c5fd;
 }
