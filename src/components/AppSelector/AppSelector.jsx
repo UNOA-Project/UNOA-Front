@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './AppSelector.module.css'
 import { appsData } from './../../../data/appsData'
 
+// 필터 모달 내부 혜택 앱 컴포넌트
 const AppSelector = ({ selectedApps, onToggleApp }) => {
   return (
     <div className={styles.appSelector}>
