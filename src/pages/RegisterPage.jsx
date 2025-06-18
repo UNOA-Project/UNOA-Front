@@ -1,8 +1,77 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import Kakao from '@/assets/kakao-icon.svg'
 
 export default function RegisterPage() {
+  const [name, setName] = useState('')
+  const [userId, setUserId] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [isUplus, setIsUplus] = useState('')
+
+  const [nameError, setNameError] = useState('')
+  const [userIdError, setUserIdError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [passwordConfirmError, setPasswordConfirmError] = useState('')
+  const [isUplusError, setIsUplusError] = useState('')
+
+  const [isPasswordConfirmTouched, setIsPasswordConfirmTouched] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+
+  const validateName = value => {
+    const isValid = /^[가-힣]+$/.test(value)
+    setNameError(isValid ? '' : '한글로 입력해주세요.')
+  }
+
+  const validateUserId = value => {
+    const isValid = /^[a-z0-9]{4,16}$/.test(value)
+    setUserIdError(isValid ? '' : '영문소문자 또는 숫자 4~16자로 입력해주세요.')
+  }
+
+  const validatePassword = value => {
+    const isValid = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{}[\]|;:'",.<>/?]).{8,20}$/.test(
+      value
+    )
+    setPasswordError(isValid ? '' : '영문자, 숫자, 특수문자 포함 8~20자로 입력해주세요.')
+  }
+
+  const validatePasswordConfirm = value => {
+    setPasswordConfirmError(value === password ? '' : '비밀번호가 일치하지 않습니다.')
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+
+    validateName(name.trim())
+    validateUserId(userId.trim())
+    validatePassword(password)
+    validatePasswordConfirm(passwordConfirm)
+
+    if (!isUplus) {
+      setIsUplusError('LG U+ 요금제 여부를 선택해주세요.')
+    } else {
+      setIsUplusError('')
+    }
+
+    const isValid =
+      name.trim() &&
+      userId.trim() &&
+      password &&
+      passwordConfirm &&
+      isUplus &&
+      !nameError &&
+      !userIdError &&
+      !passwordError &&
+      !passwordConfirmError &&
+      !isUplusError
+
+    if (isValid) {
+      console.log('회원가입 성공 처리')
+    }
+  }
+
   return (
     <div className="flex flex-col items-center py-4 md:py-10">
       <h1 className="text-sub-title sm:text-page-header mb-2 font-bold md:mb-4 md:text-4xl">
@@ -21,7 +90,7 @@ export default function RegisterPage() {
         </Link>
       </p>
 
-      <form className="w-full max-w-[320px] sm:max-w-sm md:max-w-md">
+      <form className="w-full max-w-[320px] sm:max-w-sm md:max-w-md" onSubmit={handleSubmit}>
         <div className="space-y-6">
           {/* 이름 */}
           <div>
@@ -30,9 +99,17 @@ export default function RegisterPage() {
             </label>
             <input
               type="text"
+              value={name}
+              onChange={e => {
+                setName(e.target.value)
+                validateName(e.target.value)
+              }}
               placeholder="이름을 입력해주세요"
               className="focus:ring-primary-purple hover:ring-primary-purple sm:placeholder:text-body w-full rounded-sm border px-4 py-2 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
             />
+            {nameError && (
+              <p className="text-caption sm:text-small-body text-error mt-2 ml-2">ⓘ {nameError}</p>
+            )}
           </div>
 
           {/* 아이디 + 중복확인 */}
@@ -47,9 +124,19 @@ export default function RegisterPage() {
             </div>
             <input
               type="text"
+              value={userId}
+              onChange={e => {
+                setUserId(e.target.value)
+                validateUserId(e.target.value)
+              }}
               placeholder="아이디를 입력해주세요"
-              className="focus:ring-primary-purple sm:placeholder:text-body hover:ring-primary-purple w-full rounded-sm border px-4 py-2 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
+              className="focus:ring-primary-purple hover:ring-primary-purple sm:placeholder:text-body w-full rounded-sm border px-4 py-2 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
             />
+            {userIdError && (
+              <p className="text-caption sm:text-small-body text-error mt-2 ml-2">
+                ⓘ {userIdError}
+              </p>
+            )}
           </div>
 
           {/* 비밀번호 */}
@@ -59,17 +146,33 @@ export default function RegisterPage() {
             </label>
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={e => {
+                  const newPassword = e.target.value
+                  setPassword(newPassword)
+                  validatePassword(newPassword)
+
+                  if (isPasswordConfirmTouched) {
+                    validatePasswordConfirm(passwordConfirm)
+                  }
+                }}
                 placeholder="영문자, 숫자, 특수문자 포함 8~20자"
-                className="focus:ring-primary-purple sm:placeholder:text-body hover:ring-primary-purple w-full rounded-sm border px-4 py-2 pr-24 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
+                className="focus:ring-primary-purple hover:ring-primary-purple sm:placeholder:text-body w-full rounded-sm border px-4 py-2 pr-24 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
               />
               <button
                 type="button"
+                onClick={() => setShowPassword(prev => !prev)}
                 className="text-small-body absolute top-1/2 right-4 -translate-y-1/2 text-gray-800 hover:underline"
               >
-                비밀번호 표시
+                {showPassword ? '숨기기' : '비밀번호 표시'}
               </button>
             </div>
+            {passwordError && (
+              <p className="text-caption sm:text-small-body text-error mt-2 ml-2">
+                ⓘ {passwordError}
+              </p>
+            )}
           </div>
 
           {/* 비밀번호 확인 */}
@@ -79,17 +182,29 @@ export default function RegisterPage() {
             </label>
             <div className="relative">
               <input
-                type="password"
+                type={showPasswordConfirm ? 'text' : 'password'}
+                value={passwordConfirm}
+                onChange={e => {
+                  setPasswordConfirm(e.target.value)
+                  setIsPasswordConfirmTouched(true)
+                  validatePasswordConfirm(e.target.value)
+                }}
                 placeholder="비밀번호를 확인해주세요"
-                className="focus:ring-primary-purple sm:placeholder:text-body hover:ring-primary-purple w-full rounded-sm border px-4 py-2 pr-24 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
+                className="focus:ring-primary-purple hover:ring-primary-purple sm:placeholder:text-body w-full rounded-sm border px-4 py-2 pr-24 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
               />
               <button
                 type="button"
+                onClick={() => setShowPasswordConfirm(prev => !prev)}
                 className="text-small-body absolute top-1/2 right-4 -translate-y-1/2 text-gray-800 hover:underline"
               >
-                비밀번호 표시
+                {showPasswordConfirm ? '숨기기' : '비밀번호 표시'}
               </button>
             </div>
+            {passwordConfirmError && isPasswordConfirmTouched && (
+              <p className="text-caption sm:text-small-body text-error mt-2 ml-2">
+                ⓘ {passwordConfirmError}
+              </p>
+            )}
           </div>
 
           {/* 라디오 버튼 */}
@@ -101,15 +216,38 @@ export default function RegisterPage() {
             </div>
             <div className="flex items-center gap-6">
               <label className="flex items-center gap-2">
-                <input type="radio" name="isUplus" value="yes" className="accent-primary-purple" />
+                <input
+                  type="radio"
+                  name="isUplus"
+                  value="yes"
+                  checked={isUplus === 'yes'}
+                  onChange={e => {
+                    setIsUplus(e.target.value)
+                    setIsUplusError('')
+                  }}
+                  className="accent-primary-purple"
+                />
                 <span>예</span>
               </label>
               <label className="flex items-center gap-2">
-                <input type="radio" name="isUplus" value="no" className="accent-primary-purple" />
+                <input
+                  type="radio"
+                  name="isUplus"
+                  value="no"
+                  checked={isUplus === 'no'}
+                  onChange={e => {
+                    setIsUplus(e.target.value)
+                    setIsUplusError('')
+                  }}
+                  className="accent-primary-purple"
+                />
                 <span>아니요</span>
               </label>
             </div>
           </div>
+          {isUplusError && (
+            <p className="text-caption sm:text-small-body text-error mt-2 ml-2">ⓘ {isUplusError}</p>
+          )}
         </div>
 
         <div className="border-text-main mt-4 mb-4 border-t sm:mb-8" />
