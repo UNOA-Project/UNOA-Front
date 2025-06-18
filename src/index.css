@@ -138,3 +138,15 @@ textarea {
   font-family: inherit;
   transition: 0.2s ease;
 }
+
+:root {
+  /* 기본 헤더 높이 (모바일, h-16) */
+  --header-height: 64px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    /* 데스크탑 헤더 높이 (lg:h-20) */
+    --header-height: 80px;
+  }
+}
