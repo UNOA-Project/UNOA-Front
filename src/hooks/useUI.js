@@ -1,57 +1,57 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react'
 
 export const useUI = (messages, streamingMessage, isStreaming, isConnected) => {
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
+  const messagesEndRef = useRef(null)
+  const inputRef = useRef(null)
 
   // 메시지 목록 끝으로 스크롤
   const scrollToBottom = () => {
     try {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     } catch (error) {
-      console.error("스크롤 오류:", error);
+      console.error('스크롤 오류:', error)
     }
-  };
+  }
 
   // 메시지나 스트리밍 메시지 변경 시 스크롤
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, streamingMessage]);
+    scrollToBottom()
+  }, [messages, streamingMessage])
 
   // 스트리밍 완료 후 입력창에 포커스
   useEffect(() => {
     if (!isStreaming && isConnected) {
       setTimeout(() => {
         try {
-          inputRef.current?.focus();
+          inputRef.current?.focus()
         } catch (error) {
-          console.error("포커스 오류:", error);
+          console.error('포커스 오류:', error)
         }
-      }, 300);
+      }, 300)
     }
-  }, [isStreaming, isConnected]);
+  }, [isStreaming, isConnected])
 
   // 메시지 시간 포맷팅
-  const formatTime = (timestamp) => {
+  const formatTime = timestamp => {
     try {
-      const date = new Date(timestamp);
-      return date.toLocaleTimeString("ko-KR", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      const date = new Date(timestamp)
+      return date.toLocaleTimeString('ko-KR', {
+        hour: '2-digit',
+        minute: '2-digit',
+      })
     } catch (error) {
-      console.log("시간 포맷팅 오류:", error);
-      return new Date().toLocaleTimeString("ko-KR", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      console.log('시간 포맷팅 오류:', error)
+      return new Date().toLocaleTimeString('ko-KR', {
+        hour: '2-digit',
+        minute: '2-digit',
+      })
     }
-  };
+  }
 
   return {
     messagesEndRef,
     inputRef,
     formatTime,
     scrollToBottom,
-  };
-};
+  }
+}

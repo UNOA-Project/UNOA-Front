@@ -1,12 +1,12 @@
-import WelcomeText from '../../assets/welcomeText.svg?react';
+import WelcomeText from '../../assets/welcomeText.svg?react'
 
 const WelcomeMessage = () => {
   const svgStyle = {
     maxWidth: '85%',
-    height: 'auto', 
-  };
+    height: 'auto',
+  }
 
-  return <WelcomeText style={svgStyle} />;
-};
+  return <WelcomeText style={svgStyle} />
+}
 
-export default WelcomeMessage;
+export default WelcomeMessage

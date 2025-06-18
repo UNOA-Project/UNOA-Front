@@ -1,18 +1,18 @@
 // src/components/ChatMode.jsx
 
-import React from 'react';
-import MessageList from './MessageList';
-import MessageInput from './MessageInput';
-import ChatModeWelcome from './ChatModeWelcome'; 
+import React from 'react'
+import MessageList from './MessageList'
+import MessageInput from './MessageInput'
+import ChatModeWelcome from './ChatModeWelcome'
 
-const ChatMode = (props) => {
+const ChatMode = props => {
   return (
     <>
       <MessageList
         messages={props.messages}
         formatTime={props.formatTime}
         messagesEndRef={props.messagesEndRef}
-        WelcomeComponent={ChatModeWelcome} 
+        WelcomeComponent={ChatModeWelcome}
       />
       <MessageInput
         onSendMessage={props.onSendMessage}
@@ -22,7 +22,7 @@ const ChatMode = (props) => {
         inputRef={props.inputRef}
       />
     </>
-  );
-};
+  )
+}
 
-export default ChatMode;
+export default ChatMode
