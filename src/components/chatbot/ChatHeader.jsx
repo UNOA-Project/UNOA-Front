@@ -1,6 +1,6 @@
 // src/components/ChatHeader.jsx
-import React from 'react';
-import styles from './ChatHeader.module.css';
+import React from 'react'
+import styles from './ChatHeader.module.css'
 
 const ChatHeader = ({ currentMode, onModeChange, isStreaming }) => {
   return (
@@ -22,7 +22,7 @@ const ChatHeader = ({ currentMode, onModeChange, isStreaming }) => {
         </button>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default ChatHeader;
+export default ChatHeader

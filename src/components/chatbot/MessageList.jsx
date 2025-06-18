@@ -1,6 +1,6 @@
-import MessageItem from "./MessageItem";
-import ChatModeWelcome from "./ChatModeWelcome";
-import styles from "./MessageList.module.css"; // CSS 모듈 import
+import MessageItem from './MessageItem'
+import ChatModeWelcome from './ChatModeWelcome'
+import styles from './MessageList.module.css' // CSS 모듈 import
 
 const MessageList = ({ messages, formatTime, messagesEndRef }) => {
   return (
@@ -9,18 +9,14 @@ const MessageList = ({ messages, formatTime, messagesEndRef }) => {
         <ChatModeWelcome />
       ) : (
         <>
-          {messages.map((message) => (
-            <MessageItem
-              key={message.id}
-              message={message}
-              formatTime={formatTime}
-            />
+          {messages.map(message => (
+            <MessageItem key={message.id} message={message} formatTime={formatTime} />
           ))}
         </>
       )}
       <div ref={messagesEndRef} />
     </div>
-  );
-};
+  )
+}
 
-export default MessageList;
+export default MessageList
