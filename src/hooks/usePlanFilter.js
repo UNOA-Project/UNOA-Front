@@ -2,15 +2,17 @@ import { useMemo, useState } from 'react'
 import { planData } from '../data/planData'
 
 const usePlanFilter = () => {
-  const [appliedFilters, setAppliedFilters] = useState({
+  //초기값을 먼저 정의
+  const initialFilters = {
     category: '5GLTE',
     network: '5G/LTE',
     dataPrice: '',
     dataType: '',
     selectedApps: [],
-  })
+  }
 
-  const [tempFilters, setTempFilters] = useState(appliedFilters)
+  const [appliedFilters, setAppliedFilters] = useState(initialFilters)
+  const [tempFilters, setTempFilters] = useState(initialFilters)
 
   const getCurrentCategoryData = () => {
     return planData[0][appliedFilters.category] || []
