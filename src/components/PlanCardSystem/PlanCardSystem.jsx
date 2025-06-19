@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import usePlanFilter from '../../hooks/usePlanFilter'
 import TabMenu from '../TabMenu/TabMenu'
 import FilterSort from '../FilterSort/FilterSort'
@@ -12,6 +12,9 @@ const PlanCardSystem = () => {
   const [currentSort, setCurrentSort] = useState('popularity')
   const [currentAgeGroup, setCurrentAgeGroup] = useState('all')
 
+  //페이지네이션 초기화
+  const [resetTrigger, setResetTrigger] = useState(0)
+
   const {
     appliedFilters,
     tempFilters,
@@ -22,6 +25,18 @@ const PlanCardSystem = () => {
     toggleApp,
     changeCategory,
   } = usePlanFilter()
+
+  //탭 변경 시 페이지네이션 초기화
+  useEffect(() => {
+    if (appliedFilters?.category) {
+      setResetTrigger(prev => prev + 1)
+    }
+  }, [appliedFilters?.category])
+
+  //정렬이나 나이대 필터 변경시에도 페이지네이션 초기화
+  useEffect(() => {
+    setResetTrigger(prev => prev + 1)
+  }, [currentSort, currentAgeGroup])
 
   const getSortedPlans = useMemo(() => {
     let sortedPlans = [...filteredPlans]
@@ -125,9 +140,17 @@ const PlanCardSystem = () => {
     setCurrentAgeGroup(ageGroup)
   }
 
+  //필터 적용 및 모달닫기
   const handleApplyFilters = () => {
     applyFilters()
     setIsFilterOpen(false)
+  }
+
+  //전체 초기화(필터,정렬,페이지네이션)
+  const handleResetAll = () => {
+    resetFilters()
+    setCurrentSort('popularity')
+    setCurrentAgeGroup('all')
   }
 
   const getCategoryTitle = () => {
@@ -162,11 +185,8 @@ const PlanCardSystem = () => {
 
         <PlanGrid
           plans={getSortedPlans} // 정렬된 결과 전달
-          onResetFilters={() => {
-            resetFilters()
-            setCurrentSort('popularity')
-            setCurrentAgeGroup('all')
-          }}
+          onResetFilters={handleResetAll}
+          resetTrigger={resetTrigger}
         />
       </div>
 

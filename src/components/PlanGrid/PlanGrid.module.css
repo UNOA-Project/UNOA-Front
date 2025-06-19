@@ -6,13 +6,13 @@
 
 @media (min-width: 768px) {
   .planGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
   .planGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -52,19 +52,112 @@
 .moreButtonContainer {
   text-align: center;
   margin-top: 32px;
+  padding: 20px;
 }
 
 .moreButton {
-  border: 1px solid #d1d5db;
+  border: 2px solid var(--color-sub-lilac);
   color: #374151;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 20px;
   background: white;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
   transition: all 0.2s;
 }
 
 .moreButton:hover {
   background-color: #f9fafb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.moreButton:active {
+  transform: translateY(0);
+}
+
+/* 모든 요금제 로드 완료 상태 */
+.allLoadedContainer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 24px;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 16px;
+  border: 1px solid #bae6fd;
+}
+
+.allLoadedMessage {
+  font-size: 16px;
+  color: #0c4a6e;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.backToTopButton {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.backToTopButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+/* 로딩 애니메이션  */
+.loadingSpinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 부드러운 나타나기 애니메이션 */
+.planGrid > * {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 반응형 개선 */
+@media (max-width: 768px) {
+  .moreButton {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+  
+  .moreButtonContainer {
+    margin-top: 32px;
+    padding: 16px;
+  }
+  
+  .allLoadedContainer {
+    margin-top: 32px;
+    padding: 20px 16px;
+  }
 }
