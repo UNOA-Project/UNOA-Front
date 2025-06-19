@@ -19,6 +19,9 @@ const PlanCardSystem = () => {
     appliedFilters,
     tempFilters,
     filteredPlans,
+    allPlans,
+    loading,
+    error,
     setTempFilters,
     applyFilters,
     resetFilters,
@@ -155,18 +158,45 @@ const PlanCardSystem = () => {
 
   const getCategoryTitle = () => {
     const titles = {
-      '5GLTE': '5G/LTE 요금제',
-      Online: '온라인 전용 요금제',
-      TabWatch: '태블릿/스마트워치 요금제',
-      Dual: '듀얼넘버 플러스',
+      '5G/LTE 요금제': '5G/LTE 요금제',
+      '온라인 다이렉트 요금제': '온라인 전용 요금제',
+      '태블릿/워치 요금제': '태블릿/스마트워치 요금제',
+      '듀얼심 요금제': '듀얼넘버 플러스',
     }
     return titles[appliedFilters.category] || '요금제'
+  }
+
+  // 로딩 상태 처리
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>
+          <p>요금제 정보를 불러오는 중...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // 에러 상태 처리
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.errorContainer}>
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>다시 시도</button>
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.mainContent}>
-        <TabMenu selectedCategory={appliedFilters.category} onCategoryChange={changeCategory} />
+        <TabMenu
+          selectedCategory={appliedFilters.category}
+          onCategoryChange={changeCategory}
+          allPlans={allPlans} // 전체 플랜 데이터 전달 (카테고리별 개수 표시용)
+        />
 
         <FilterSort
           onFilterOpen={() => setIsFilterOpen(true)}
