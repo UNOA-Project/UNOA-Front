@@ -73,12 +73,12 @@
 
 .discountPrice {
   font-size: 14px;
-  color: #059669;
+  color: var(--color-text-secondary);
 }
 
 .premierDiscount {
   font-size: 14px;
-  color: #2563eb;
+   color: var(--color-text-secondary);
 }
 
 .benefitsSection {

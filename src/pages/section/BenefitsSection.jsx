@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import styles from './BenefitsSection.module.css'
 import mascot1 from '../../assets/section/benefit1.png'
 import mascot2 from '../../assets/section/benefit2.png'
 import mascot3 from '../../assets/section/benefit3.png'
@@ -52,8 +51,7 @@ const BenefitCenterSection = () => {
           }, 100)
         }
 
-        // 전체 왼쪽 → 오른쪽 슬라이드 거리 (100% 이동 × 2회 반복)
-        const totalWidth = logos.length * 160 * 4 // 로고 크기 * 개수 * 2
+        const totalWidth = logos.length * 160 * 4
         setTranslateX(ratio * totalWidth * 0.3)
       }
     }
@@ -63,26 +61,58 @@ const BenefitCenterSection = () => {
   }, [currentIndex])
 
   return (
-    <section ref={sectionRef} className={styles.scrollWrapper}>
-      <div className={styles.stickyContent}>
+    <section ref={sectionRef} className="relative h-[450vh]">
+      {/* 커스텀 애니메이션 직접 정의 */}
+      <style>
+        {`
+          @keyframes fadeSlideIn {
+            0% {
+              opacity: 0;
+              transform: translateY(20px) scale(0.95);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+          .animate-fadeSlideIn {
+            animation: fadeSlideIn 0.5s ease-out;
+          }
+        `}
+      </style>
+
+      <div className="sticky top-0 h-screen overflow-hidden bg-gradient-to-b from-[#9b94fa] to-[#acc7f8]">
         <div
-          className={styles.logoBackground}
-          style={{ transform: `translateX(-${translateX}px)` }}
+          className="absolute top-[50%] left-0 z-[1] flex gap-8 transition-transform duration-200 ease-out"
+          style={{ transform: `translateX(-${translateX}px) translateY(-50%)` }}
         >
           {[...logos, ...logos, ...logos, ...logos].map((src, idx) => (
-            <div className={styles.logoItem} key={idx}>
-              <img src={src} alt={`logo-${idx}`} />
+            <div
+              key={idx}
+              className="flex h-[150px] w-[150px] flex-none items-center justify-center rounded-full lg:h-[150px] lg:w-[150px]"
+            >
+              <img
+                src={src}
+                alt={`logo-${idx}`}
+                className="max-h-[100%] max-w-[100%] object-contain"
+              />
             </div>
           ))}
         </div>
 
-        <div className={styles.character}>
+        <div className="relative z-[2] flex h-full flex-col items-center justify-center">
           <img
             src={mascotData[currentIndex].img}
             alt="캐릭터"
-            className={`${styles.mascot} ${animate ? styles.animated : ''}`}
+            className={`mb-4 w-[250px] transition-all duration-500 lg:w-[350px] ${
+              animate ? 'animate-fadeSlideIn' : ''
+            }`}
           />
-          <p className={`${styles.label} ${animate ? styles.animated : ''}`}>
+          <p
+            className={`text-4xl font-bold text-white transition-opacity duration-500 ${
+              animate ? 'animate-fadeSlideIn' : ''
+            }`}
+          >
             {mascotData[currentIndex].label}
           </p>
         </div>
