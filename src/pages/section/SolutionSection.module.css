@@ -47,7 +47,7 @@
     inset 1em 1em 1em rgba(255, 255, 255, 0.103),
     0 1em 2em rgba(0, 0, 0, 0.1);
   animation: floatUp 4s ease-out forwards;
-  z-index: 111;
+  z-index: 1;
 }
 
 /* 떠오르며 사라지는 효과 */
