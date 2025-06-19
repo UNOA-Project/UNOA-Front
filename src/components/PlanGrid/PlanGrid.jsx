@@ -5,11 +5,11 @@ import { style } from 'framer-motion/client'
 
 //요금제 카드 그리드 컴포넌트
 const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
-  const [visibleCount, setVisibleCount] = useState(5) //초기에 보여줄 카드수
+  const [visibleCount, setVisibleCount] = useState(6) //초기에 보여줄 카드수
 
   //탭 변경되면 페이지네이션 초기화
   useEffect(() => {
-    setVisibleCount(5)
+    setVisibleCount(6)
   }, [resetTrigger])
 
   //현재 보여줄 요금제들
@@ -19,12 +19,11 @@ const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
 
   //더보기 버튼 클릭 핸들러
   const handleLoadMore = () => {
-    setVisibleCount(prev => prev + 5)
+    setVisibleCount(prev => prev + 6)
   }
 
   //더 보여줄 요금제가 있는지 확인
   const hasMore = visibleCount < plans.length
-  const remainingCount = plans.length - visibleCount
 
   //요금제가 없을 때
   if (plans.length === 0) {
@@ -56,7 +55,7 @@ const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
       )}
 
       {/*모든 요금제를 다 보여준 경우 */}
-      {!hasMore && plans.length > 5 && (
+      {!hasMore && plans.length > 6 && (
         <div className={styles.allLoadedContainer}>
           <div className={styles.allLoadedMessage}>
             모든 요금제를 확인했습니다 ({plans.length}개)
@@ -64,7 +63,7 @@ const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
           <button
             className={styles.backToTopButton}
             onClick={() => {
-              setVisibleCount(5)
+              setVisibleCount(6)
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
           >
