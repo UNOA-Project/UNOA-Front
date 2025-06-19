@@ -2,9 +2,16 @@ import ChatBotImg from '@/assets/WelcomeNoa.svg'
 import HandImg from '@/assets/hand-sign.svg'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { SimpleModeForm } from './SimpleModeForm'
 
 export default function SimpleMode() {
   const [started, setStarted] = useState(false)
+  const [result, setResult] = useState(null)
+
+  const handleFinish = answers => {
+    console.log('사용자 응답:', answers)
+    setResult(answers)
+  }
 
   return (
     <>
@@ -24,7 +31,7 @@ export default function SimpleMode() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="relative flex h-[60px] w-[254px] items-center justify-center rounded-[30px] bg-[var(--color-light-purple)] px-[92px] py-[18px] text-[20px] font-medium text-white shadow-md"
+              className="bg-light-purple relative flex h-[60px] w-[254px] items-center justify-center rounded-[30px] px-[92px] py-[18px] text-[20px] font-medium text-white shadow-md"
               onClick={() => setStarted(true)}
             >
               시작하기
@@ -37,8 +44,7 @@ export default function SimpleMode() {
           </div>
         </div>
       ) : (
-        // 질문과 답변 추가 예정
-        <div></div>
+        <SimpleModeForm onFinish={handleFinish} />
       )}
     </>
   )
