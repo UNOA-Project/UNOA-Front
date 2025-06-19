@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import styles from './UserProblems.module.css'
 
 const problems = [
   '지금 요금제는 괜찮을까?',
@@ -17,39 +16,29 @@ const UserProblems = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // 중앙에 비워둘 영역 설정 (20% ~ 70% 영역)
       const exclusionZoneStart = 20
       const exclusionZoneEnd = 70
-
       let top, left
 
-      // 1. 가로(left) 위치를 먼저 전체 범위(5% ~ 85%) 내에서 랜덤하게 정합니다.
       left = Math.random() * 80 + 5
 
-      // 2. 가로 위치가 중앙 영역(20% ~ 70%)에 포함되는지 확인합니다.
       if (left > exclusionZoneStart && left < exclusionZoneEnd) {
-        // 2-1. 중앙이라면, 세로(top) 위치는 가장자리(위 또는 아래)로 강제합니다.
-        if (Math.random() < 0.5) {
-          // 위쪽 가장자리 (5% ~ 20%)
-          top = Math.random() * (exclusionZoneStart - 5) + 5
-        } else {
-          // 아래쪽 가장자리 (70% ~ 85%)
-          top = Math.random() * (85 - exclusionZoneEnd) + exclusionZoneEnd
-        }
+        top =
+          Math.random() < 0.5
+            ? Math.random() * (exclusionZoneStart - 10) + 10 // 최소 10%
+            : Math.random() * (85 - exclusionZoneEnd) + exclusionZoneEnd
       } else {
-        // 2-2. 가장자리라면, 세로(top) 위치는 어디든 괜찮습니다. (5% ~ 85%)
-        top = Math.random() * 80 + 5
+        top = Math.random() * 55 + 10 // 최소 10%, 최대 80%
       }
 
       const newBubble = {
         id: Date.now(),
         text: problems[Math.floor(Math.random() * (problems.length - 1))],
-        top: top,
-        left: left,
+        top,
+        left,
       }
 
       setBubbles(prev => [...prev, newBubble])
-
       setTimeout(() => {
         setBubbles(prev => prev.filter(b => b.id !== newBubble.id))
       }, 3000)
@@ -57,7 +46,7 @@ const UserProblems = () => {
 
     return () => clearInterval(interval)
   }, [])
-  // 스크롤에 따라 오버레이 표시 및 activeIndex 결정
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
@@ -73,17 +62,36 @@ const UserProblems = () => {
         setActiveIndex(Math.min(problems.length - 1, idx))
       }
     }
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <div className={styles.scrollWrapper}>
-      <div className={styles.wrapper}>
+    <div className="relative h-[200vh]">
+      {/* 애니메이션 정의 */}
+      <style>{`
+        @keyframes floatInOut {
+          0% {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          20% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-50px);
+          }
+        }
+      `}</style>
+
+      {/* 배경 및 비눗방울 */}
+      <div className="sticky top-0 h-screen overflow-hidden bg-gradient-to-b from-black to-[#50a9e9]">
         {bubbles.map(b => (
           <div
             key={b.id}
-            className={styles.bubble}
+            className="absolute animate-[floatInOut_4s_ease-in-out_forwards] rounded-full bg-white px-4 py-2 text-sm whitespace-nowrap text-gray-800 shadow-md"
             style={{ top: `${b.top}%`, left: `${b.left}%` }}
           >
             {b.text}
@@ -91,12 +99,21 @@ const UserProblems = () => {
         ))}
       </div>
 
-      <div className={`${styles.overlay} ${isOverlayActive ? styles.active : ''}`}>
-        <div className={styles.sloganBox}>
+      {/* 오버레이 슬로건 */}
+      <div
+        className={`fixed top-0 left-0 z-10 flex h-screen w-full items-center justify-center backdrop-blur-sm transition-opacity duration-1000 ${
+          isOverlayActive ? 'bg-black/45 opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      >
+        <div className="relative flex h-[50vh] w-[90%] items-center justify-center text-center">
           {problems.map((text, i) => (
             <p
               key={i}
-              className={`${styles.slogan} ${i === activeIndex ? styles.active : styles.inactive}`}
+              className={`pointer-events-none absolute top-1/2 m-0 w-full -translate-y-1/2 font-semibold transition-all duration-500 will-change-[transform,opacity] ${
+                i === activeIndex
+                  ? 'text-[1.6rem] text-white opacity-100 sm:text-[1.6rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[4rem]'
+                  : 'text-[1rem] text-white/0 opacity-50 sm:text-[1.2rem] md:text-[1.2rem] lg:text-[2rem]'
+              }`}
             >
               {text}
             </p>
