@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import Kakao from '@/assets/kakao-icon.svg'
+import { registerUser } from '@/apis/userApi'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
@@ -41,7 +42,7 @@ export default function RegisterPage() {
     setPasswordConfirmError(value === password ? '' : '비밀번호가 일치하지 않습니다.')
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
 
     validateName(name.trim())
@@ -67,8 +68,24 @@ export default function RegisterPage() {
       !passwordConfirmError &&
       !isUplusError
 
-    if (isValid) {
-      console.log('회원가입 성공 처리')
+    if (!isValid) return
+
+    try {
+      const payload = {
+        name,
+        userId,
+        password,
+        isUplus,
+        planInfo: isUplus === 'yes' ? {} : null,
+      }
+
+      await registerUser(payload)
+      alert('회원가입 완료!')
+
+      // 성공 후 이동 처리 (로그인 페이지로 이동)
+    } catch {
+      alert('회원가입 실패')
+      // 사용자에게 에러 메시지 보여주기
     }
   }
 
