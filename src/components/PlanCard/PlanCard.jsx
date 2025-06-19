@@ -69,16 +69,16 @@ const PlanCard = ({ plan }) => {
 
       <div className={styles.priceSection}>
         <div className={styles.mainPrice}>월 {highlightNumbers(formatPrice(plan.price))}원</div>
-        {plan.optionalContractDiscount && (
-          <div className={styles.discountPrice}>
-            선택약정 할인 시: 월{' '}
-            {calculateDiscountedPrice(plan.price, plan.optionalContractDiscount)}원
-          </div>
-        )}
         {plan.premierContractDiscount && (
           <div className={styles.premierDiscount}>
             프리미어 할인 시: 월{' '}
             {calculateDiscountedPrice(plan.price, plan.premierContractDiscount)}원
+          </div>
+        )}
+        {plan.optionalContractDiscount && (
+          <div className={styles.discountPrice}>
+            선택약정 할인 시: 월{' '}
+            {calculateDiscountedPrice(plan.price, plan.optionalContractDiscount)}원
           </div>
         )}
       </div>

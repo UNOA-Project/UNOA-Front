@@ -1,3 +1,9 @@
+import PlanCardSystem from './../components/PlanCardSystem/PlanCardSystem'
+
 export default function PlanListPage() {
-  return <div>PlanListPage</div>
+  return (
+    <div>
+      <PlanCardSystem />
+    </div>
+  )
 }
