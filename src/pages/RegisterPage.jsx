@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import Kakao from '@/assets/kakao-icon.svg'
-import { registerUser } from '@/apis/userApi'
+import { registerUser, checkUserIdDuplicate } from '@/apis/userApi'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
@@ -20,6 +20,8 @@ export default function RegisterPage() {
   const [isPasswordConfirmTouched, setIsPasswordConfirmTouched] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+
+  const [userIdCheckStatus, setUserIdCheckStatus] = useState('')
 
   const validateName = value => {
     const isValid = /^[가-힣]+$/.test(value)
@@ -42,6 +44,33 @@ export default function RegisterPage() {
     setPasswordConfirmError(value === password ? '' : '비밀번호가 일치하지 않습니다.')
   }
 
+  const handleCheckDuplicate = async () => {
+    const trimmedId = userId.trim()
+
+    const isValidFormat = /^[a-z0-9]{4,16}$/.test(trimmedId)
+    if (!trimmedId) {
+      setUserIdError('아이디를 입력해주세요')
+      setUserIdCheckStatus('error')
+      return
+    }
+
+    if (!isValidFormat) {
+      setUserIdError('영문소문자 또는 숫자 4~16자로 입력해주세요.')
+      setUserIdCheckStatus('error')
+      return
+    }
+
+    try {
+      const { message } = await checkUserIdDuplicate(trimmedId)
+      setUserIdError(message)
+      setUserIdCheckStatus('success')
+    } catch (err) {
+      const msg = err?.response?.data?.message || '중복 확인 중 오류가 발생했습니다.'
+      setUserIdError(msg)
+      setUserIdCheckStatus('error')
+    }
+  }
+
   const handleSubmit = async e => {
     e.preventDefault()
 
@@ -54,6 +83,12 @@ export default function RegisterPage() {
       setIsUplusError('LG U+ 요금제 여부를 선택해주세요.')
     } else {
       setIsUplusError('')
+    }
+
+    if (userIdCheckStatus !== 'success') {
+      setUserIdError('아이디 중복 확인을 해주세요.')
+      setUserIdCheckStatus('error')
+      return
     }
 
     const isValid =
@@ -135,7 +170,11 @@ export default function RegisterPage() {
               <label className="ml-2 block">
                 아이디 <span className="text-error">*</span>
               </label>
-              <button type="button" className="text-small-body mr-2 hover:underline">
+              <button
+                type="button"
+                className="text-small-body mr-2 hover:underline"
+                onClick={handleCheckDuplicate}
+              >
                 중복 확인
               </button>
             </div>
@@ -145,12 +184,17 @@ export default function RegisterPage() {
               onChange={e => {
                 setUserId(e.target.value)
                 validateUserId(e.target.value)
+                setUserIdCheckStatus('')
               }}
               placeholder="아이디를 입력해주세요"
               className="focus:ring-primary-purple hover:ring-primary-purple sm:placeholder:text-body w-full rounded-sm border px-4 py-2 placeholder:text-sm hover:ring-1 focus:ring-1 focus:outline-none sm:rounded-lg sm:px-5 sm:py-4"
             />
             {userIdError && (
-              <p className="text-caption sm:text-small-body text-error mt-2 ml-2">
+              <p
+                className={`text-caption sm:text-small-body mt-2 ml-2 ${
+                  userIdCheckStatus === 'success' ? 'text-success' : 'text-error'
+                }`}
+              >
                 ⓘ {userIdError}
               </p>
             )}
