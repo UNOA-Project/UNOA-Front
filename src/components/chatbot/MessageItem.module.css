@@ -8,7 +8,6 @@
   flex-direction: column; /* 시간 표시를 아래로 보내기 위해 */
 }
 
-
 .user {
   background: #b47eff;
   color: white;
@@ -43,6 +42,7 @@
   line-height: 1.5;
   white-space: pre-wrap;
   word-wrap: break-word;
+  --vertical-rhythm: 0.2rem; /* 약 6-7px */
 }
 
 .messageTime {
@@ -61,14 +61,12 @@
 
 .noaText {
   font-weight: bold;
-  font-size: 0.8rem;
   color: var(--color-text-secondary);
 }
 .messageWrapper[data-role='user'] {
   justify-content: flex-end; /* 사용자 메시지는 오른쪽 끝으로 */
   padding-right: 1rem; /* 화면 끝과의 여백 */
   font-size: var(--text-small-body);
-
 }
 
 .messageWrapper[data-role='assistant'] {
@@ -80,9 +78,9 @@
 
 /* 아이콘을 담는 컨테이너 스타일 */
 .avatarContainer {
-display: flex;
-  flex-direction: column; 
-  align-items: center;   
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-right: 0.5rem;
 }
 
@@ -96,11 +94,4 @@ display: flex;
 /* --- 마크다운 렌더링을 위한 스타일 추가 --- */
 .messageContent strong {
   color: var(--color-primary-purple); /* 강조 색상 변경 */
-}
-
-
-.messageContent ul,
-.messageContent ol {
-  padding-left: 1rem;
-  margin-top: 0;
 }
