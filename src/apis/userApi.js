@@ -6,3 +6,10 @@ export const registerUser = async userData => {
   const response = await axios.post(`${API_URL}/auth/register`, userData)
   return response.data
 }
+
+export const checkUserIdDuplicate = async userId => {
+  const response = await axios.get(`${API_URL}/auth/check-id`, {
+    params: { userId },
+  })
+  return response.data
+}
