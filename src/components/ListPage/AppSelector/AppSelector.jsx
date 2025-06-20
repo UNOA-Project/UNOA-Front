@@ -1,7 +1,6 @@
 import React from 'react'
-
 import styles from './AppSelector.module.css'
-import { appsData } from './../../../data/appsData'
+import { appsData } from '../../../data/appsData'
 
 // 필터 모달 내부 혜택 앱 컴포넌트
 const AppSelector = ({ selectedApps, onToggleApp }) => {
@@ -17,7 +16,9 @@ const AppSelector = ({ selectedApps, onToggleApp }) => {
               selectedApps.includes(app.name) ? styles.selected : ''
             }`}
           >
-            <div className={`${styles.appIcon} ${app.color}`}>{app.icon}</div>
+            <div className={`${styles.appIcon} `}>
+              <img src={`${app.icon}`} alt="asdf" />
+            </div>
             <div className={styles.appName}>{app.name}</div>
           </div>
         ))}
