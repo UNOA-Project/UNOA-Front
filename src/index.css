@@ -4,13 +4,16 @@
 @theme {
   /* Color Design Tokens */
   --color-primary-pink: #ff5acd;
-  --color-primary-purple: #7b61ff;
+  --color-primary-purple: #543ed9;
   --color-primary-blue: #1e90ff;
 
   --color-sub-mint: #00c9a7;
   --color-sub-lightpink: #ffc1de;
   --color-sub-lilac: #b28dff;
   --color-sub-skyblue: #6ec9ff;
+  --color-light-purple: #b47eff;
+
+  --color-kakao: #fee500;
 
   --color-success: #48bb78;
   --color-warning: #ecc94b;
@@ -109,6 +112,9 @@ body {
   font-family: var(--font-pretendard);
   font-size: var(--text-body);
   color: var(--color-text-main);
+  .Toastify__toast {
+    margin: 6rem auto;
+  }
 }
 
 a {
@@ -141,11 +147,28 @@ textarea {
 :root {
   /* 기본 헤더 높이 (모바일, h-16) */
   --header-height: 64px;
+
+  --toastify-toast-width: 300px;
+  --toastify-color-info: var(--color-info);
+  --toastify-color-success: var(--color-success);
+  --toastify-color-warning: var(--color-warning);
+  --toastify-color-error: var(--color-error);
+  --toastify-icon-color-info: var(--color-info);
+  --toastify-icon-color-success: var(--color-success);
+  --toastify-icon-color-warning: var(--color-warning);
+  --toastify-icon-color-error: var(--color-error);
+  --toastify-text-color-light: var(--color-text-main);
+  --toastify-color-progress-light: var(--color-primary-purple);
+  --toastify-color-progress-info: var(--color-info);
+  --toastify-color-progress-success: var(--color-success);
+  --toastify-color-progress-warning: var(--color-warning);
+  --toastify-color-progress-error: var(--color-error);
 }
 
-@media (min-width: 1024px) {
-  :root {
-    /* 데스크탑 헤더 높이 (lg:h-20) */
-    --header-height: 80px;
+@media (max-width: 480px) {
+  .Toastify__toast {
+    width: 290px;
+    margin: 5rem auto;
+    border-radius: var(--radius-sm);
   }
 }

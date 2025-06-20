@@ -1,7 +1,7 @@
 import React from 'react'
 import FilterButton from '../FilterButton/FilterButton'
 import AppSelector from '../AppSelector/AppSelector'
-import { filterOptions } from '../../data/planData'
+import { filterOptions } from './../../../data/appsData'
 import styles from './FilterModal.module.css'
 
 const FilterModal = ({

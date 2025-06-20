@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import PlanCard from '../PlanCard/PlanCard'
 import styles from './PlanGrid.module.css'
-import { style } from 'framer-motion/client'
 
 //요금제 카드 그리드 컴포넌트
 const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
@@ -42,7 +41,7 @@ const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
     <>
       <div className={styles.planGrid}>
         {visiblePlans.map(plan => (
-          <PlanCard key={plan.id} plan={plan} />
+          <PlanCard key={plan._id} plan={plan} />
         ))}
       </div>
 

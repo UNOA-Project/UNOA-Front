@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react'
-import { planData } from '../data/planData'
+import { useMemo, useState, useEffect } from 'react'
+import axios from 'axios'
 
 const usePlanFilter = () => {
-  //초기값을 먼저 정의
+  // 초기값을 먼저 정의
   const initialFilters = {
-    category: '5GLTE',
+    category: '5G/LTE 요금제',
     network: '5G/LTE',
     dataPrice: '',
     dataType: '',
@@ -13,9 +13,31 @@ const usePlanFilter = () => {
 
   const [appliedFilters, setAppliedFilters] = useState(initialFilters)
   const [tempFilters, setTempFilters] = useState(initialFilters)
+  const [allPlans, setAllPlans] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // API에서 데이터 가져오기
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get('http://localhost:5000/api/plans')
+        setAllPlans(response.data)
+        setError(null)
+      } catch (err) {
+        console.error('API 요청 실패:', err)
+        setError('요금제 데이터를 불러오는데 실패했습니다.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPlans()
+  }, [])
 
   const getCurrentCategoryData = () => {
-    return planData[0][appliedFilters.category] || []
+    return allPlans.filter(plan => plan.category === appliedFilters.category)
   }
 
   const filteredPlans = useMemo(() => {
@@ -54,7 +76,8 @@ const usePlanFilter = () => {
           case '다쓰면 속도제한':
             return (
               plan.postExhaustionDataSpeed &&
-              plan.postExhaustionDataSpeed.includes('Mbps' || 'Kbps')
+              (plan.postExhaustionDataSpeed.includes('Mbps') ||
+                plan.postExhaustionDataSpeed.includes('Kbps'))
             )
           case '완전 무제한':
             return plan.data === '무제한' || plan.data.includes('무제한')
@@ -69,7 +92,11 @@ const usePlanFilter = () => {
         if (appliedFilters.selectedApps.length === 0) return true
 
         const allBenefits = [
-          ...(plan.basicBenefit ? [plan.basicBenefit] : []),
+          ...(plan.basicBenefit
+            ? Array.isArray(plan.basicBenefit)
+              ? plan.basicBenefit
+              : [plan.basicBenefit]
+            : []),
           ...(Array.isArray(plan.premiumBenefit)
             ? plan.premiumBenefit
             : plan.premiumBenefit
@@ -91,22 +118,22 @@ const usePlanFilter = () => {
 
       return networkMatch && dataPriceMatch && dataTypeMatch && appMatch
     })
-  }, [appliedFilters])
+  }, [appliedFilters, allPlans])
 
   const applyFilters = () => {
     setAppliedFilters(tempFilters)
   }
 
   const resetFilters = () => {
-    const initialFilters = {
+    const resetFilters = {
       category: appliedFilters.category,
       network: '5G/LTE',
       dataPrice: '',
       dataType: '',
       selectedApps: [],
     }
-    setTempFilters(initialFilters)
-    setAppliedFilters(initialFilters)
+    setTempFilters(resetFilters)
+    setAppliedFilters(resetFilters)
   }
 
   const toggleApp = appName => {
@@ -133,6 +160,9 @@ const usePlanFilter = () => {
     appliedFilters,
     tempFilters,
     filteredPlans,
+    allPlans,
+    loading,
+    error,
     setTempFilters,
     applyFilters,
     resetFilters,
