@@ -13,3 +13,14 @@ export const checkUserIdDuplicate = async userId => {
   })
   return response.data
 }
+
+export const loginUser = async ({ userId, password }) => {
+  const response = await axios.post(
+    `${API_URL}/auth/login`,
+    { userId, password },
+    {
+      withCredentials: true,
+    }
+  )
+  return response.data
+}
