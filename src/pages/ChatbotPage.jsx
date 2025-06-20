@@ -1,25 +1,20 @@
 // src/pages/ChatbotPage.jsx
 
 import { useState } from 'react'
-// 훅과 CSS 파일은 현재 위치(pages)에서 한 단계 위로 올라가야 하므로 '../'를 사용합니다.
 import { useSocket } from '../hooks/useSocket'
 import { useChat } from '../hooks/useChat'
 import { useUI } from '../hooks/useUI'
-import styles from './ChatbotPage.module.css'
 
-// 컴포넌트들은 한 단계 위로 올라가 'components/chatbot' 폴더 안에 있습니다.
 import ChatHeader from '../components/chatbot/ChatHeader'
 import ChatContainer from '../components/chatbot/ChatContainer'
 import WelcomeMessage from '../components/chatbot/WelcomeMessage'
 import LoadingScreen from '../components/chatbot/LoadingScreen'
 
-// 함수 이름을 App에서 ChatbotPage로 변경합니다.
 function ChatbotPage() {
   const [currentMode, setCurrentMode] = useState('normal')
   const { socket, isConnected } = useSocket()
   const { messages, isStreaming, sendMessage, addLocalMessage, resetMessages, sendPromptSilently } =
     useChat(socket, isConnected)
-
   const { messagesEndRef, inputRef, formatTime } = useUI(messages, '', isStreaming, isConnected)
 
   const handleModeChange = newMode => {
@@ -28,18 +23,21 @@ function ChatbotPage() {
     setCurrentMode(newMode)
   }
 
-  // 로딩 화면 로직 추가
   if (!isConnected) {
     return <LoadingScreen />
   }
 
   return (
-    <div className={styles.appContainer}>
-      <div className={styles.welcomeMessageContainer}>
+    // .appContainer 스타일 적용
+    <div className="flex items-center justify-center h-[calc(100vh-var(--header-height))] bg-gradient-to-br from-[#899df4] to-[#9262c3]">
+      
+      {/* .welcomeMessageContainer 스타일 적용 (반응형) */}
+      <div className="hidden lg:block">
         <WelcomeMessage />
       </div>
 
-      <div className={styles.app}>
+      {/* .app 스타일 적용 (반응형) */}
+      <div className="flex h-full w-full max-w-[550px] flex-col bg-white shadow-none lg:h-[80vh] lg:max-h-[80vh] lg:max-w-[600px] lg:rounded-xl lg:shadow-[0_4px_15px_rgba(0,0,0,0.2)]">
         <ChatHeader
           currentMode={currentMode}
           onModeChange={handleModeChange}
