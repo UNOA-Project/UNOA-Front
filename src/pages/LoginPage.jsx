@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import KakaoIcon from '@/assets/kakao-icon.svg'
 import { loginUser } from '@/apis/userApi'
+import useToast from '@/hooks/useToast'
 import FormField from '@/components/FormField'
 
 export default function LoginPage() {
@@ -12,29 +13,44 @@ export default function LoginPage() {
   const [userIdError, setUserIdError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
+  const navigate = useNavigate()
+  const { showErrorToast } = useToast()
+
   const handleSubmit = async e => {
     e.preventDefault()
 
+    let hasError = false
+
     if (!userId) {
       setUserIdError('아이디를 입력해주세요.')
+      hasError = true
     } else {
       setUserIdError('')
     }
 
     if (!password) {
       setPasswordError('비밀번호를 입력해주세요.')
+      hasError = true
     } else {
       setPasswordError('')
     }
 
-    if (userId && password) {
-      try {
-        const data = await loginUser({ userId, password })
-        console.log('✅ 로그인 성공:', data)
-        // TODO: 로그인 성공 후 리디렉션 또는 사용자 상태 저장
-      } catch (err) {
-        console.error('❌ 로그인 실패:', err.response?.data?.message || err.message)
-      }
+    if (hasError) return
+
+    try {
+      await loginUser({ userId, password })
+
+      setUserId('')
+      setPassword('')
+
+      navigate('/')
+    } catch {
+      showErrorToast(
+        <>
+          아이디 또는 비밀번호가 <br />
+          잘못되었습니다.
+        </>
+      )
     }
   }
 
@@ -43,7 +59,7 @@ export default function LoginPage() {
       <h1 className="text-sub-title sm:text-page-header mb-2 font-bold md:mb-4 md:text-4xl">
         UNOA 계정
       </h1>
-      <p className="md:text-card-title mb-4 sm:mb-6">
+      <p className="md:text-card-title mb-8">
         아직 UNOA 계정이 없으신가요?
         <Link
           to="/register"
