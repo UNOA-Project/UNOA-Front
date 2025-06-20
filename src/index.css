@@ -122,7 +122,6 @@ li {
 button {
   cursor: pointer;
   outline: none;
-  background-color: transparent;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
