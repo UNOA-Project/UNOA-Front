@@ -1,13 +1,10 @@
-// src/components/ChatMode.jsx
-
-import React from 'react'
 import MessageList from './MessageList'
 import MessageInput from './MessageInput'
 import ChatModeWelcome from './ChatModeWelcome'
 
 const ChatMode = props => {
   return (
-    <>
+    <div className="flex h-full flex-col">
       <MessageList
         messages={props.messages}
         formatTime={props.formatTime}
@@ -21,7 +18,7 @@ const ChatMode = props => {
         isConnected={props.isConnected}
         inputRef={props.inputRef}
       />
-    </>
+    </div>
   )
 }
 
