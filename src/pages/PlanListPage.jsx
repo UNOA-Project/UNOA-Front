@@ -1,4 +1,4 @@
-import PlanCardSystem from './../components/PlanCardSystem/PlanCardSystem'
+import PlanCardSystem from '../components/ListPage/PlanCardSystem/PlanCardSystem'
 
 export default function PlanListPage() {
   return (
