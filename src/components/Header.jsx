@@ -35,7 +35,7 @@ export default function Header() {
     <header
       className={`${isHome ? 'absolute' : 'fixed'} top-0 left-0 z-50 w-full ${headerBgClass} ${headerShadow}`}
     >
-      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 md:px-8 lg:h-20 lg:px-16">
+      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16">    
         {/* 로고 (모바일) - 로고는 색상이 없으므로 수정 X */}
         <Link to="/" onClick={() => setIsMenuOpen(false)} className="lg:hidden">
           <img src={Logo} alt="U+NOA 로고" className="h-8" />
