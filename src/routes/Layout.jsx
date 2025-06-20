@@ -5,12 +5,12 @@ import 'react-toastify/dist/ReactToastify.css'
 
 export default function Layout() {
   const location = useLocation()
-  const isHome = location.pathname === '/'
+  const isNoPaddingTop = location.pathname === '/' || location.pathname === '/login'
 
   return (
     <>
-      <Header isHome={isHome} />
-      <main className={isHome ? '' : 'pt-[var(--header-height)]'}>
+      <Header isNoPaddingTop={isNoPaddingTop} />
+      <main className={isNoPaddingTop ? '' : 'pt-[var(--header-height)]'}>
         <Outlet />
         <ToastContainer limit={1} />
       </main>
