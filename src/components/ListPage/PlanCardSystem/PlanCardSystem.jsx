@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import usePlanFilter from '../../hooks/usePlanFilter'
-import TabMenu from '../TabMenu/TabMenu'
+import usePlanFilter from './../../../hooks/usePlanFilter'
+import TabMenu from './../TabMenu/TabMenu'
 import FilterSort from '../FilterSort/FilterSort'
 import PlanGrid from '../PlanGrid/PlanGrid'
 import FilterModal from '../FilterModal/FilterModal'
@@ -19,6 +19,9 @@ const PlanCardSystem = () => {
     appliedFilters,
     tempFilters,
     filteredPlans,
+    allPlans,
+    loading,
+    error,
     setTempFilters,
     applyFilters,
     resetFilters,
@@ -78,6 +81,21 @@ const PlanCardSystem = () => {
             // 무제한인 경우 최고값
             if (dataStr.includes('무제한') || dataStr.toLowerCase().includes('unlimited')) {
               return 999999
+            }
+
+            // 범위 처리: 예) "250MB~1GB"
+            const rangeMatch = dataStr.match(
+              /(\d+(?:\.\d+)?)(MB|GB|TB)?\s*~\s*(\d+(?:\.\d+)?)(MB|GB|TB)?/i
+            )
+            if (rangeMatch) {
+              let value = parseFloat(rangeMatch[3]) // 상한값 사용
+              let unit = (rangeMatch[4] || rangeMatch[2] || 'MB').toUpperCase() // 단위가 없으면 앞 단위 또는 MB
+
+              if (unit === 'GB') value *= 1000
+              else if (unit === 'TB') value *= 1000000
+              // MB는 그대로
+
+              return value
             }
 
             // 숫자 추출 (GB, MB 단위 고려)
@@ -155,18 +173,45 @@ const PlanCardSystem = () => {
 
   const getCategoryTitle = () => {
     const titles = {
-      '5GLTE': '5G/LTE 요금제',
-      Online: '온라인 전용 요금제',
-      TabWatch: '태블릿/스마트워치 요금제',
-      Dual: '듀얼넘버 플러스',
+      '5G/LTE 요금제': '5G/LTE 요금제',
+      '온라인 다이렉트 요금제': '온라인 전용 요금제',
+      '태블릿/워치 요금제': '태블릿/스마트워치 요금제',
+      '듀얼심 요금제': '듀얼넘버 플러스',
     }
     return titles[appliedFilters.category] || '요금제'
+  }
+
+  // 로딩 상태 처리
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>
+          <p>요금제 정보를 불러오는 중...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // 에러 상태 처리
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.errorContainer}>
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>다시 시도</button>
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.mainContent}>
-        <TabMenu selectedCategory={appliedFilters.category} onCategoryChange={changeCategory} />
+        <TabMenu
+          selectedCategory={appliedFilters.category}
+          onCategoryChange={changeCategory}
+          allPlans={allPlans} // 전체 플랜 데이터 전달 (카테고리별 개수 표시용)
+        />
 
         <FilterSort
           onFilterOpen={() => setIsFilterOpen(true)}

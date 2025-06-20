@@ -84,18 +84,25 @@ const PlanCard = ({ plan }) => {
       </div>
 
       <div className={styles.benefitsSection}>
-        <div className={styles.benefitItem}>
-          <span className={styles.benefitLabel}>데이터:</span>
-          <span className={styles.benefitValue}>{highlightNumbers(plan.data)}</span>
-        </div>
-        <div className={styles.benefitItem}>
-          <span className={styles.benefitLabel}>음성통화:</span>
-          <span className={styles.benefitValue}>{plan.voiceCall}</span>
-        </div>
-        <div className={styles.benefitItem}>
-          <span className={styles.benefitLabel}>문자:</span>
-          <span className={styles.benefitValue}>{plan.sms}</span>
-        </div>
+        {plan.data && (
+          <div className={styles.benefitItem}>
+            <span className={styles.benefitLabel}>데이터:</span>
+            <span className={styles.benefitValue}>{highlightNumbers(plan.data)}</span>
+          </div>
+        )}
+        {plan.voiceCall && (
+          <div className={styles.benefitItem}>
+            <span className={styles.benefitLabel}>음성통화:</span>
+            <span className={styles.benefitValue}>{plan.voiceCall}</span>
+          </div>
+        )}
+        {plan.sms && (
+          <div className={styles.benefitItem}>
+            <span className={styles.benefitLabel}>문자:</span>
+            <span className={styles.benefitValue}>{plan.sms}</span>
+          </div>
+        )}
+
         {plan.tethering && (
           <div className={styles.benefitItem}>
             <span className={styles.benefitLabel}>테더링:</span>
