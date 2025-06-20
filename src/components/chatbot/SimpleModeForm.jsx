@@ -34,6 +34,9 @@ export const SimpleModeForm = ({ onFinish }) => {
 
   return (
     <div className="flex h-screen flex-col px-4 py-6">
+      <p className="text-card-title mb-4 text-center">
+        {step + 1} / {questions.length}
+      </p>
       <div className="mx-auto mb-12 w-full max-w-lg">
         <div className="h-2 w-full rounded-full bg-gray-200">
           <div
