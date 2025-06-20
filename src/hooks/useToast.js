@@ -63,7 +63,7 @@ export default function useToast() {
       toast.error(message, {
         ...commonOptions,
         toastId: TOAST_IDS.error,
-        className: 'border border-border flex flex-row justify-center',
+        className: 'border border-border text-center flex flex-row justify-center',
         ...options,
       })
     }

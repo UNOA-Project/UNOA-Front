@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import mascot1 from '../../assets/section/benefit1.png'
-import mascot2 from '../../assets/section/benefit2.png'
-import mascot3 from '../../assets/section/benefit3.png'
-import mascot4 from '../../assets/section/benefit4.png'
+import mascot1 from '@/assets/section/benefit1.png'
+import mascot2 from '@/assets/section/benefit2.png'
+import mascot3 from '@/assets/section/benefit3.png'
+import mascot4 from '@/assets/section/benefit4.png'
 
 const mascotData = [
   { img: mascot1, label: '영화 보고' },

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-import mascot from '../../assets/section/solution.png'
-import SolutionTextImg from '../../assets/section/Solutiontext.png'
+import mascot from '@/assets/section/solution.png'
+import SolutionTextImg from '@/assets/section/Solutiontext.png'
 
 const TOTAL_BUBBLES = 20
 
