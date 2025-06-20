@@ -1,13 +1,10 @@
-// src/components/ChatContainer.jsx
 import ChatMode from './ChatMode'
 import SimpleMode from './SimpleMode'
-import appStyles from '../../pages/ChatbotPage.module.css' // App의 스타일을 가져옴
-
 const ChatContainer = props => {
   const { currentMode } = props
 
   return (
-    <div className={appStyles.chatContainer}>
+    <div className="flex flex-1 flex-col overflow-hidden rounded-b-xl bg-[#f7f2ff] p-4 pt-0">
       {currentMode === 'normal' ? <ChatMode {...props} /> : <SimpleMode {...props} />}
     </div>
   )

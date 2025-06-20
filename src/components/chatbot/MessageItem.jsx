@@ -1,5 +1,7 @@
 import React from 'react'
 import styles from './MessageItem.module.css'
+import NoaIcon from '../../assets/noamessageicon.svg';
+import ReactMarkdown from 'react-markdown'; 
 
 const MessageItem = ({ message, formatTime }) => {
   const messageClasses = [
@@ -10,14 +12,23 @@ const MessageItem = ({ message, formatTime }) => {
   ].join(' ')
 
   return (
-    <div className={messageClasses}>
-      <div className={styles.messageContent}>{message.content}</div>
-      <div className={styles.messageTime}>
-        {formatTime(message.timestamp)}
-        {message.isTemp && <span className={styles.tempIndicator}>전송중</span>}
+    <div className={styles.messageWrapper} data-role={message.role}>
+      {message.role === 'assistant' && (
+        <div className={styles.avatarContainer}>
+          <img src={NoaIcon} alt="노아 아이콘" className={styles.avatarIcon} />
+          <span className={styles.noaText}>NOA</span>
+        </div>
+      )}
+
+      <div className={messageClasses}>
+        <div className={styles.messageContent}><ReactMarkdown>{message.content}</ReactMarkdown></div>
+        <div className={styles.messageTime}>
+          {formatTime(message.timestamp)}
+          {message.isTemp && <span className={styles.tempIndicator}>전송중</span>}
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MessageItem
