@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import usePlanFilter from '../../hooks/usePlanFilter'
-import TabMenu from '../TabMenu/TabMenu'
+import usePlanFilter from './../../../hooks/usePlanFilter'
+import TabMenu from './../TabMenu/TabMenu'
 import FilterSort from '../FilterSort/FilterSort'
 import PlanGrid from '../PlanGrid/PlanGrid'
 import FilterModal from '../FilterModal/FilterModal'
@@ -81,6 +81,21 @@ const PlanCardSystem = () => {
             // 무제한인 경우 최고값
             if (dataStr.includes('무제한') || dataStr.toLowerCase().includes('unlimited')) {
               return 999999
+            }
+
+            // 범위 처리: 예) "250MB~1GB"
+            const rangeMatch = dataStr.match(
+              /(\d+(?:\.\d+)?)(MB|GB|TB)?\s*~\s*(\d+(?:\.\d+)?)(MB|GB|TB)?/i
+            )
+            if (rangeMatch) {
+              let value = parseFloat(rangeMatch[3]) // 상한값 사용
+              let unit = (rangeMatch[4] || rangeMatch[2] || 'MB').toUpperCase() // 단위가 없으면 앞 단위 또는 MB
+
+              if (unit === 'GB') value *= 1000
+              else if (unit === 'TB') value *= 1000000
+              // MB는 그대로
+
+              return value
             }
 
             // 숫자 추출 (GB, MB 단위 고려)
