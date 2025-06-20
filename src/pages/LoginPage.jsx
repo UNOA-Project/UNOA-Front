@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import KakaoIcon from '@/assets/kakao-icon.svg'
+import { loginUser } from '@/apis/userApi'
 import FormField from '@/components/FormField'
 
 export default function LoginPage() {
@@ -11,7 +12,7 @@ export default function LoginPage() {
   const [userIdError, setUserIdError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
 
     if (!userId) {
@@ -27,8 +28,13 @@ export default function LoginPage() {
     }
 
     if (userId && password) {
-      // TODO: 로그인 API 연결
-      console.log('로그인 요청', { userId, password })
+      try {
+        const data = await loginUser({ userId, password })
+        console.log('✅ 로그인 성공:', data)
+        // TODO: 로그인 성공 후 리디렉션 또는 사용자 상태 저장
+      } catch (err) {
+        console.error('❌ 로그인 실패:', err.response?.data?.message || err.message)
+      }
     }
   }
 
