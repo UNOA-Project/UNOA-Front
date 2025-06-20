@@ -2,16 +2,17 @@ import { useState } from 'react'
 import MenuIcon from '../../assets/menu.svg?react'
 import SendArrowIcon from '../../assets/sendarrow.svg?react'
 import styles from './MessageInput.module.css'
+import ArrowUpIcon from '../../assets/arrowup.svg?react'
 
 const MessageInput = ({ onSendMessage, isStreaming, isConnected, inputRef }) => {
   const [inputMessage, setInputMessage] = useState('')
-  const [isFaqVisible, setFaqVisible] = useState(false)
+  const [isFaqVisible, setFaqVisible] = useState(true)
 
   const faqQuestions = [
-    '5G 요금제 추천해 주세요.',
-    '데이터 무제한 요금제 알려줘.',
+    '요금제를 추천받고 싶어요.',
+    '데이터 무제한 요금제 추천해 주세요.',
     '선택약정 할인에 대해 궁금해요.',
-    '가족 결합 할인 혜택이 있나요?',
+    'OTT 서비스가 포함된 요금제는 어떤 게 있나요?',
   ]
 
   const handleSubmit = e => {
@@ -33,9 +34,20 @@ const MessageInput = ({ onSendMessage, isStreaming, isConnected, inputRef }) => 
   }
 
   return (
-    <div>
+    <div className={styles.inputContainerWrapper}>
       {isFaqVisible && (
-        <div className={styles.faqContainer}>
+        <div className={`${styles.faqContainer} ${!isFaqVisible ? styles.faqHidden : ''}`}>
+          <div className={styles.faqHeader}>
+            <button
+              type="button"
+              className={styles.faqCloseButton}
+              onClick={() => setFaqVisible(false)}
+            >
+              <ArrowUpIcon />
+            </button>
+            <span className={styles.faqTitle}>추천 질문</span>
+          </div>
+
           {faqQuestions.map((q, index) => (
             <button key={index} className={styles.faqButton} onClick={() => handleFaqClick(q)}>
               {q}

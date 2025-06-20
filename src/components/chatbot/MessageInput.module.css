@@ -1,9 +1,9 @@
-/* MessageInput.module.css */
 
 .inputForm {
   display: flex;
+  align-items: center;
   gap: 0.75rem;
-  padding: 1rem;
+  padding: 0.3rem 0.6rem;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 2rem;
   margin-bottom: 1rem;
@@ -14,18 +14,12 @@
 
 .messageInput {
   flex: 1;
-  padding: 0.75rem 1rem;
-  border: 2px solid rgba(176, 109, 243, 0.2);
+  padding: 0.5rem;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: var(--text-small-body);
   background-color: transparent;
   outline: none;
   transition: all 0.2s ease;
-}
-
-.messageInput:focus {
-  border-color: #a981e7;
-  box-shadow: 0 0 0 3px rgba(157, 68, 235, 0.1);
 }
 
 .messageInput:disabled {
@@ -36,10 +30,9 @@
 .iconButton {
   background-color: transparent;
   border: none;
-  border-radius: 50px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 40px; /* 아이콘 크기에 맞춰 조정 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,33 +52,70 @@
 }
 
 /* FAQ 관련 스타일 */
-.faqContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-  padding: 0 1rem;
-  animation: fadeIn 0.3s ease;
+.inputContainerWrapper {
+  position: relative;
+  
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+.faqContainer {
+  position: absolute;
+  bottom: 75%;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255);
+  padding-top: 0.3rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 2rem;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .faqButton {
   background-color: #ffffff;
-  color: #333;
+  color: var(--color-text-main);
   padding: 0.5rem 0.75rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid #eee;
   border-radius: 1rem;
-  font-size: 0.85rem;
+  font-size: var(--text-caption);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .faqButton:hover {
-  background-color: #f0f0f0;
+  color: #b47eff;
   transform: translateY(-1px);
+}
+
+.faqHidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(100%);
+}
+
+/* FAQ 헤더 스타일 */
+.faqHeader {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* "추천질문" 텍스트 스타일 */
+.faqTitle {
+  font-weight: medium;
+  color: var(--color-text-secondary);
+  font-size: var(--text-small-body);
+}
+
+/* FAQ 닫기 버튼  */
+.faqCloseButton {
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
