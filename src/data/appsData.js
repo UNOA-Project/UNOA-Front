@@ -13,3 +13,9 @@ export const appsData = [
   { name: '유플레이', icon: '💳', color: 'bg-blue-500' },
   { name: '아이들나라', icon: '🎵', color: 'bg-pink-500' },
 ]
+
+export const filterOptions = {
+  networks: ['5G/LTE', '5G', 'LTE'],
+  priceFilter: ['~5만원대', '6~8만원대', '9만원대~', '상관없어요'],
+  dataTypes: ['다쓰면 속도제한', '완전 무제한', '상관 없어요'],
+}
