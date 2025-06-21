@@ -59,7 +59,7 @@ const PlanCard = ({ plan }) => {
   }
 
   return (
-    <div className="flex max-w-65 flex-col rounded-xl border border-gray-200 bg-white p-6 transition-shadow duration-200 hover:shadow-xl">
+    <div className="flex max-w-65 min-w-65 flex-col rounded-xl border border-gray-200 bg-white p-6 transition-shadow duration-200 hover:shadow-xl">
       {/* 제목 */}
       <h3 className="mb-6 text-center text-lg leading-tight font-bold text-gray-900">
         {plan.title}
