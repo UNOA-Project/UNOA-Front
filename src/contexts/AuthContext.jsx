@@ -5,9 +5,15 @@ const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const isAuthenticated = !!user
 
-  const login = userData => {
-    setUser(userData)
+  const login = async () => {
+    try {
+      const userInfo = await getUserInfo()
+      setUser(userInfo)
+    } catch {
+      setUser(null)
+    }
   }
 
   const logout = async () => {
@@ -20,19 +26,14 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userInfo = await getUserInfo()
-        setUser(userInfo)
-      } catch {
-        setUser(null)
-      }
-    }
-
-    fetchUser()
+    login()
   }, [])
 
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export function useAuth() {
