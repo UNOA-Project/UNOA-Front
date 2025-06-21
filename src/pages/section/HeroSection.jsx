@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
-import mouse from '../../assets/section/mouse.png'
+import mouse from '@/assets/section/mouse.png'
+import TextAnimation from './TextAnimation'
 
-// UNOA 로고 컴포넌트
 const UoaLogo = () => {
   const svgRef = useRef(null)
   const [isDrawn, setDrawn] = useState(false)
@@ -31,7 +31,7 @@ const UoaLogo = () => {
   }, [])
 
   return (
-    <div className="mx-auto flex min-h-[45vh] w-full max-w-[700px] items-center justify-center">
+    <div className="mx-auto flex min-h-[35vh] w-full max-w-[600px] items-center justify-center">
       <svg ref={svgRef} className="block h-auto w-full" viewBox="0 -10 250 70">
         <style>
           {`
@@ -91,42 +91,7 @@ const UoaLogo = () => {
   )
 }
 
-// 텍스트 애니메이션
-const TextAnimation = ({ text, startDelay }) => {
-  const [isVisible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), startDelay)
-    return () => clearTimeout(timer)
-  }, [startDelay])
-
-  return (
-    <div className="mt-4 flex flex-wrap justify-center text-[2rem] font-semibold text-white md:text-[1.5rem]">
-      <style>
-        {`
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-        `}
-      </style>
-      {text.split('').map((char, index) => (
-        <span
-          key={index}
-          className="inline-block opacity-0"
-          style={{
-            animation: isVisible ? 'fadeIn 0.3s forwards' : 'none',
-            animationDelay: `${index * 0.05}s`,
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </span>
-      ))}
-    </div>
-  )
-}
-
-// 서브 슬로건
+// 서브 슬로건 컴포넌트
 const SubSlogans = () => {
   const [isVisible, setVisible] = useState(false)
 
@@ -147,7 +112,7 @@ const SubSlogans = () => {
   )
 }
 
-// 스크롤 안내
+// 스크롤 안내 컴포넌트
 const Scrollecomment = () => {
   const [isVisible, setVisible] = useState(false)
 
@@ -158,7 +123,7 @@ const Scrollecomment = () => {
 
   return (
     <div
-      className={`mt-0 mb-20 pt-20 text-center text-[1rem] text-white transition-all duration-1000 ${
+      className={`mt-0 mb-40 pt-30 text-center text-[1rem] text-white transition-all duration-1000 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
       }`}
     >
@@ -168,7 +133,6 @@ const Scrollecomment = () => {
   )
 }
 
-// HeroSection 컴포넌트
 function HeroSection() {
   const sloganText = '한 번에 쉽게, 나한테 딱 맞게'
 

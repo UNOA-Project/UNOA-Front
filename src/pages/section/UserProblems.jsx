@@ -111,7 +111,7 @@ const UserProblems = () => {
               key={i}
               className={`pointer-events-none absolute top-1/2 m-0 w-full -translate-y-1/2 font-semibold transition-all duration-500 will-change-[transform,opacity] ${
                 i === activeIndex
-                  ? 'text-[1.6rem] text-white opacity-100 sm:text-[1.6rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[4rem]'
+                  ? 'text-[1.4rem] text-white opacity-100 sm:text-[1.6rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[4rem]'
                   : 'text-[1rem] text-white/0 opacity-50 sm:text-[1.2rem] md:text-[1.2rem] lg:text-[2rem]'
               }`}
             >

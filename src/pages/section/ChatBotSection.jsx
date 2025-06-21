@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import leftMockup from '../../assets/section/ChatBotiphone1.png'
-import rightMockup from '../../assets/section/ChatBotiphone2.png'
+import leftMockup from '@/assets/section/ChatBotiphone1.png'
+import rightMockup from '@/assets/section/ChatBotiphone2.png'
 
 const ChatBotSection = () => {
   const sectionRef = useRef(null)
@@ -13,7 +13,7 @@ const ChatBotSection = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
     }
-    handleResize() // 초기 렌더링 시에도 실행
+    handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
@@ -39,7 +39,7 @@ const ChatBotSection = () => {
           className="flex max-w-[400px] flex-col items-center text-center"
           style={{ y: leftY, opacity: leftOpacity }}
         >
-          <h2 className="mb-6 text-center text-[1.4rem] font-bold text-[#222]">
+          <h2 className="mb-6 text-center text-[1.1rem] font-bold text-[#222] md:text-[1.3rem] lg:text-[1.4rem]">
             지금 나에게 맞는 요금제가 궁금하다면?
           </h2>
           {/* leftMockup 이미지에 그림자 추가 */}
@@ -53,7 +53,7 @@ const ChatBotSection = () => {
         >
           {/* rightMockup 이미지에 그림자 추가 */}
           <img src={rightMockup} alt="챗봇 화면" className="w-full max-w-[400px]" />
-          <p className="mt-10 text-[1.3rem] font-bold text-[#333]">
+          <p className="mt-10 text-[1rem] font-bold text-[#333] md:text-[1.1rem] lg:text-[1.3rem]">
             챗봇 NOA가 쉽고 빠르게 추천해드릴게요!
           </p>
           <button
