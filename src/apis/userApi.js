@@ -26,7 +26,7 @@ export const loginUser = async ({ userId, password }) => {
 }
 
 export const getUserInfo = async () => {
-  const response = await axios.get(`${API_URL}/users/me`, {
+  const response = await axios.get(`${API_URL}/auth/me`, {
     withCredentials: true,
   })
   return response.data
