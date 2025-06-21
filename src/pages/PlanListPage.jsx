@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import PlanCardSystem from './../components/PlanCardSystem/PlanCardSystem'
 import PlanComparePage from '../components/PlanCompare/PlanComparePage'
 import PlanComparePageMobile from '../components/PlanCompare/PlanComparePageMobile'
+import PlanCardSystem from '@/components/ListPage/PlanCardSystem/PlanCardSystem'
 
 export default function PlanListPage() {
   const [isMobile, setIsMobile] = useState(false)
