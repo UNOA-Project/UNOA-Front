@@ -10,17 +10,11 @@ export default function Header() {
 
   const isHome = location.pathname === '/'
 
-  const headerBgClass = isHome ? 'bg-black' : 'bg-white'
-  const headerShadow = isHome ? '' : 'shadow-sm'
-
-  const headerTextColorClass = isHome ? 'text-white' : 'text-text-main'
-
   const headerBgClass = isHome ? 'bg-transparent' : 'bg-white'
   const headerShadow = isHome ? '' : 'shadow-sm'
   const headerTextColorClass = isHome ? 'text-white' : 'text-text-main'
   const menuIconColorClass = isHome ? 'bg-white' : 'bg-black'
   const navLinkBaseClass = 'hover:text-primary-purple transition-colors duration-200'
-
   const navLinkActiveClass = isHome
     ? 'relative font-bold'
     : 'text-primary-purple relative font-bold'
@@ -40,7 +34,6 @@ export default function Header() {
     <header
       className={`${isHome ? 'absolute' : 'fixed'} top-0 left-0 z-50 w-full ${headerBgClass} ${headerShadow}`}
     >
-
       <div className="md:px-8lg:px-16 mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6">
         <Link to="/" onClick={() => setIsMenuOpen(false)} className="lg:hidden">
           <img src={Logo} alt="U+NOA 로고" className="h-8" />
