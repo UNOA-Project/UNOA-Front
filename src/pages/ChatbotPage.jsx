@@ -34,10 +34,10 @@ function ChatbotPage() {
     <div className="flex h-[calc(100vh-var(--header-height))] items-center justify-center bg-gradient-to-br from-[#899df4] to-[#9262c3]">
       {/* .welcomeMessageContainer 스타일 적용 (반응형) */}
       <div className="pointer-events-none fixed top-[var(--header-height)] left-0 z-0 h-[calc(100vh-var(--header-height))] w-[100vw] select-none">
-        <SoapBubble className="absolute top-[15%] left-[20%] h-40 w-40" />
-        <SoapBubble className="absolute top-[8%] right-[2%] h-80 w-80" />
-        <SoapBubble className="absolute -bottom-[1%] -left-[2%] h-40 w-40" />
-        <SoapBubble className="absolute bottom-[13%] left-[35%] h-20 w-20" />
+        <SoapBubble className="absolute top-[15%] left-[25%] h-41 w-41" />
+        <SoapBubble className="absolute top-[4%] right-[2%] h-80 w-80" />
+        <SoapBubble className="absolute -bottom-[1%] -left-[1.5%] h-40 w-40" />
+        <SoapBubble className="absolute bottom-[13%] left-[40%] h-20 w-20" />
       </div>
       <div className="z-10 hidden lg:block">
         <WelcomeMessage />
