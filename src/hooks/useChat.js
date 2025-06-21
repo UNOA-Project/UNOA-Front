@@ -49,20 +49,32 @@ export const useChat = (socket, isConnected) => {
       }
     }
 
-    // 스트리밍 종료: 스트리밍 상태를 false로 바꾸고 최종 메시지로 업데이트
-    const handleStreamEnd = (data = {}) => {
-      if (data.message && streamingMessageIdRef.current) {
-        setMessages(prev =>
-          prev.map(msg =>
-            msg.id === streamingMessageIdRef.current
-              ? { ...data.message, id: msg.id, isStreaming: false }
-              : msg
-          )
+const handleStreamEnd = (data = {}) => {
+    // AI의 텍스트 메시지 업데이트
+    if (data.message && streamingMessageIdRef.current) {
+      setMessages(prev =>
+        prev.map(msg =>
+          msg.id === streamingMessageIdRef.current
+            ? { ...data.message, id: msg.id, isStreaming: false }
+            : msg
         )
-      }
-      setIsStreaming(false)
-      streamingMessageIdRef.current = null
+      );
     }
+    
+    // 추천 요금제 데이터가 있다면, 'card' 역할의 새 메시지를 추가
+    if (data.recommendedPlans && data.recommendedPlans.length > 0) {
+      const cardMessage = {
+        id: `card-${Date.now()}`,
+        role: 'card',
+        content: data.recommendedPlans,
+        timestamp: new Date().toISOString(),
+      };
+      setMessages(prev => [...prev, cardMessage]);
+    }
+
+    setIsStreaming(false);
+    streamingMessageIdRef.current = null;
+  };
 
     // 에러 처리
     const handleError = error => {
@@ -129,12 +141,9 @@ export const useChat = (socket, isConnected) => {
     [socket, isConnected, isStreaming, messages]
   )
 
-  // 화면에 표시하지 않고, 서버로 프롬프트를 전송하는 역할만 합니다.
   const sendPromptSilently = useCallback(
     (promptText, mode = 'normal') => {
       if (!promptText.trim() || isStreaming || !socket || !isConnected) return
-
-      // setMessages 로직이 없습니다!
 
       const payload = {
         text: promptText.trim(),

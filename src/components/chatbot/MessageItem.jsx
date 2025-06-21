@@ -1,9 +1,13 @@
 import React from 'react'
 import styles from './MessageItem.module.css'
-import NoaIcon from '../../assets/noamessageicon.svg';
-import ReactMarkdown from 'react-markdown'; 
+import NoaIcon from '../../assets/noamessageicon.svg'
+import ReactMarkdown from 'react-markdown'
+import PlanCardGroup from './PlanCard';
 
 const MessageItem = ({ message, formatTime }) => {
+  if (message.role === 'card') {
+    return <PlanCardGroup plans={message.content} />
+  }
   const messageClasses = [
     styles.message,
     styles[message.role], // 'user' 또는 'assistant' 클래스를 동적으로 적용
@@ -21,14 +25,16 @@ const MessageItem = ({ message, formatTime }) => {
       )}
 
       <div className={messageClasses}>
-        <div className={styles.messageContent}><ReactMarkdown>{message.content}</ReactMarkdown></div>
+        <div className={styles.messageContent}>
+          <ReactMarkdown>{message.content}</ReactMarkdown>
+        </div>
         <div className={styles.messageTime}>
           {formatTime(message.timestamp)}
           {message.isTemp && <span className={styles.tempIndicator}>전송중</span>}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default MessageItem

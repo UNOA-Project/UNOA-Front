@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
 import Logo from '@/assets/Logo.svg'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
+  const { user, logout } = useAuth()
 
   const isHome = location.pathname === '/'
 
@@ -13,9 +15,10 @@ export default function Header() {
 
   const headerTextColorClass = isHome ? 'text-white' : 'text-text-main'
 
+  const headerBgClass = isHome ? 'bg-transparent' : 'bg-white'
+  const headerShadow = isHome ? '' : 'shadow-sm'
+  const headerTextColorClass = isHome ? 'text-white' : 'text-text-main'
   const menuIconColorClass = isHome ? 'bg-white' : 'bg-black'
-
-  // --- ✨ 2. 활성 링크 스타일 수정 ---
   const navLinkBaseClass = 'hover:text-primary-purple transition-colors duration-200'
 
   const navLinkActiveClass = isHome
@@ -28,11 +31,17 @@ export default function Header() {
     { to: '/mypage', label: '마이페이지' },
   ]
 
+  const handleLogout = async () => {
+    await logout()
+    setIsMenuOpen(false)
+  }
+
   return (
     <header
       className={`${isHome ? 'absolute' : 'fixed'} top-0 left-0 z-50 w-full ${headerBgClass} ${headerShadow}`}
     >
-      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 md:px-8 lg:h-20 lg:px-16">
+
+      <div className="md:px-8lg:px-16 mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6">
         <Link to="/" onClick={() => setIsMenuOpen(false)} className="lg:hidden">
           <img src={Logo} alt="U+NOA 로고" className="h-8" />
         </Link>
@@ -57,14 +66,20 @@ export default function Header() {
             ))}
           </div>
 
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              `${navLinkBaseClass} ${isActive ? navLinkActiveClass : ''}`
-            }
-          >
-            로그인
-          </NavLink>
+          {user ? (
+            <button onClick={handleLogout} className={navLinkBaseClass}>
+              로그아웃
+            </button>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `${navLinkBaseClass} ${isActive ? navLinkActiveClass : ''}`
+              }
+            >
+              로그인
+            </NavLink>
+          )}
         </div>
 
         <button
@@ -90,6 +105,10 @@ export default function Header() {
         </button>
       </div>
 
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-30 lg:hidden" onClick={() => setIsMenuOpen(false)}></div>
+      )}
+
       {/* 모바일 메뉴 영역 */}
       <div
         className={`absolute top-15 left-0 z-40 w-full overflow-hidden transition-all duration-300 lg:hidden ${
@@ -112,15 +131,22 @@ export default function Header() {
               {label}
             </NavLink>
           ))}
-          <NavLink
-            to="/login"
-            onClick={() => setIsMenuOpen(false)}
-            className={({ isActive }) =>
-              `${navLinkBaseClass} ${isActive ? navLinkActiveClass : ''}`
-            }
-          >
-            로그인
-          </NavLink>
+
+          {user ? (
+            <button onClick={handleLogout} className={navLinkBaseClass}>
+              로그아웃
+            </button>
+          ) : (
+            <NavLink
+              to="/login"
+              onClick={() => setIsMenuOpen(false)}
+              className={({ isActive }) =>
+                `${navLinkBaseClass} ${isActive ? navLinkActiveClass : ''}`
+              }
+            >
+              로그인
+            </NavLink>
+          )}
         </div>
       </div>
     </header>
