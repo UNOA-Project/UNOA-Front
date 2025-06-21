@@ -29,15 +29,14 @@ function ChatbotPage() {
 
   return (
     // .appContainer 스타일 적용
-    <div className="flex items-center justify-center h-[calc(100vh-var(--header-height))] bg-gradient-to-br from-[#899df4] to-[#9262c3]">
-      
+    <div className="flex h-[calc(100vh-var(--header-height))] items-center justify-center bg-gradient-to-br from-[#899df4] to-[#9262c3]">
       {/* .welcomeMessageContainer 스타일 적용 (반응형) */}
       <div className="hidden lg:block">
         <WelcomeMessage />
       </div>
 
       {/* .app 스타일 적용 (반응형) */}
-      <div className="flex h-full w-full max-w-[550px] flex-col bg-white shadow-none lg:h-[80vh] lg:max-h-[80vh] lg:max-w-[600px] lg:rounded-xl lg:shadow-[0_4px_15px_rgba(0,0,0,0.2)]">
+      <div className="flex h-full w-full max-w-[550px] flex-col bg-gradient-to-b from-[#F9F9FF] to-[#F7F2FF] shadow-none lg:h-[80vh] lg:max-h-[80vh] lg:max-w-[600px] lg:rounded-xl lg:shadow-[0_4px_15px_rgba(0,0,0,0.2)]">
         <ChatHeader
           currentMode={currentMode}
           onModeChange={handleModeChange}
