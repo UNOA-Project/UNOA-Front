@@ -119,7 +119,7 @@ const PlanCard = ({ plan }) => {
               {basicBenefits.map((benefit, index) => (
                 <span
                   key={index}
-                  className="mr-2 mb-2 inline-block rounded-md bg-blue-50 px-3 py-2 text-sm text-blue-600"
+                  className="mr-2 mb-2 inline-block rounded-md bg-blue-50 px-3 py-2 text-sm text-gray-700"
                 >
                   {benefit.name}
                 </span>
@@ -153,8 +153,8 @@ const PlanCard = ({ plan }) => {
                 </div>
               ))}
               {iconBenefits.length > 6 && (
-                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-blue-200 bg-blue-50">
-                  <span className="text-xs font-medium text-blue-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200">
+                  <span className="text-xs font-medium text-gray-600">
                     +{iconBenefits.length - 6}
                   </span>
                 </div>
