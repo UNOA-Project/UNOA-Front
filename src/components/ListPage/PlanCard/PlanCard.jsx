@@ -37,6 +37,11 @@ const PlanCard = ({ plan }) => {
   }
 
   const allBenefits = getAllBenefits()
+  const basicBenefits = allBenefits.filter(benefit => benefit.type === 'basic')
+  const iconBenefits = allBenefits.filter(
+    benefit => benefit.type === 'premium' || benefit.type === 'media'
+  )
+
   const highlightNumbers = text => {
     if (!text) return text
 
@@ -54,7 +59,7 @@ const PlanCard = ({ plan }) => {
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 transition-shadow duration-200 hover:shadow-xl">
+    <div className="flex max-w-65 flex-col rounded-xl border border-gray-200 bg-white p-6 transition-shadow duration-200 hover:shadow-xl">
       {/* 제목 */}
       <h3 className="mb-6 text-center text-lg leading-tight font-bold text-gray-900">
         {plan.title}
@@ -76,8 +81,8 @@ const PlanCard = ({ plan }) => {
       <div className="mb-6 space-y-3">
         {plan.data && (
           <div className="flex items-center justify-between">
-            <span className="text-nm text-black">데이터:</span>
-            <span className="text-primary-purple text-nm font-medium">
+            <span className="text-sm text-gray-700">데이터:</span>
+            <span className="text-primary-purple text-sm font-medium">
               {highlightNumbers(plan.data)}
             </span>
           </div>
@@ -85,50 +90,81 @@ const PlanCard = ({ plan }) => {
 
         {plan.voiceCall && (
           <div className="flex items-center justify-between">
-            <span className="text-nm text-gray-700">음성통화:</span>
-            <span className="text-nm text-gray-500">{plan.voiceCall}</span>
+            <span className="text-sm text-gray-700">음성통화:</span>
+            <span className="text-sm text-gray-500">{plan.voiceCall}</span>
           </div>
         )}
 
         {plan.sms && (
           <div className="flex items-center justify-between">
-            <span className="text-nm text-gray-700">문자:</span>
-            <span className="text-nm text-gray-500">{plan.sms}</span>
+            <span className="text-sm text-gray-700">문자:</span>
+            <span className="text-sm text-gray-500">{plan.sms}</span>
           </div>
         )}
 
         {plan.tethering && (
           <div className="flex items-center justify-between">
-            <span className="text-nm text-gray-700">테더링+쉐어링:</span>
-            <span className="text-nm text-gray-500">{plan.tethering}</span>
+            <span className="text-sm text-gray-700">테더링+쉐어링:</span>
+            <span className="text-sm text-gray-500">{plan.tethering}</span>
           </div>
         )}
       </div>
 
       {/* 포함 혜택 섹션 */}
       {allBenefits.length > 0 && (
-        <div className="mb-6">
-          <div className="text-nm mb-3 font-medium text-gray-700">포함 혜택</div>
-          <div className="flex">
-            {allBenefits.slice(0, 3).map((benefit, index) => (
-              <span
-                key={index}
-                className="min-sm mr-1 rounded-md bg-blue-50 px-3 py-2 text-sm text-blue-600"
-              >
-                {benefit.name}
-              </span>
-            ))}
-            {allBenefits.length > 6 && (
-              <span className="rounded-md bg-blue-50 px-3 py-2 text-sm text-blue-600">
-                +{allBenefits.length - 6}개
-              </span>
-            )}
-          </div>
+        <div className="mb-6 flex-grow">
+          <div className="mb-3 text-sm font-medium text-gray-700">포함 혜택</div>
+          {basicBenefits.length > 0 && (
+            <div className="mb-3">
+              {basicBenefits.map((benefit, index) => (
+                <span
+                  key={index}
+                  className="mr-2 mb-2 inline-block rounded-md bg-blue-50 px-3 py-2 text-sm text-blue-600"
+                >
+                  {benefit.name}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {iconBenefits.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {iconBenefits.slice(0, 6).map((benefit, index) => (
+                <div
+                  key={index}
+                  className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <img
+                    src={`/images/icons/${benefit.name}.png`}
+                    alt={benefit.name}
+                    className="h-8 w-8 object-contain"
+                    onError={e => {
+                      // 이미지 로딩 실패시 텍스트로 대체
+                      e.target.style.display = 'none'
+                      e.target.nextSibling.style.display = 'block'
+                    }}
+                  />
+                  <span
+                    className="hidden text-xs font-medium text-gray-600"
+                    style={{ fontSize: '10px' }}
+                  >
+                    {benefit.name.slice(0, 2)}
+                  </span>
+                </div>
+              ))}
+              {iconBenefits.length > 6 && (
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-blue-200 bg-blue-50">
+                  <span className="text-xs font-medium text-blue-600">
+                    +{iconBenefits.length - 6}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
-      {/* 버튼 */}
-      <button className="w-full rounded-lg border border-blue-600 bg-white px-4 py-3 font-medium text-blue-600 transition-colors duration-200 hover:bg-gray-50">
+      <button className="border-primary-purple text-primary-purple hover:bg-gray-30 mt-auto w-full rounded-lg border bg-white px-4 py-3 font-medium transition-colors duration-200">
         비교하기
       </button>
     </div>
