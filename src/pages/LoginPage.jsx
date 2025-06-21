@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import KakaoIcon from '@/assets/kakao-icon.svg'
 import { loginUser } from '@/apis/userApi'
+import { useAuth } from '@/contexts/AuthContext'
 import useToast from '@/hooks/useToast'
 import FormField from '@/components/FormField'
 
@@ -12,6 +13,8 @@ export default function LoginPage() {
 
   const [userIdError, setUserIdError] = useState('')
   const [passwordError, setPasswordError] = useState('')
+
+  const { login } = useAuth()
 
   const navigate = useNavigate()
   const { showErrorToast } = useToast()
@@ -39,10 +42,10 @@ export default function LoginPage() {
 
     try {
       await loginUser({ userId, password })
+      await login()
 
       setUserId('')
       setPassword('')
-
       navigate('/')
     } catch {
       showErrorToast(
