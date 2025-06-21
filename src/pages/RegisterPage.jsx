@@ -6,6 +6,8 @@ import { registerUser, checkUserIdDuplicate } from '@/apis/userApi'
 import useToast from '@/hooks/useToast'
 import FormField from '@/components/FormField'
 
+const API_URL = import.meta.env.VITE_BACK_URL
+
 export default function RegisterPage() {
   const [name, setName] = useState('')
   const [userId, setUserId] = useState('')
@@ -121,6 +123,10 @@ export default function RegisterPage() {
     } catch {
       showErrorToast('회원가입에 실패했습니다.')
     }
+  }
+
+  const handleKakaoLogin = () => {
+    window.location.href = `${API_URL}/api/auth/kakao/login`
   }
 
   return (
@@ -261,6 +267,7 @@ export default function RegisterPage() {
 
         <button
           type="button"
+          onClick={handleKakaoLogin}
           className="group bg-kakao relative w-full items-center justify-center rounded-sm py-3 font-semibold sm:rounded-lg sm:py-4"
         >
           <img

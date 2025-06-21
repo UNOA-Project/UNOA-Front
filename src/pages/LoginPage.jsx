@@ -7,6 +7,8 @@ import { useAuth } from '@/contexts/AuthContext'
 import useToast from '@/hooks/useToast'
 import FormField from '@/components/FormField'
 
+const API_URL = import.meta.env.VITE_BACK_URL
+
 export default function LoginPage() {
   const [userId, setUserId] = useState('')
   const [password, setPassword] = useState('')
@@ -55,6 +57,10 @@ export default function LoginPage() {
         </>
       )
     }
+  }
+
+  const handleKakaoLogin = () => {
+    window.location.href = `${API_URL}/api/auth/kakao/login`
   }
 
   return (
@@ -115,6 +121,7 @@ export default function LoginPage() {
 
         <button
           type="button"
+          onClick={handleKakaoLogin}
           className="group bg-kakao relative w-full items-center justify-center rounded-sm py-3 font-semibold sm:rounded-lg sm:py-4"
         >
           <img
