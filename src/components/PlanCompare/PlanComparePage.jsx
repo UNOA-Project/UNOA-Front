@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import mascot from '@/assets/PlanCompare.png'
-import SimpleBarComparison from './SimpleBarComparison'
+import { motion } from 'framer-motion'
 
 const PlanComparePage = () => {
   const [plans, setPlans] = useState([])
@@ -17,10 +17,140 @@ const PlanComparePage = () => {
   }, [])
 
   const handleRemove = id => {
-    const updated = plans.filter(plan => plan.id !== id)
+    const updated = plans.filter(plan => plan._id !== id)
     setPlans(updated)
     localStorage.setItem('comparePlans', JSON.stringify(updated))
     window.dispatchEvent(new CustomEvent('compareUpdated'))
+  }
+
+  const getComparisonMax = (a, b) => {
+    let referenceValue
+    if (a === Infinity || b === Infinity) {
+      if (a === Infinity && b === Infinity) return 100
+      referenceValue = a === Infinity ? b : a
+    } else {
+      referenceValue = Math.max(a, b)
+    }
+
+    if (referenceValue <= 100) return 100
+    if (referenceValue <= 200) return 200
+    if (referenceValue <= 300) return 300
+    return referenceValue
+  }
+
+  const imageBasePath = '/images/icons'
+  const renderBenefitImages = (benefits, size = 'h-6 w-6') => (
+    <div className="mt-2 flex flex-wrap justify-center gap-2">
+      {benefits?.filter(Boolean).map((item, idx) => (
+        <img key={idx} src={`${imageBasePath}/${item}.png`} alt={item} className={size} />
+      ))}
+    </div>
+  )
+
+  const Bar = ({ value, max, label, delay }) => {
+    const getBarHeight = (val, maxVal) =>
+      val === Infinity ? '100%' : maxVal > 0 ? `${(val / maxVal) * 100}%` : '0%'
+
+    return (
+      <div className="flex flex-col items-center gap-1.5">
+        <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
+          <motion.div
+            className="absolute bottom-0 w-full bg-[#6b3ce6]"
+            initial={{ height: 0 }}
+            animate={{ height: getBarHeight(value, max) }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
+          />
+        </div>
+        <span className="text-xs font-semibold text-black">
+          {value === Infinity ? '무제한' : value.toLocaleString()}
+        </span>
+        <span className="text-[11px] font-medium text-gray-500">{label}</span>
+      </div>
+    )
+  }
+
+  const PlanColumn = ({ plan, align }) => {
+    const parseValue = val =>
+      typeof val === 'string' && val.includes('무제한') ? Infinity : parseFloat(val || 0)
+
+    const price = parseInt(plan?.price || 0)
+    const data = parseValue(plan?.data)
+
+    const premiumBenefits = Array.isArray(plan?.premiumBenefit)
+      ? plan?.premiumBenefit
+      : [plan?.premiumBenefit]
+    const mediaBenefits = Array.isArray(plan?.mediaBenefit)
+      ? plan?.mediaBenefit
+      : [plan?.mediaBenefit]
+
+    const otherPlan = plans.find(p => p._id !== plan._id)
+    const otherPrice = parseInt(otherPlan?.price || 0)
+    const otherData = parseValue(otherPlan?.data)
+
+    const maxPrice = getComparisonMax(price, otherPrice)
+    const maxData = getComparisonMax(data, otherData)
+
+    return (
+      <div
+        className={`mx-5 flex w-full max-w-[350px] flex-1 flex-col items-center rounded-xl p-4 text-black`}
+        key={plan?._id}
+      >
+        <h3 className="h-12 text-sm leading-snug font-bold break-keep text-black lg:text-2xl xl:text-3xl">
+          {plan?.title}
+        </h3>
+
+        <div className="flex w-full items-start justify-around gap-4 rounded-md p-3">
+          <Bar value={price} max={maxPrice} label="월 요금" delay={0} />
+          <Bar value={data} max={maxData} label="데이터" delay={0.2} />
+        </div>
+
+        <div className="w-full text-center text-sm text-gray-700 md:text-xl lg:text-2xl xl:text-3xl">
+          <div className="mt-8 text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
+            음성통화
+          </div>
+          <div className="text-2xl font-medium whitespace-pre-line text-[#543ed9]">
+            {plan?.voiceCall}
+          </div>
+        </div>
+        <div className="w-full text-center text-sm text-gray-700 lg:text-2xl xl:text-3xl">
+          <div className="mt-10 text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
+            문자메시지
+          </div>
+          <div className="text-2xl font-medium text-[#543ed9]">{plan?.sms}</div>
+        </div>
+
+        <div className="mt-10 min-h-[120px] w-full pt-2 text-center">
+          <div className="text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
+            프리미엄 혜택
+          </div>
+          {premiumBenefits?.filter(Boolean).length > 0 ? (
+            renderBenefitImages(premiumBenefits)
+          ) : (
+            <div className="mt-2 text-xs text-gray-400">없음</div>
+          )}
+        </div>
+
+        <div className="min-h-[90px] w-full pt-2 text-center">
+          <div className="text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
+            미디어 혜택
+          </div>
+          {mediaBenefits?.filter(Boolean).length > 0 ? (
+            renderBenefitImages(mediaBenefits)
+          ) : (
+            <div className="mt-2 text-xs text-gray-400">없음</div>
+          )}
+        </div>
+
+        <div className="mt-auto w-full pt-3">
+          <button
+            onClick={() => handleRemove(plan?._id)}
+            className="w-full rounded-md border border-gray-300 py-1.5 text-xs font-semibold text-gray-600 transition-colors hover:bg-gray-200"
+          >
+            삭제하기
+          </button>
+        </div>
+      </div>
+    )
   }
 
   const renderEmptyCard = key => (
@@ -31,94 +161,6 @@ const PlanComparePage = () => {
       <p className="mt-8 text-lg">비교할 요금제를 추가하세요</p>
     </div>
   )
-
-  const imageBasePath = '/images/icons'
-  const renderBenefitImages = (benefits, align = 'left') => (
-    <div className={`flex flex-wrap gap-2 ${align === 'left' ? 'justify-start' : 'justify-end'}`}>
-      {benefits.filter(Boolean).map((item, idx) => (
-        <img
-          key={idx}
-          src={`${imageBasePath}/${item}.png`}
-          alt={item}
-          className="h-8 w-auto rounded-md"
-        />
-      ))}
-    </div>
-  )
-
-  const PlanColumn = ({ plan, align }) => {
-    const premiumBenefits = Array.isArray(plan.premiumBenefit)
-      ? plan.premiumBenefit
-      : [plan.premiumBenefit]
-    const mediaBenefits = Array.isArray(plan.mediaBenefit) ? plan.mediaBenefit : [plan.mediaBenefit]
-
-    return (
-      <div
-        className={`mx-5 flex w-full max-w-[350px] flex-1 flex-col rounded-xl p-4 text-black ${
-          align === 'left' ? 'items-start text-left' : 'items-end text-right'
-        }`}
-        key={plan.id}
-      >
-        <h3 className="mb-0 text-[2rem] font-bold text-black sm:text-2xl md:text-3xl">
-          {plan.title}
-        </h3>
-
-        <div className="mt-10 w-full">
-          <span className="text-[1.1rem] font-semibold">월 </span>
-          <span className="text-[1.3rem] font-semibold text-[#543ed9]">
-            {parseInt(plan.price).toLocaleString()}원
-          </span>
-          <hr className="my-4 border-t-2 border-gray-300" />
-        </div>
-
-        <div className="w-full">
-          <div className="text-[1.1rem] font-semibold">데이터</div>
-          <div className="text-[1.1rem] font-semibold text-[#543ed9]">
-            <span className="text-[0.9rem] font-bold text-black">월 </span>
-            {plan.data}
-          </div>
-          <hr className="my-4 border-t-2 border-gray-300" />
-        </div>
-
-        <div className="w-full">
-          <div className="text-[1.1rem] font-semibold">음성통화</div>
-          <div className="text-[1.1rem] font-semibold text-[#543ed9]">{plan.voiceCall}</div>
-          <hr className="my-4 border-t-2 border-gray-300" />
-        </div>
-
-        <div className="w-full">
-          <div className="text-[1.1rem] font-semibold">문자메시지</div>
-          <div className="text-[1.1rem] font-semibold text-[#543ed9]">{plan.sms}</div>
-          <hr className="my-4 border-t-2 border-gray-300" />
-        </div>
-
-        <div className="w-full">
-          <div className="text-[1.1rem] font-semibold">미디어 혜택</div>
-          <div className="text-[1.1rem] font-semibold text-[#543ed9]">
-            총 {mediaBenefits.filter(Boolean).length}개
-          </div>
-          <div className="mt-2">{renderBenefitImages(mediaBenefits, align)}</div>
-        </div>
-
-        <div className="mt-auto w-full">
-          <div className="mt-6 w-full">
-            <div className="text-[1.1rem] font-semibold">프리미엄 혜택</div>
-            <div className="text-[1.1rem] font-semibold text-[#543ed9]">
-              총 {premiumBenefits.filter(Boolean).length}개
-            </div>
-            <div className="mt-2">{renderBenefitImages(premiumBenefits, align)}</div>
-          </div>
-
-          <button
-            className="mt-8 rounded-[16px] border border-[#6b3ce6] px-20 py-3 text-sm text-[#6b3ce6] transition hover:bg-[#f2edff]"
-            onClick={() => handleRemove(plan.id)}
-          >
-            삭제하기
-          </button>
-        </div>
-      </div>
-    )
-  }
 
   const renderEmptyState = () => (
     <div className="flex h-[70vh] flex-col items-center justify-center rounded-xl px-4 py-12 text-center">
@@ -133,22 +175,26 @@ const PlanComparePage = () => {
   const right = plans[1] ? <PlanColumn plan={plans[1]} align="right" /> : renderEmptyCard('right')
 
   return (
-    <section className="mx-auto flex min-h-screen w-1/2 flex-col items-center bg-[rgba(178,141,255,0.1)] px-6 py-24 text-center">
-      <h2 className="mt-5 mb-4 text-[1.4rem] font-bold">요금제 비교하기</h2>
-      <hr className="mr-20 mb-12 ml-20 w-[100%] border-t-[2px] border-gray-300" />
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="flex h-[100dvh] w-full flex-col overflow-hidden bg-[#ffffff] px-4 py-8 md:px-6 md:py-12"
+    >
+      <h2 className="mt-15 mb-4 text-left text-base font-bold sm:text-lg lg:text-xl xl:text-2xl">
+        요금제 비교하기
+      </h2>
+      <hr className="mb-6 w-full border-t-[2px] border-gray-300" />
 
       {plans.length === 0 ? (
         renderEmptyState()
       ) : (
-        <div className="flex w-full items-stretch justify-center gap-4 lg:gap-8">
-          <div className="flex flex-1 justify-end">{left}</div>
-          <div className="flex w-20 flex-shrink-0 justify-center">
-            {plans.length === 2 && <SimpleBarComparison planA={plans[0]} planB={plans[1]} />}
-          </div>
-          <div className="flex flex-1 justify-start">{right}</div>
+        <div className="flex flex-col gap-8 sm:gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex flex-1 justify-center lg:justify-end">{left}</div>
+          <div className="flex flex-1 justify-center lg:justify-start">{right}</div>
         </div>
       )}
-    </section>
+    </motion.section>
   )
 }
 

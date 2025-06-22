@@ -1,4 +1,5 @@
 import React from 'react'
+import toast from 'react-hot-toast'
 
 const PlanCard = ({ plan }) => {
   const formatPrice = price => {
@@ -37,6 +38,7 @@ const PlanCard = ({ plan }) => {
   }
 
   const allBenefits = getAllBenefits()
+
   const basicBenefits = allBenefits.filter(benefit => benefit.type === 'basic')
   const iconBenefits = allBenefits.filter(
     benefit => benefit.type === 'premium' || benefit.type === 'media'
@@ -44,7 +46,6 @@ const PlanCard = ({ plan }) => {
 
   const highlightNumbers = text => {
     if (!text) return text
-
     const regex = /(\d+(?:\.\d+)?|무제한)/g
     return text.split(regex).map((part, index) => {
       if (/^\d+(?:\.\d+)?$/.test(part) || part === '무제한') {
@@ -56,6 +57,25 @@ const PlanCard = ({ plan }) => {
       }
       return part
     })
+  }
+  const handleCompare = () => {
+    const stored = JSON.parse(localStorage.getItem('comparePlans')) || []
+    const exists = stored.some(p => p._id === plan._id)
+
+    if (exists) {
+      toast('이미 비교 목록에 있는 요금제입니다.', { icon: '⚠️' })
+      return
+    }
+
+    const updated = [...stored, plan]
+    if (updated.length > 2) {
+      toast('가장 오래된 항목이 제거됩니다.', { icon: 'ℹ️' })
+      updated.shift()
+    }
+
+    localStorage.setItem('comparePlans', JSON.stringify(updated))
+    window.dispatchEvent(new CustomEvent('compareUpdated'))
+    toast.success(`'${plan.title}' 요금제가 추가되었습니다.`)
   }
 
   return (
@@ -164,7 +184,10 @@ const PlanCard = ({ plan }) => {
         </div>
       )}
 
-      <button className="border-primary-purple text-primary-purple hover:bg-gray-30 mt-auto w-full rounded-lg border bg-white px-4 py-3 font-medium transition-colors duration-200">
+      <button
+        className="w-full rounded-lg border border-blue-600 bg-white px-4 py-3 font-medium text-blue-600 transition-colors duration-200 hover:bg-gray-50"
+        onClick={handleCompare}
+      >
         비교하기
       </button>
     </div>
