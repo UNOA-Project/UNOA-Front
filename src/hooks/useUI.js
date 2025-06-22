@@ -1,57 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react';
 
-export const useUI = (messages, streamingMessage, isStreaming, isConnected) => {
-  const messagesEndRef = useRef(null)
-  const inputRef = useRef(null)
+export const useUI = (messages, currentMode) => {
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
 
-  // 메시지 목록 끝으로 스크롤
-  const scrollToBottom = () => {
-    try {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-    } catch (error) {
-      console.error('스크롤 오류:', error)
-    }
-  }
-
-  // 메시지나 스트리밍 메시지 변경 시 스크롤
   useEffect(() => {
-    scrollToBottom()
-  }, [messages, streamingMessage])
-
-  // 스트리밍 완료 후 입력창에 포커스
-  useEffect(() => {
-    if (!isStreaming && isConnected) {
-      setTimeout(() => {
-        try {
-          inputRef.current?.focus()
-        } catch (error) {
-          console.error('포커스 오류:', error)
-        }
-      }, 300)
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    
+    if(currentMode === 'normal') {
+      inputRef.current?.focus();
     }
-  }, [isStreaming, isConnected])
+  }, [messages, currentMode]); // 'messages' 또는 'currentMode'가 변경될 때마다 이 효과가 실행
 
-  // 메시지 시간 포맷팅
-  const formatTime = timestamp => {
-    try {
-      const date = new Date(timestamp)
-      return date.toLocaleTimeString('ko-KR', {
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-    } catch (error) {
-      console.log('시간 포맷팅 오류:', error)
-      return new Date().toLocaleTimeString('ko-KR', {
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-    }
-  }
+  // 시간 포맷 함수
+  const formatTime = (timestamp) => {
+    if (!timestamp) return '';
+    return new Date(timestamp).toLocaleTimeString('ko-KR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
 
-  return {
-    messagesEndRef,
-    inputRef,
-    formatTime,
-    scrollToBottom,
-  }
-}
+  return { messagesEndRef, inputRef, formatTime };
+};
