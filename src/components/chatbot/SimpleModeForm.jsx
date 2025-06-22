@@ -33,11 +33,11 @@ export const SimpleModeForm = ({ onFinish }) => {
   const selectedChoice = answers[step] && Object.values(answers[step])[0]
 
   return (
-    <div className="flex h-screen flex-col px-4 py-6">
-      <p className="text-card-title mb-4 text-center">
+    <div className="flex h-screen flex-col overflow-y-auto sm:px-4 sm:py-6">
+      <p className="text-card-title mb-2 text-center sm:mb-4">
         {step + 1} / {questions.length}
       </p>
-      <div className="mx-auto mb-12 w-full max-w-lg">
+      <div className="mx-auto mb-5 w-[85%] max-w-lg sm:mb-12 sm:w-[80%]">
         <div className="h-2 w-full rounded-full bg-gray-200">
           <div
             className="bg-primary-purple h-full rounded-full transition-all duration-300"
@@ -46,28 +46,28 @@ export const SimpleModeForm = ({ onFinish }) => {
         </div>
       </div>
 
-      <div className="mb-6 flex items-center justify-around sm:mb-10">
+      <div className="mb-3 flex items-center justify-between sm:mb-5">
         <button
           onClick={handleBack}
-          className={`p-4 ${step === 0 ? 'pointer-events-none invisible' : ''}`}
+          className={`group p-4 ${step === 0 ? 'pointer-events-none invisible' : ''}`}
         >
-          <ArrowIcon className="h-8 w-8 rotate-180 text-black hover:-translate-x-1" />
+          <ArrowIcon className="h-8 w-8 rotate-180 text-black duration-300 group-hover:-translate-x-1" />
         </button>
-        <img src={ChatBotImg} alt="NOA" className="w-32 sm:w-48" />
+        <img src={ChatBotImg} alt="NOA" className="w-28 sm:w-48" />
         <button
           onClick={handleNext}
           disabled={!selectedChoice}
-          className={`p-4 transition-opacity duration-200 ${
+          className={`group p-4 transition-opacity duration-200 ${
             selectedChoice ? 'opacity-100' : 'pointer-events-none opacity-0'
           }`}
         >
           <ArrowIcon
-            className={`h-8 w-8 hover:translate-x-1 ${step === questions.length - 1 ? 'pointer-events-none opacity-0' : ''}`}
+            className={`h-8 w-8 duration-300 group-hover:translate-x-1 ${step === questions.length - 1 ? 'pointer-events-none opacity-0' : ''}`}
           />
         </button>
       </div>
 
-      <p className="text-title mx-auto w-full max-w-lg p-5 px-2 text-center font-bold break-keep whitespace-normal">
+      <p className="text-sub-title sm:text-title mx-auto mb-4 w-[85%] max-w-md text-center font-bold break-keep whitespace-pre-line sm:p-5 sm:px-2">
         {questions[step].question}
       </p>
 
@@ -79,10 +79,10 @@ export const SimpleModeForm = ({ onFinish }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => handleSelect(choice)}
-              className={`rounded-lg border border-gray-200 p-5 text-xl font-medium transition-colors duration-200 ${
+              className={`rounded-lg border border-gray-200 py-3 text-xl font-medium transition-colors duration-200 sm:p-5 ${
                 choice === selectedChoice
-                  ? 'bg-light-purple font-bold text-white'
-                  : 'hover:bg-light-purple bg-white hover:text-white'
+                  ? 'bg-sub-lilac font-bold text-white'
+                  : 'hover:bg-sub-lilac bg-white hover:text-white'
               }`}
             >
               {choice}
@@ -94,7 +94,7 @@ export const SimpleModeForm = ({ onFinish }) => {
       {step === questions.length - 1 && selectedChoice && (
         <div className="mt-6 flex justify-center">
           <button
-            className="bg-primary-purple w-full max-w-96 rounded-2xl py-3 text-sm text-white sm:py-4 sm:text-base"
+            className="bg-primary-purple w-full rounded-2xl py-3 text-sm text-white sm:max-w-96 sm:py-4 sm:text-base"
             onClick={() => onFinish(answers)}
           >
             NOA의 추천 보기 →
