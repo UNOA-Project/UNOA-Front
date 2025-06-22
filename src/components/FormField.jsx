@@ -58,13 +58,13 @@ export default function FormField({
         )}
       </div>
 
-      <p
-        className={`text-caption sm:text-small-body text-error mt-2 ml-2 ${
-          error ? 'opacity-100' : 'opacity-0'
+      <div
+        className={`text-caption sm:text-small-body text-error mt-2 ml-2 overflow-hidden transition-all duration-300 ease-in-out ${
+          error ? 'max-h-[100px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        ⓘ {error}
-      </p>
+        {error}
+      </div>
     </div>
   )
 }
