@@ -1,93 +1,80 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { motion } from 'framer-motion'
 
-const SimpleBarComparison = ({ planA, planB }) => {
-  const parseData = value => {
-    if (typeof value === 'string' && value.includes('무제한')) return Infinity
-    const num = parseFloat(value)
-    return isNaN(num) ? 0 : num
-  }
+const SimpleBarComparisonMobile = ({ planA, planB }) => {
+  const parseValue = val =>
+    typeof val === 'string' && val.includes('무제한') ? Infinity : parseFloat(val || 0)
 
   const priceA = parseInt(planA?.price || 0)
   const priceB = parseInt(planB?.price || 0)
-  const dataA = parseData(planA?.data || 0)
-  const dataB = parseData(planB?.data || 0)
+  const dataA = parseValue(planA?.data)
+  const dataB = parseValue(planB?.data)
 
-  const getComparisonMax = (val1, val2) => {
-    let ref = val1 === Infinity ? val2 : val1
-    if (val1 === Infinity && val2 === Infinity) return 100
-    if (ref <= 100) return 100
-    if (ref <= 200) return 200
-    if (ref <= 300) return 300
-    return Math.max(val1, val2)
+  const getComparisonMax = (a, b) => {
+    let referenceValue
+    if (a === Infinity || b === Infinity) {
+      if (a === Infinity && b === Infinity) return 100
+      referenceValue = a === Infinity ? b : a
+    } else {
+      referenceValue = Math.max(a, b)
+    }
+
+    if (referenceValue <= 100) return 100
+    if (referenceValue <= 200) return 200
+    if (referenceValue <= 300) return 300
+    return referenceValue
   }
 
   const maxPrice = getComparisonMax(priceA, priceB)
   const maxData = getComparisonMax(dataA, dataB)
 
-  const getBarHeight = (value, max) => {
-    if (value === Infinity) return 100
-    if (max === 0) return 0
-    return (value / max) * 100
-  }
+  const getBarHeight = (val, max) =>
+    val === Infinity ? '100%' : max > 0 ? `${(val / max) * 100}%` : '0%'
 
-  const Bar = ({ value, max, label }) => {
-    const finalHeight = getBarHeight(value, max)
-    const [height, setHeight] = useState('0%')
-    const [color, setColor] = useState('#ef4444') // 초기 빨간색
-
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        setHeight(`${finalHeight}%`)
-        setColor('#5b3ce6') // 보라색으로 바꿈
-      }, 100)
-      return () => clearTimeout(timeout)
-    }, [finalHeight])
-
-    return (
-      <div className="flex w-5 flex-col items-center gap-2">
-        <div className="relative h-32 w-full overflow-hidden bg-gray-200">
-          <div
-            className="absolute bottom-0 w-full transition-all duration-1000 ease-out"
-            style={{
-              height,
-              backgroundColor: color,
-              transition: 'height 1s ease-out, background-color 1s ease-out',
-            }}
-          />
-        </div>
-        {value === Infinity ? (
-          <span className="text-xs font-bold whitespace-nowrap text-purple-700">무제한</span>
-        ) : (
-          <span className="text-xs font-medium text-gray-700">{value.toLocaleString()}</span>
-        )}
-        <span className="text-xs text-gray-500">{label}</span>
+  const Bar = ({ value, max, label, delay }) => (
+    <div className="flex flex-col items-center gap-1 sm:gap-1.5 md:gap-2">
+      <div className="relative h-20 w-4 overflow-hidden rounded-md bg-gray-200 sm:h-24 sm:w-5 md:h-28 md:w-6 lg:h-32 lg:w-7 xl:h-40 xl:w-8">
+        <motion.div
+          className="absolute bottom-0 w-full bg-[#6b3ce6]"
+          initial={{ height: 0 }}
+          animate={{ height: getBarHeight(value, max) }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
+        />
       </div>
-    )
-  }
+      <span className="text-[10px] font-semibold text-black sm:text-xs md:text-sm lg:text-base">
+        {value === Infinity ? '무제한' : value.toLocaleString()}
+      </span>
+      <span className="text-[9px] text-gray-500 sm:text-[11px] md:text-sm">{label}</span>
+    </div>
+  )
 
   return (
-    <div className="mt-5 flex w-full flex-col items-center rounded-lg">
-      <h3 className="text-xl font-bold">비교</h3>
-
-      {/* 요금 비교 */}
-      <div className="mt-7 flex w-full flex-col items-center gap-4">
-        <p className="text-sm font-semibold text-gray-600">요금</p>
-        <div className="flex items-end gap-8">
-          <Bar value={priceA} max={maxPrice} />
-          <Bar value={priceB} max={maxPrice} />
+    <div className="w-full rounded-xl bg-gray-50 p-4">
+      <div className="flex flex-col gap-6 sm:gap-8">
+        {/* A 요금제 */}
+        <div className="flex flex-col items-center">
+          <h4 className="mb-2 max-w-[160px] truncate text-center text-sm font-semibold text-black sm:text-base">
+            {planA.title}
+          </h4>
+          <div className="flex justify-center gap-6 sm:gap-8">
+            <Bar value={priceA} max={maxPrice} delay={0} label="요금" />
+            <Bar value={dataA} max={maxData} delay={0.2} label="데이터" />
+          </div>
         </div>
-      </div>
 
-      {/* 데이터 비교 */}
-      <div className="flex w-full flex-col items-center gap-2">
-        <p className="text-sm font-semibold text-gray-600">데이터</p>
-        <div className="flex items-end gap-8">
-          <Bar value={dataA} max={maxData} />
-          <Bar value={dataB} max={maxData} />
+        {/* B 요금제 */}
+        <div className="flex flex-col items-center">
+          <h4 className="mb-2 max-w-[160px] truncate text-center text-sm font-semibold text-black sm:text-base">
+            {planB.title}
+          </h4>
+          <div className="flex justify-center gap-6 sm:gap-8">
+            <Bar value={priceB} max={maxPrice} delay={0.1} label="요금" />
+            <Bar value={dataB} max={maxData} delay={0.3} label="데이터" />
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default SimpleBarComparison
+export default SimpleBarComparisonMobile

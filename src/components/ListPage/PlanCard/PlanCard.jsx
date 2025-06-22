@@ -1,4 +1,5 @@
 import React from 'react'
+import toast from 'react-hot-toast'
 
 const PlanCard = ({ plan }) => {
   const formatPrice = price => {
@@ -37,9 +38,9 @@ const PlanCard = ({ plan }) => {
   }
 
   const allBenefits = getAllBenefits()
+
   const highlightNumbers = text => {
     if (!text) return text
-
     const regex = /(\d+(?:\.\d+)?|무제한)/g
     return text.split(regex).map((part, index) => {
       if (/^\d+(?:\.\d+)?$/.test(part) || part === '무제한') {
@@ -51,6 +52,23 @@ const PlanCard = ({ plan }) => {
       }
       return part
     })
+  }
+
+  const handleCompare = () => {
+    const stored = JSON.parse(localStorage.getItem('comparePlans')) || []
+    const exists = stored.some(p => p._id === plan._id)
+
+    if (exists) {
+      toast('이미 비교 목록에 있는 요금제입니다.', { icon: '⚠️' })
+      return
+    }
+
+    const updated = [...stored, plan]
+    if (updated.length > 2) updated.shift()
+
+    localStorage.setItem('comparePlans', JSON.stringify(updated))
+    window.dispatchEvent(new CustomEvent('compareUpdated'))
+    toast.success('요금제가 비교 목록에 추가되었습니다.')
   }
 
   return (
@@ -109,12 +127,9 @@ const PlanCard = ({ plan }) => {
       {allBenefits.length > 0 && (
         <div className="mb-6">
           <div className="text-nm mb-3 font-medium text-gray-700">포함 혜택</div>
-          <div className="flex">
+          <div className="flex flex-wrap gap-1">
             {allBenefits.slice(0, 3).map((benefit, index) => (
-              <span
-                key={index}
-                className="min-sm mr-1 rounded-md bg-blue-50 px-3 py-2 text-sm text-blue-600"
-              >
+              <span key={index} className="rounded-md bg-blue-50 px-3 py-2 text-sm text-blue-600">
                 {benefit.name}
               </span>
             ))}
@@ -127,8 +142,11 @@ const PlanCard = ({ plan }) => {
         </div>
       )}
 
-      {/* 버튼 */}
-      <button className="w-full rounded-lg border border-blue-600 bg-white px-4 py-3 font-medium text-blue-600 transition-colors duration-200 hover:bg-gray-50">
+      {/* 비교하기 버튼 */}
+      <button
+        className="w-full rounded-lg border border-blue-600 bg-white px-4 py-3 font-medium text-blue-600 transition-colors duration-200 hover:bg-gray-50"
+        onClick={handleCompare}
+      >
         비교하기
       </button>
     </div>

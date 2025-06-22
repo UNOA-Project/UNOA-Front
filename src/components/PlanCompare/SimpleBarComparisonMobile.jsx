@@ -32,8 +32,8 @@ const SimpleBarComparisonMobile = ({ planA, planB }) => {
     val === Infinity ? '100%' : max > 0 ? `${(val / max) * 100}%` : '0%'
 
   const Bar = ({ value, max, label, delay }) => (
-    <div className="flex flex-col items-center gap-1.5">
-      <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
+    <div className="flex flex-col items-center gap-1 sm:gap-1.5 md:gap-2">
+      <div className="relative h-20 w-4 overflow-hidden rounded-md bg-gray-200 sm:h-24 sm:w-5 md:h-28 md:w-6 lg:h-32 lg:w-7 xl:h-40 xl:w-8">
         <motion.div
           className="absolute bottom-0 w-full bg-[#6b3ce6]"
           initial={{ height: 0 }}
@@ -41,28 +41,35 @@ const SimpleBarComparisonMobile = ({ planA, planB }) => {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
         />
       </div>
-      <span className="text-xs font-semibold text-black">
+      <span className="text-[10px] font-semibold text-black sm:text-xs md:text-sm lg:text-base">
         {value === Infinity ? '무제한' : value.toLocaleString()}
       </span>
-      <span className="text-[11px] font-medium text-gray-500">{label}</span>
+      <span className="text-[9px] text-gray-500 sm:text-[11px] md:text-sm">{label}</span>
     </div>
   )
 
   return (
     <div className="w-full rounded-xl bg-gray-50 p-4">
-      <div className="flex w-full flex-row items-center gap-6">
+      <div className="flex flex-col gap-6 sm:gap-8">
+        {/* A 요금제 */}
         <div className="flex flex-col items-center">
-          <h4 className="mb-2 text-base font-semibold text-black">요금</h4>
-          <div className="flex justify-center gap-6">
-            <Bar value={priceA} max={maxPrice} label={planA.title} delay={0} />
-            <Bar value={dataA} max={maxData} label={planA.title} delay={0.2} />
+          <h4 className="mb-2 max-w-[160px] truncate text-center text-sm font-semibold text-black sm:text-base">
+            {planA.title}
+          </h4>
+          <div className="flex justify-center gap-6 sm:gap-8">
+            <Bar value={priceA} max={maxPrice} delay={0} label="요금" />
+            <Bar value={dataA} max={maxData} delay={0.2} label="데이터" />
           </div>
         </div>
+
+        {/* B 요금제 */}
         <div className="flex flex-col items-center">
-          <h4 className="mb-2 text-base font-semibold text-black">데이터</h4>
-          <div className="flex justify-center gap-6">
-            <Bar value={priceB} max={maxPrice} label={planB.title} delay={0.1} />
-            <Bar value={dataB} max={maxData} label={planB.title} delay={0.3} />
+          <h4 className="mb-2 max-w-[160px] truncate text-center text-sm font-semibold text-black sm:text-base">
+            {planB.title}
+          </h4>
+          <div className="flex justify-center gap-6 sm:gap-8">
+            <Bar value={priceB} max={maxPrice} delay={0.1} label="요금" />
+            <Bar value={dataB} max={maxData} delay={0.3} label="데이터" />
           </div>
         </div>
       </div>
