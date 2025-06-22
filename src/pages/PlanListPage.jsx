@@ -1,17 +1,39 @@
-import PlanCardSystem from '../components/ListPage/PlanCardSystem/PlanCardSystem'
 import PlanComparePage from '../components/PlanCompare/PlanComparePage'
 import PlanComparePageMobile from '../components/PlanCompare/PlanComparePageMobile'
+import PlanCardSystem from '@/components/ListPage/PlanCardSystem/PlanCardSystem'
+import { Toaster } from 'react-hot-toast'
+
 export default function PlanListPage() {
   return (
     <div className="w-full">
+      {/* ✅ Toaster 실제 렌더링 */}
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          className: 'with-progress',
+          style: {
+            background: '#fff',
+            color: '#333',
+            border: '1px solid #e5e7eb',
+            padding: '12px 10px',
+            fontSize: '14px',
+          },
+          success: {
+            iconTheme: {
+              primary: '#7c3aed',
+              secondary: '#f3e8ff',
+            },
+          },
+        }}
+      />
+
       {/* PC 화면 (xl 이상) */}
       <div className="fixed inset-0 hidden w-full xl:flex">
-        {/* 왼쪽 스크롤 영역 */}
         <div className="h-full w-1/2 overflow-y-auto border-r border-gray-200">
           <PlanCardSystem />
         </div>
-
-        {/* 오른쪽 고정 영역 */}
         <div className="h-full w-1/2 overflow-hidden">
           <PlanComparePage />
         </div>

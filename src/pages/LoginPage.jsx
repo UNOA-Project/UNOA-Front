@@ -3,8 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import KakaoIcon from '@/assets/kakao-icon.svg'
 import { loginUser } from '@/apis/userApi'
+import { useAuth } from '@/contexts/AuthContext'
 import useToast from '@/hooks/useToast'
 import FormField from '@/components/FormField'
+
+const API_URL = import.meta.env.VITE_BACK_URL
 
 export default function LoginPage() {
   const [userId, setUserId] = useState('')
@@ -12,6 +15,8 @@ export default function LoginPage() {
 
   const [userIdError, setUserIdError] = useState('')
   const [passwordError, setPasswordError] = useState('')
+
+  const { login } = useAuth()
 
   const navigate = useNavigate()
   const { showErrorToast } = useToast()
@@ -39,10 +44,10 @@ export default function LoginPage() {
 
     try {
       await loginUser({ userId, password })
+      await login()
 
       setUserId('')
       setPassword('')
-
       navigate('/')
     } catch {
       showErrorToast(
@@ -52,6 +57,10 @@ export default function LoginPage() {
         </>
       )
     }
+  }
+
+  const handleKakaoLogin = () => {
+    window.location.href = `${API_URL}/api/auth/kakao/login`
   }
 
   return (
@@ -112,6 +121,7 @@ export default function LoginPage() {
 
         <button
           type="button"
+          onClick={handleKakaoLogin}
           className="group bg-kakao relative w-full items-center justify-center rounded-sm py-3 font-semibold sm:rounded-lg sm:py-4"
         >
           <img
