@@ -16,22 +16,24 @@ export default function SimpleMode() {
   return (
     <>
       {!started ? (
-        <div className="relative flex h-full flex-col items-center justify-center gap-y-16">
+        <div className="relative flex h-full flex-col items-center justify-center gap-y-5 overflow-y-auto lg:gap-y-10">
           <div>
-            <img src={ChatBotImg} alt="NOA 캐릭터 이미지" className="w-[200px]" />
+            <img src={ChatBotImg} alt="NOA 캐릭터 이미지" className="w-28 sm:w-32 md:w-52" />
           </div>
-          <p className="mb-2 text-center text-[24px] font-semibold">
+          <p className="mb-2 text-center text-[18px] font-semibold break-keep whitespace-normal sm:text-[24px]">
             간단한 질문에 답을 선택해주시면, <br />
             NOA가
-            <strong className="ml-2 text-[28px] font-bold text-[#543ED9]">딱 맞는 요금제</strong>를
-            추천해드릴게요!
+            <strong className="ml-2 text-[20px] font-bold text-[#543ED9] sm:text-[28px]">
+              딱 맞는 요금제
+            </strong>
+            를 추천해드릴게요!
           </p>
           <div className="relative flex flex-col items-center gap-4">
             <p>아래 버튼을 눌러 시작해보세요</p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="bg-light-purple relative flex h-[60px] w-[254px] items-center justify-center rounded-[30px] px-[92px] py-[18px] text-[20px] font-medium text-white shadow-md"
+              className="bg-sub-lilac relative flex h-[60px] w-[254px] items-center justify-center rounded-[30px] px-[92px] py-[18px] text-[20px] font-medium text-white shadow-md"
               onClick={() => setStarted(true)}
             >
               시작하기

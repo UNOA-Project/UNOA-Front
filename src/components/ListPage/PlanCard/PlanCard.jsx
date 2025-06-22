@@ -2,6 +2,8 @@ import React from 'react'
 import sharingImg from '/images/icons/proicons_arrow.png'
 import callImg from '/images/icons/call.png'
 import messageImg from '/images/icons/message.png'
+import toast from 'react-hot-toast'
+
 const PlanCard = ({ plan }) => {
   const formatPrice = price => {
     return parseInt(price).toLocaleString()
@@ -41,6 +43,7 @@ const PlanCard = ({ plan }) => {
   }
 
   const allBenefits = getAllBenefits()
+
   const basicBenefits = allBenefits.filter(benefit => benefit.type === 'basic')
   const iconBenefits = allBenefits.filter(
     benefit => benefit.type === 'premium' || benefit.type === 'media'
@@ -48,7 +51,7 @@ const PlanCard = ({ plan }) => {
 
   const highlightNumbers = text => {
     if (!text) return text
-
+    
     const regex = /(\d+(?:\.\d+)?(?:GB|MB|TB|KB|분|초|원|건|회|개|무제한))/g
     return text.split(regex).map((part, index) => {
       if (/^\d+(?:\.\d+)?(?:GB|MB|TB|KB|분|초|원|건|회|개)$/.test(part) || part === '무제한') {
@@ -60,6 +63,25 @@ const PlanCard = ({ plan }) => {
       }
       return part
     })
+  }
+  const handleCompare = () => {
+    const stored = JSON.parse(localStorage.getItem('comparePlans')) || []
+    const exists = stored.some(p => p._id === plan._id)
+
+    if (exists) {
+      toast('이미 비교 목록에 있는 요금제입니다.', { icon: '⚠️' })
+      return
+    }
+
+    const updated = [...stored, plan]
+    if (updated.length > 2) {
+      toast('가장 오래된 항목이 제거됩니다.', { icon: 'ℹ️' })
+      updated.shift()
+    }
+
+    localStorage.setItem('comparePlans', JSON.stringify(updated))
+    window.dispatchEvent(new CustomEvent('compareUpdated'))
+    toast.success(`'${plan.title}' 요금제가 추가되었습니다.`)
   }
 
   return (
