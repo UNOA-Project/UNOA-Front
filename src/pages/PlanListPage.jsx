@@ -11,13 +11,12 @@ export default function PlanListPage() {
         position="bottom-center"
         reverseOrder={false}
         toastOptions={{
-          duration: 3000,
+          duration: 1500,
           className: 'with-progress',
           style: {
             background: '#fff',
             color: '#333',
             border: '1px solid #e5e7eb',
-            padding: '12px 10px',
             fontSize: '14px',
           },
           success: {
