@@ -53,7 +53,7 @@ const PlanCard = ({ plan }) => {
     return text.split(regex).map((part, index) => {
       if (/^\d+(?:\.\d+)?(?:GB|MB|TB|KB|분|초|원|건|회|개)$/.test(part) || part === '무제한') {
         return (
-          <span key={index} className="text-primary-purple font-semibold">
+          <span key={index} className="text-primary-purple mr-1 ml-1 text-2xl font-semibold">
             {part}
           </span>
         )
@@ -65,15 +65,21 @@ const PlanCard = ({ plan }) => {
   return (
     <div className="flex max-w-75 min-w-75 flex-col rounded-xl border border-gray-200 bg-white p-6 transition-shadow duration-200 hover:shadow-xl">
       {/* 제목 */}
-      <h3 className="mb-6 text-center text-lg leading-tight font-bold text-gray-900">
-        {plan.title}
-      </h3>
+      <div className="flex flex-col items-center justify-center">
+        <span className="mx-auto mb-6 flex min-h-12 items-center justify-center text-xl leading-tight font-semibold text-gray-900">
+          {plan.title}
+        </span>
+      </div>
       <hr className="mb-4 border-gray-200" />
 
       {/* 가격 섹션 */}
       <div className="mb-6">
-        <div className="mb-1 text-2xl font-bold text-gray-900">
-          월 <span className="text-primary-purple">{formatPrice(plan.price)}</span>원
+        <div className="font-semibold text-gray-900">
+          월{' '}
+          <span className="text-primary-purple text-2xl font-semibold">
+            {formatPrice(plan.price)}
+          </span>
+          원
         </div>
         {plan.optionalContractDiscount && (
           <div className="text-sm text-gray-600">
@@ -83,16 +89,19 @@ const PlanCard = ({ plan }) => {
       </div>
       {/* 상세 정보 섹션 */}
       <div className="mb-6">
-        <div className="mb-4 flex items-center">
-          <div className="mr-2 flex items-center text-sm text-gray-700">데이터:</div>
-          <div className="flex items-center text-sm font-medium">{highlightNumbers(plan.data)}</div>
+        <div className="flex">
+          <div className="font-bold text-gray-900">
+            데이터
+            <span className="font-bold text-gray-900">{highlightNumbers(plan.data)}</span>
+          </div>
         </div>
+        <div className="text-sm text-gray-600">{plan.postExhaustionDataSpeed}</div>
 
-        <hr className="mb-4 border-gray-200" />
+        <hr className="mt-4 mb-4 border-gray-200" />
 
         <div className="grid grid-cols-3 gap-4 text-center">
           <div className="flex flex-col items-center">
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50">
               <div className="h-5 w-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                 <img src={sharingImg} alt="셰어링이미지" />
               </div>
@@ -102,7 +111,7 @@ const PlanCard = ({ plan }) => {
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50">
               <div className="h-5 w-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                 <img src={callImg} alt="전화이미지" />
               </div>
@@ -112,7 +121,7 @@ const PlanCard = ({ plan }) => {
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50">
               <div className="h-5 w-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                 <img src={messageImg} alt="메세지이미지" />
               </div>
@@ -127,7 +136,7 @@ const PlanCard = ({ plan }) => {
       {/* 포함 혜택 섹션 */}
       {allBenefits.length > 0 && (
         <div className="mb-6 flex-grow">
-          <div className="mb-3 text-sm font-medium text-gray-700">포함 혜택</div>
+          <div className="mb-1 text-sm font-medium text-gray-900">포함 혜택</div>
 
           {/* Basic benefits (텍스트 형태) */}
           {basicBenefits.length > 0 && (
@@ -135,7 +144,7 @@ const PlanCard = ({ plan }) => {
               {basicBenefits.map((benefit, index) => (
                 <span
                   key={index}
-                  className="mr-2 mb-2 inline-block rounded-md bg-blue-50 px-3 py-2 text-sm text-blue-600"
+                  className="mr-2 inline-block rounded-md py-1 text-sm text-gray-600"
                 >
                   {benefit.name}
                 </span>
@@ -145,7 +154,7 @@ const PlanCard = ({ plan }) => {
 
           {/* Premium & Media benefits (아이콘 형태) */}
           {iconBenefits.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1">
               {iconBenefits.slice(0, 6).map((benefit, index) => (
                 <div
                   key={index}
@@ -176,8 +185,8 @@ const PlanCard = ({ plan }) => {
                 </div>
               ))}
               {iconBenefits.length > 6 && (
-                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-blue-200 bg-blue-50">
-                  <span className="text-xs font-medium text-blue-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 shadow-sm">
+                  <span className="text-xs font-medium text-gray-600">
                     +{iconBenefits.length - 6}
                   </span>
                 </div>
@@ -188,7 +197,7 @@ const PlanCard = ({ plan }) => {
       )}
 
       {/* 버튼 */}
-      <button className="mt-auto w-full rounded-lg border border-blue-600 bg-white px-4 py-3 font-medium text-blue-600 transition-colors duration-200 hover:bg-gray-50">
+      <button className="border-primary-purple text-primary-purple hover:bg-gray-30 mt-auto w-full rounded-lg border bg-white px-4 py-3 font-medium transition-colors duration-200">
         비교하기
       </button>
     </div>
