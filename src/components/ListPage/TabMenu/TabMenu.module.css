@@ -1,23 +1,39 @@
 .tabContainer {
   display: flex;
-  gap: 4px;
+  gap: 0;
   margin-bottom: 24px;
-  background-color: #f3f4f6;
-  padding: 4px;
-  border-radius: 8px;
-  width: fit-content;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  width: 100%; 
+  max-width: 100%;
+  overflow-x: auto;
+  border-bottom: 1px solid #e5e7eb;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .tab {
-  padding: 8px 16px;
+  padding: 12px 20px;
   font-size: 14px;
   border: none;
-  border-radius: 6px;
+  border-radius: 0;
   background: none;
   color: #6b7280;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 0;
+  position: relative;
+  font-weight: 400;
 }
 
 .tab:hover {
@@ -25,8 +41,99 @@
 }
 
 .activeTab {
-  background: white;
-  color: #374151;
-  font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: none;
+  color: #111827;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.activeTab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #111827;
+  border-radius: 1px 1px 0 0;
+}
+
+.tabLabel {
+  display: block;
+}
+
+/* 모바일 (480px 이하) */
+@media (max-width: 480px) {
+  .tabContainer {
+    width: 100%;
+    padding: 0;
+    gap: 0;
+    margin-bottom: 16px;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x; /* 가로 터치만 허용 */
+  }
+
+  .tab {
+    padding: 10px 16px;
+    font-size: 13px;
+    flex-shrink: 0;
+    min-width: max-content;
+    touch-action: manipulation;
+  }
+
+  .tabLabel {
+    white-space: nowrap;
+  }
+}
+
+/* 태블릿 (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .tabContainer {
+    width: 100%;
+    padding: 0;
+    gap: 0;
+    margin-bottom: 20px;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+  }
+
+  .tab {
+    padding: 11px 18px;
+    font-size: 14px;
+    flex-shrink: 0;
+    min-width: max-content;
+    touch-action: manipulation;
+  }
+}
+
+/* 작은 데스크톱 (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tabContainer {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tab {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+/* 큰 데스크톱 (1025px 이상) */
+@media (min-width: 1025px) {
+  .tabContainer {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tab {
+    padding: 12px 20px;
+    font-size: 22px;
+  }
 }

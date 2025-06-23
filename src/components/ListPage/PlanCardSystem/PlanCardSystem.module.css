@@ -1,26 +1,332 @@
+/* 기본 컨테이너 (모바일 우선) */
 .container {
-  width: 100vh;
+  width: 100%;
   min-height: 100vh;
   background-color: #f9fafb;
 }
 
+/* 메인 콘텐츠 (모바일) */
 .mainContent {
   margin: 0 auto;
-  padding: 16px 16px 16px 16px;
+  padding: 12px;
+  max-width: 100%;
 }
 
+/* 카테고리 섹션 (모바일) */
 .categorySection {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  padding: 0 4px;
 }
 
 .categoryTitle {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: #111827;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  line-height: 1.3;
 }
 
 .categoryDescription {
   color: #6b7280;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* 로딩 및 에러 상태 */
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.loadingContainer p,
+.errorContainer p {
   font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.errorContainer button {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.errorContainer button:hover {
+  background-color: #1d4ed8;
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 8px;
+  }
+  
+  .categorySection {
+    margin-bottom: 16px;
+    padding: 0 4px;
+  }
+  
+  .categoryTitle {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  
+  .categoryDescription {
+    font-size: 12px;
+  }
+  
+  .loadingContainer,
+  .errorContainer {
+    min-height: 40vh;
+    padding: 16px;
+  }
+  
+  .loadingContainer p,
+  .errorContainer p {
+    font-size: 13px;
+  }
+  
+  .errorContainer button {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 575px) {
+  .mainContent {
+    padding: 14px;
+  }
+  
+  .categorySection {
+    margin-bottom: 22px;
+  }
+  
+  .categoryTitle {
+    font-size: 19px;
+    margin-bottom: 7px;
+  }
+  
+  .categoryDescription {
+    font-size: 13.5px;
+  }
+}
+
+@media (min-width: 576px) {
+  .mainContent {
+    padding: 16px;
+    max-width: 540px;
+  }
+  
+  .categorySection {
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+  
+  .categoryTitle {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  
+  .categoryDescription {
+    font-size: 14px;
+  }
+  
+  .loadingContainer,
+  .errorContainer {
+    min-height: 60vh;
+    padding: 24px;
+  }
+  
+  .loadingContainer p,
+  .errorContainer p {
+    font-size: 15px;
+  }
+  
+  .errorContainer button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mainContent {
+    padding: 20px;
+    max-width: 720px;
+  }
+  
+  .categorySection {
+    margin-bottom: 28px;
+    padding: 0 12px;
+  }
+  
+  .categoryTitle {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .categoryDescription {
+    font-size: 15px;
+  }
+  
+  .loadingContainer,
+  .errorContainer {
+    min-height: 70vh;
+    padding: 32px;
+  }
+  
+  .loadingContainer p,
+  .errorContainer p {
+    font-size: 16px;
+  }
+  
+  .errorContainer button {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  .mainContent {
+    padding: 24px;
+    max-width: 960px;
+  }
+  
+  .categorySection {
+    margin-bottom: 32px;
+    padding: 0 16px;
+  }
+  
+  .categoryTitle {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  
+  .categoryDescription {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .mainContent {
+    padding: 32px;
+    max-width: 1140px;
+  }
+  
+  .categorySection {
+    margin-bottom: 36px;
+    padding: 0 20px;
+  }
+  
+  .categoryTitle {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+  
+  .categoryDescription {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .mainContent {
+    padding: 40px;
+    max-width: 1320px;
+  }
+  
+  .categorySection {
+    margin-bottom: 40px;
+    padding: 0 24px;
+  }
+  
+  .categoryTitle {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  
+  .categoryDescription {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .mainContent {
+    padding: 48px;
+    max-width: 1500px;
+  }
+  
+  .categorySection {
+    margin-bottom: 44px;
+    padding: 0 28px;
+  }
+  
+  .categoryTitle {
+    font-size: 30px;
+    margin-bottom: 18px;
+  }
+  
+  .categoryDescription {
+    font-size: 19px;
+  }
+}
+
+/* 접근성 개선 */
+@media (prefers-reduced-motion: reduce) {
+  .errorContainer button {
+    transition: none;
+  }
+}
+
+/* 가로 모드 (모바일/태블릿) */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .mainContent {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  
+  .categorySection {
+    margin-bottom: 20px;
+  }
+  
+  .loadingContainer,
+  .errorContainer {
+    min-height: 40vh;
+  }
+}
+
+/* 프린트 스타일 */
+@media print {
+  .container {
+    background-color: white;
+  }
+  
+  .mainContent {
+    padding: 0;
+    max-width: none;
+  }
+  
+  .categoryTitle {
+    color: black;
+    font-size: 18px;
+  }
+  
+  .categoryDescription {
+    color: #333333;
+    font-size: 14px;
+  }
+  
+  .loadingContainer,
+  .errorContainer {
+    display: none;
+  }
 }
