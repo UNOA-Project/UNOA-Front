@@ -6,7 +6,7 @@ import PlanGrid from '../PlanGrid/PlanGrid'
 import FilterModal from '../FilterModal/FilterModal'
 import styles from './PlanCardSystem.module.css'
 
-const PlanCardSystem = () => {
+const PlanCardSystem = ({ onFilterModalState }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   //정렬 및 나이대 필터 변수
   const [currentSort, setCurrentSort] = useState('popularity')
@@ -28,6 +28,13 @@ const PlanCardSystem = () => {
     toggleApp,
     changeCategory,
   } = usePlanFilter()
+
+  //필터 모달상태 변경 시 PageList에 알림
+  useEffect(() => {
+    if (onFilterModalState) {
+      onFilterModalState(isFilterOpen)
+    }
+  }, [isFilterOpen, onFilterModalState])
 
   //탭 변경 시 페이지네이션 초기화
   useEffect(() => {
@@ -220,13 +227,6 @@ const PlanCardSystem = () => {
           currentSort={currentSort}
           currentAgeGroup={currentAgeGroup}
         />
-
-        <div className={styles.categorySection}>
-          <h2 className={styles.categoryTitle}>{getCategoryTitle()}</h2>
-          <p className={styles.categoryDescription}>
-            {filteredPlans.length}개의 요금제가 있습니다.
-          </p>
-        </div>
 
         <PlanGrid
           plans={getSortedPlans} // 정렬된 결과 전달

@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import PlanComparePage from '../components/PlanCompare/PlanComparePage'
 import PlanComparePageMobile from '../components/PlanCompare/PlanComparePageMobile'
 import PlanCardSystem from '@/components/ListPage/PlanCardSystem/PlanCardSystem'
 import { Toaster } from 'react-hot-toast'
 
 export default function PlanListPage() {
+  const [onFilterModalState, setOnFilterModalState] = useState(false)
   return (
     <div className="w-full">
       {/* ✅ Toaster 실제 렌더링 */}
@@ -30,7 +32,7 @@ export default function PlanListPage() {
 
       {/* PC 화면 (xl 이상) */}
       <div className="fixed inset-0 hidden w-full xl:flex">
-        <div className="h-full w-1/2 overflow-y-auto border-r border-gray-200">
+        <div className="h-full w-1/2 overflow-y-auto border-r border-gray-200 pt-[60px]">
           <PlanCardSystem />
         </div>
         <div className="h-full w-1/2 overflow-hidden">
@@ -39,9 +41,9 @@ export default function PlanListPage() {
       </div>
 
       {/* 모바일 및 중간 해상도 */}
-      <div className="block min-h-screen overflow-y-auto xl:hidden">
-        <PlanCardSystem />
-        <PlanComparePageMobile />
+      <div className="block min-h-screen overflow-y-auto pb-[60px] xl:hidden">
+        <PlanCardSystem onFilterModalState={setOnFilterModalState} />
+        {!onFilterModalState && <PlanComparePageMobile />}
       </div>
     </div>
   )
