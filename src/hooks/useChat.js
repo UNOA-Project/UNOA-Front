@@ -42,13 +42,27 @@ export const useChat = (socket, isConnected) => {
       setMessages(prev => [...prev, streamingPlaceholder])
     }
 
+    // 마크다운 오류 처리
+    const preprocessMessage = content => {
+      if (!content) return ''
+      return (
+        content
+          // 1. '* *텍스트**' 와 같이 비정상적인 별표 사용을 교정
+          .replace(/\* \*([\s\S]*?)\*\*/g, '**$1**')
+          // 2. '** 텍스트 **' 와 같이 불필요한 공백이 포함된 경우를 교정
+          .replace(/\*\*\s(.*?)\s\*\*/g, '**$1**')
+          // 3. '**텍스트**단어' 와 같이 닫는 태그가 다음 단어와 붙어있는 경우, 공백을 추가
+          .replace(/(?<=\S)\*\*(?=\S)/g, '** ')
+      )
+    }
+
     // [이벤트 핸들러] AI 응답 스트림 데이터 수신
     const handleStreamChunk = chunk => {
       if (chunk && streamingMessageIdRef.current) {
         setMessages(prev =>
           prev.map(msg =>
             msg.id === streamingMessageIdRef.current
-              ? { ...msg, content: msg.content + chunk }
+              ? { ...msg, content: preprocessMessage(msg.content + chunk) }
               : msg
           )
         )
@@ -131,7 +145,7 @@ export const useChat = (socket, isConnected) => {
       socket.off(SOCKET_EVENTS.STREAM_END, handleStreamEnd)
       socket.off(SOCKET_EVENTS.ERROR, handleError)
     }
-  }, [socket]) 
+  }, [socket])
 
   // --- 외부에서 사용할 함수들 ---
 
