@@ -96,3 +96,8 @@
 .messageContent strong {
   color: var(--color-primary-purple); /* 강조 색상 변경 */
 }
+
+.messageContent {
+  word-break: break-word;
+  white-space: pre-wrap;
+}

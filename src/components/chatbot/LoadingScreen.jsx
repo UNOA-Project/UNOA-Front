@@ -1,13 +1,12 @@
 const LoadingScreen = () => {
   return (
-    <div className="App">
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <p>이전 대화를 불러오는 중...</p>
-        <small style={{ marginTop: '1rem', opacity: 0.7 }}>
-          연결이 오래 걸리면 자동으로 진행됩니다
-        </small>
-      </div>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
+      {/* 스피너 */}
+      <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-blue-500 border-t-transparent"></div>
+
+      {/* 로딩 텍스트 */}
+      <p className="mt-4 text-lg font-semibold text-gray-700 dark:text-gray-200">로딩중...</p>
+      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">잠시만 기다려 주세요.</p>
     </div>
   )
 }

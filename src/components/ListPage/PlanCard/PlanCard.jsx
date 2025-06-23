@@ -5,7 +5,7 @@ import messageImg from '/images/icons/message.png'
 import toast from 'react-hot-toast'
 import style from './PlanCard.module.css'
 
-const PlanCard = ({ plan }) => {
+const PlanCard = ({ plan, isCompare = true }) => {
   const formatPrice = price => {
     return parseInt(price).toLocaleString()
   }
