@@ -3,10 +3,9 @@
   max-width: 280px;
 }
 
-
 @media (min-width: 1780px) {
   .planCard {
-    max-width: 25rem; /* max-w-100 */
-    min-width: 25rem; /* min-w-100 */
+    max-width: 25rem;
+    min-width: 25rem;
   }
 }
