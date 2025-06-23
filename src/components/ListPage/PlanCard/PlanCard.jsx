@@ -51,7 +51,7 @@ const PlanCard = ({ plan }) => {
 
   const highlightNumbers = text => {
     if (!text) return text
-    
+
     const regex = /(\d+(?:\.\d+)?(?:GB|MB|TB|KB|분|초|원|건|회|개|무제한))/g
     return text.split(regex).map((part, index) => {
       if (/^\d+(?:\.\d+)?(?:GB|MB|TB|KB|분|초|원|건|회|개)$/.test(part) || part === '무제한') {

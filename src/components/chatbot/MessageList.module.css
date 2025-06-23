@@ -1,4 +1,3 @@
-
 .messagesContainer {
   flex: 1;
   overflow-y: auto;
@@ -13,7 +12,7 @@
   width: 8px;
 }
 .messagesContainer::-webkit-scrollbar-track {
-  background: #F7F2FF;
+  background: #f7f2ff;
 }
 .messagesContainer::-webkit-scrollbar-thumb {
   background: #d4c4e9;

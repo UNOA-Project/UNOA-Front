@@ -9,11 +9,11 @@ import CopyrightIcon from '@/assets/copyright.svg?react'
 const Footer = () => {
   return (
     <footer className="w-full">
-      <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-6 px-4 py-8 sm:flex-row sm:px-6 sm:relative sm:-left-13">
-        <div className="flex sm:flex-1 sm:justify-start ">
+      <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-6 px-4 py-8 sm:relative sm:-left-13 sm:flex-row sm:px-6">
+        <div className="flex sm:flex-1 sm:justify-start">
           <UnoalgIcon className="h-9" />
         </div>
-        <div className="flex items-center space-x-2 text-xs sm:text-sm sm:flex-1 sm:justify-center sm:pl-25">
+        <div className="flex items-center space-x-2 text-xs sm:flex-1 sm:justify-center sm:pl-25 sm:text-sm">
           <CopyrightIcon className="h-10 w-80" />
         </div>
 
