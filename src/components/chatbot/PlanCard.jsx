@@ -1,6 +1,4 @@
-import React from 'react';
-
-// 스크롤바를 위한 커스텀 CSS 스타일 (기존과 동일)
+// 스크롤바를 위한 커스텀 CSS 스타일
 const customScrollbarStyles = `
   .custom-scrollbar { scrollbar-width: auto; scrollbar-color: #d4c4e9 #F7F2FF; }
   .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
@@ -25,15 +23,14 @@ const SpecValue = ({ text }) => {
 
 // 요금제 하나의 상세 정보를 보여주는 카드 컴포넌트
 const PlanCard = ({ plan }) => {
-  // CSS 변수가 없을 경우를 대비한 기본값
-  const primaryColor = 'var(--color-primary-purple, #899df4)';
-  const pinkColor = 'var(--color-primary-pink, #ff8a80)';
-  const smallBodyFont = 'var(--text-small-body, 0.875rem)';
-  const captionFont = 'var(--text-caption, 0.75rem)';
+  const primaryColor = 'var(--color-primary-purple)';
+  const pinkColor = 'var(--color-primary-pink)';
+  const smallBodyFont = 'var(--text-small-body)';
+  const captionFont = 'var(--text-caption)';
 
   return (
     // 카드 전체 컨테이너: 사이즈(w-64), 패딩(p-5), 내부 간격(space-y-3) 축소
-    <div className="flex w-64 flex-shrink-0 flex-col space-y-3 rounded-xl bg-white p-5 shadow-md">
+    <div className="flex w-64 flex-shrink-0 flex-col space-y-3 rounded-xl bg-white p-5 shadow-md ml-3">
       {/* 1. 요금제 제목 */}
       <h3 style={{ fontSize: smallBodyFont }} className="truncate font-bold text-gray-900">
         {plan.title}
