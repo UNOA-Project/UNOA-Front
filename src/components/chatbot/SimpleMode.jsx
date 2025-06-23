@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
@@ -9,10 +9,16 @@ import NoaYeah from '@/assets/noa-yeah.svg'
 import { SimpleModeForm } from './SimpleModeForm'
 import PlanCard from '../ListPage/PlanCard/PlanCard'
 
-export default function SimpleMode({ sendPromptSilently, messages }) {
+export default function SimpleMode({
+  sendPromptSilently,
+  messages,
+  simpleModeResultMessage,
+  setSimpleModeResultMessage,
+}) {
   const [started, setStarted] = useState(false)
   const [result, setResult] = useState(null)
   const navigate = useNavigate()
+  const [isWaiting, setIsWaiting] = useState(false)
 
   const handleFinish = answers => {
     console.log('사용자 응답:', answers)
@@ -27,16 +33,20 @@ export default function SimpleMode({ sendPromptSilently, messages }) {
 
     const prompt = `${formatted}`.trim()
 
+    setSimpleModeResultMessage(null)
+    setIsWaiting(true)
+
     sendPromptSilently(prompt, 'simple')
   }
 
-  const lastMessage = messages
-    .slice()
-    .reverse()
-    .find(msg => msg.role === 'assistant')
+  useEffect(() => {
+    if (simpleModeResultMessage) {
+      setIsWaiting(false)
+    }
+  }, [simpleModeResultMessage])
+  const lastMessage = simpleModeResultMessage
 
   console.log(lastMessage)
-
   return (
     <>
       {!started ? (
@@ -76,7 +86,9 @@ export default function SimpleMode({ sendPromptSilently, messages }) {
       ) : result ? (
         <div className="relative flex h-full flex-col items-center justify-center px-4 py-10 sm:px-8">
           <div className="absolute z-0 h-[280px] w-[280px] rounded-full bg-gradient-to-br from-[#f3dcff] to-[#ece0ff] opacity-80 blur-3xl" />
-          {lastMessage ? (
+          {isWaiting ? (
+            <p className="z-10 text-gray-500">추천 결과를 기다리고 있어요...</p>
+          ) : lastMessage ? (
             <div className="z-10 flex w-full flex-col items-center gap-y-3">
               <div className="text-text-main text-center">
                 <h2 className="mb-1 text-2xl font-bold">
@@ -97,6 +109,8 @@ export default function SimpleMode({ sendPromptSilently, messages }) {
                 onClick={() => {
                   setStarted(false)
                   setResult(null)
+                  setSimpleModeResultMessage(null)
+                  setIsWaiting(false)
                 }}
                 className="mt-7 max-w-sm rounded-full bg-gray-400 px-6 py-[1.6vh] text-base font-medium text-white sm:w-[50%] sm:py-[1.5vh] sm:text-base"
               >
@@ -109,9 +123,7 @@ export default function SimpleMode({ sendPromptSilently, messages }) {
                 다른 요금제도 볼래요!
               </button>
             </div>
-          ) : (
-            <p className="z-10 text-gray-500">추천 결과를 기다리고 있어요...</p>
-          )}
+          ) : null}
         </div>
       ) : (
         <SimpleModeForm onFinish={handleFinish} />
