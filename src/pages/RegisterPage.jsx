@@ -130,11 +130,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex flex-col items-center pt-4 sm:pt-16">
+    <div className="flex flex-col items-center py-4 sm:pt-16">
       <h1 className="text-sub-title sm:text-page-header mb-2 font-bold md:mb-4 md:text-4xl">
         UNOA 계정 생성
       </h1>
-      <p className="md:text-card-title mb-4">
+      <p className="md:text-card-title mb-4 text-center">
         UNOA 계정을 가지고 계시나요?
         <Link
           to="/login"
@@ -279,6 +279,10 @@ export default function RegisterPage() {
           <ArrowIcon className="absolute top-1/2 right-4 h-4 w-5 -translate-y-1/2 duration-300 group-hover:translate-x-1" />
         </button>
       </form>
+      <footer className="text-text-secondary text-caption sm:text-small-body mt-6 flex w-full max-w-[320px] flex-row justify-between px-2 max-[350px]:flex-col max-[350px]:text-center sm:mt-12 sm:max-w-sm md:max-w-md md:px-6">
+        <p>김현우A | 송은재 | 심영민 | 홍성현 | 황주경</p>
+        <p>© UNOA Corp.</p>
+      </footer>
     </div>
   )
 }
