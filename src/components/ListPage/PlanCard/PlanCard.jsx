@@ -240,12 +240,14 @@ const PlanCard = ({ plan, isCompare = true }) => {
       )}
 
       {/* 버튼 */}
-      <button
-        className="border-primary-purple text-primary-purple hover:bg-gray-30 mt-auto w-full rounded-lg border bg-white px-4 py-3 font-medium transition-colors duration-200"
-        onClick={handleCompare}
-      >
-        비교하기
-      </button>
+      {isCompare && (
+        <button
+          className="border-primary-purple text-primary-purple hover:bg-gray-30 mt-auto w-full rounded-lg border bg-white px-4 py-3 font-medium transition-colors duration-200"
+          onClick={handleCompare}
+        >
+          비교하기
+        </button>
+      )}
     </div>
   )
 }
