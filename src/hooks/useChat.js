@@ -71,6 +71,16 @@ export const useChat = (socket, isConnected) => {
 
     // [이벤트 핸들러] AI 응답 스트림 종료 및 카드 메시지 처리
     const handleStreamEnd = (data = {}) => {
+      // 간단모드 처리
+      if (!streamingMessageIdRef.current) {
+        setMessages(prev => [
+          ...prev,
+          { ...data.message, recommendedPlans: data.recommendedPlans, isStreaming: false },
+        ])
+        setIsStreaming(false)
+        return
+      }
+
       // 1. 텍스트 메시지 업데이트
       if (data.message && streamingMessageIdRef.current) {
         setMessages(prev =>
