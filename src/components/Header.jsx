@@ -10,7 +10,7 @@ export default function Header() {
 
   const isHome = location.pathname === '/'
 
-  const headerBgClass = isHome ? 'bg-transparent' : 'bg-white'
+  const headerBgClass = isHome ? 'bg-black' : 'bg-white'
   const headerShadow = isHome ? '' : 'shadow-sm'
   const headerTextColorClass = isHome ? 'text-white' : 'text-text-main'
   const menuIconColorClass = isHome ? 'bg-white' : 'bg-black'

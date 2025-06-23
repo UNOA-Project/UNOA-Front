@@ -27,15 +27,15 @@ export default function RegisterPage() {
   const { showSuccessRegister, showSuccessToast, showErrorToast } = useToast()
 
   const validations = {
-    name: value => (/^[가-힣]+$/.test(value) ? '' : '한글로 입력해주세요.'),
+    name: value => (/^[가-힣]+$/.test(value) ? '' : 'ⓘ 한글로 입력해주세요.'),
     userId: value =>
-      /^[a-z0-9]{4,16}$/.test(value) ? '' : '영문소문자 또는 숫자 4~16자로 입력해주세요.',
+      /^[a-z0-9]{4,16}$/.test(value) ? '' : 'ⓘ 영문소문자 또는 숫자 4~16자로 입력해주세요.',
     password: value =>
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{}[\]|;:'",.<>/?]).{8,20}$/.test(value)
         ? ''
-        : '영문자, 숫자, 특수문자 포함 8~20자로 입력해주세요.',
+        : 'ⓘ 영문자, 숫자, 특수문자 포함 8~20자로 입력해주세요.',
     passwordConfirm: (value, password) =>
-      value === password ? '' : '비밀번호가 일치하지 않습니다.',
+      value === password ? '' : 'ⓘ 비밀번호가 일치하지 않습니다.',
   }
 
   const handleCheckDuplicate = async () => {
@@ -73,7 +73,7 @@ export default function RegisterPage() {
     setPasswordConfirmError(validations.passwordConfirm(passwordConfirm, password))
 
     if (!isUplus) {
-      setIsUplusError('LG U+ 요금제 여부를 선택해주세요.')
+      setIsUplusError('ⓘ LG U+ 요금제 여부를 선택해주세요.')
     } else {
       setIsUplusError('')
     }
@@ -130,7 +130,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex flex-col items-center py-4 sm:py-8">
+    <div className="flex flex-col items-center pt-4 sm:pt-16">
       <h1 className="text-sub-title sm:text-page-header mb-2 font-bold md:mb-4 md:text-4xl">
         UNOA 계정 생성
       </h1>
@@ -246,16 +246,16 @@ export default function RegisterPage() {
               </label>
             </div>
           </div>
-          <p
-            className={`text-caption sm:text-small-body text-error mt-2 ml-2 ${
-              isUplusError ? 'opacity-100' : 'opacity-0'
+          <div
+            className={`text-caption sm:text-small-body text-error mt-2 ml-2 overflow-hidden transition-all duration-300 ease-in-out ${
+              isUplusError ? 'max-h-[100px] opacity-100' : 'max-h-0 opacity-0'
             }`}
           >
-            ⓘ {isUplusError}
-          </p>
+            {isUplusError}
+          </div>
         </div>
 
-        <div className="border-text-main mt-4 mb-4 border-t sm:mb-6" />
+        <div className="border-text-main mt-2 mb-4 border-t sm:mb-6" />
 
         <button
           type="submit"

@@ -27,14 +27,14 @@ export default function LoginPage() {
     let hasError = false
 
     if (!userId) {
-      setUserIdError('아이디를 입력해주세요.')
+      setUserIdError('ⓘ 아이디를 입력해주세요.')
       hasError = true
     } else {
       setUserIdError('')
     }
 
     if (!password) {
-      setPasswordError('비밀번호를 입력해주세요.')
+      setPasswordError('ⓘ 비밀번호를 입력해주세요.')
       hasError = true
     } else {
       setPasswordError('')
@@ -68,7 +68,7 @@ export default function LoginPage() {
       <h1 className="text-sub-title sm:text-page-header mb-2 font-bold md:mb-4 md:text-4xl">
         UNOA 계정
       </h1>
-      <p className="md:text-card-title mb-8">
+      <p className="md:text-card-title mb-4">
         아직 UNOA 계정이 없으신가요?
         <Link
           to="/register"
