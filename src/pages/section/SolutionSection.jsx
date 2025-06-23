@@ -1,84 +1,202 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { useInView } from 'react-intersection-observer'
+import React, { useEffect, useState, useRef } from 'react'
 import mascot from '@/assets/section/solution.png'
 import SolutionTextImg from '@/assets/section/Solutiontext.png'
+import { motion, AnimatePresence } from 'framer-motion'
 
-const TOTAL_BUBBLES = 20
+import chatbotImg from '@/assets/section/chatbot.png'
+import easyModeImg from '@/assets/section/easy.png'
+import compareImg from '@/assets/section/compare.png'
 
-const SolutionSection = () => {
-  const { ref: sectionRef, inView } = useInView({ threshold: 0.7, triggerOnce: false })
-  const containerRef = useRef(null)
-  const [bubbles, setBubbles] = useState([])
+const STAGES = 4
+
+const SolutionScrollSection = () => {
+  const [stage, setStage] = useState(0)
+  const [fillHeight, setFillHeight] = useState('0%')
+  const [isMobile, setIsMobile] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef(null)
+  const introRef = useRef(null)
 
   useEffect(() => {
-    if (inView) {
-      const generated = Array.from({ length: TOTAL_BUBBLES }, () => ({
-        left: Math.random() * 90,
-        scale: Math.random() * 0.1 + 0.5,
-        delay: Math.random() * 1.5,
-      }))
-      setBubbles(generated)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true)
+      },
+      { threshold: 0.3 }
+    )
+
+    if (introRef.current) observer.observe(introRef.current)
+    return () => {
+      if (introRef.current) observer.unobserve(introRef.current)
     }
-  }, [inView])
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024)
+
+    const handleScroll = () => {
+      const viewportHeight = window.innerHeight
+      const currentSection = sectionRef.current
+      if (!currentSection || viewportHeight === 0) return
+
+      const sectionTop = currentSection.offsetTop
+      const relativeScroll = Math.max(0, window.scrollY - sectionTop)
+      const currentStage = Math.min(STAGES - 1, Math.floor(relativeScroll / viewportHeight))
+      setStage(currentStage)
+
+      const animationStartScroll = viewportHeight
+      const animationDuration = viewportHeight * 2
+      let progress = 0
+      if (relativeScroll > animationStartScroll) {
+        progress = (relativeScroll - animationStartScroll) / animationDuration
+      }
+      const newFill = `${Math.min(1, Math.max(0, progress)) * 100}%`
+      setFillHeight(newFill)
+    }
+
+    handleResize()
+    handleScroll()
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  const leftContents = [null, chatbotImg, easyModeImg, compareImg]
+  const rightContents = [
+    null,
+    {
+      image: '/images/right1.png',
+      title: '챗봇을 통한 요금제 추천',
+      description: 'LG U+ 요금제에 대해 NOA가 쉽게 알려드려요!',
+    },
+    {
+      image: '/images/right2.png',
+      title: '간단 모드',
+      description: '글 입력이 어렵다면 추천 질문 버튼을 골라\n대화를 시작할 수 있어요!',
+    },
+    {
+      image: '/images/right3.png',
+      title: '요금제 비교',
+      description: '다양한 요금제를 한눈에 확인할 수 있어요',
+    },
+  ]
+
+  const contentVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  }
 
   return (
     <section
-      ref={containerRef}
-      className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-b from-[#50a9e9] to-[#9b94fa] text-center font-['Lilita_One']"
+      ref={sectionRef}
+      className="relative h-[450vh] bg-gradient-to-b from-[#50a9e9] to-[#9b94fa]"
     >
-      {/* 애니메이션 정의 */}
-      <style>{`
-        @keyframes floatUp {
-          0% {
-            transform: translateY(0) scale(var(--scale, 0.7));
-            opacity: 0.7;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-120vh) scale(var(--scale, 1.3));
-            opacity: 0;
-          }
-        }
-      `}</style>
+      <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden text-white">
+        {stage === 0 ? (
+          <motion.div
+            ref={introRef}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0, ease: 'easeOut' }}
+            className="flex w-full flex-col items-center justify-center text-center"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="mb-4 flex items-center justify-center gap-2"
+            >
+              <img
+                src={SolutionTextImg}
+                alt="Solution Text"
+                className="h-auto w-[100px] sm:w-[120px] md:w-[150px] lg:w-[180px]"
+              />
+              <span className="mt-2 text-2xl font-bold sm:text-3xl md:text-4xl">
+                가 해결해줍니다
+              </span>
+            </motion.div>
+            <motion.img
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              src={mascot}
+              alt="캐릭터"
+              className="z-10 h-auto w-[160px] rounded-full sm:w-[200px] md:w-[240px]"
+            />
+          </motion.div>
+        ) : (
+          <>
+            <div className="absolute flex h-full w-full items-end justify-center pb-6 lg:items-center">
+              <div
+                className={`relative ${isMobile ? 'h-[2px] w-4/5' : 'h-4/5 w-[2px]'} rounded-full bg-white/30`}
+              >
+                <div
+                  className="absolute top-0 left-0 rounded-full bg-white"
+                  style={{
+                    height: isMobile ? '100%' : fillHeight,
+                    width: isMobile ? fillHeight : '100%',
+                    transition: 'width 0.3s ease-out, height 0.3s ease-out',
+                  }}
+                />
+              </div>
+            </div>
 
-      {/* 비눗방울 */}
-      {bubbles.map((b, i) => (
-        <div
-          key={i}
-          className="absolute bottom-[-15em] z-[1] h-[10em] w-[10em] rounded-full border border-white/10 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0)_70%)] shadow-[inset_0_20px_30px_rgba(255,255,255,0.055),inset_1em_1em_1em_rgba(255,255,255,0.103),0_1em_2em_rgba(0,0,0,0.1)]"
-          style={{
-            left: `${b.left}%`,
-            transform: `scale(${b.scale})`,
-            animation: `floatUp 4s ease-out forwards`,
-            animationDelay: `${b.delay}s`,
-          }}
-        />
-      ))}
+            <div className="relative flex h-full w-full flex-col items-center justify-center gap-8 px-6 text-center lg:flex-row lg:justify-between lg:px-8 lg:text-left xl:px-16">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`left-${stage}`}
+                  variants={contentVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  className="flex w-full justify-center lg:w-1/2 lg:justify-end"
+                >
+                  {leftContents[stage] && (
+                    <img
+                      src={leftContents[stage]}
+                      alt="왼쪽 컨텐츠"
+                      className="w-[350px] object-contain transition-all duration-300 md:w-[400px] lg:w-3/4"
+                    />
+                  )}
+                </motion.div>
+              </AnimatePresence>
 
-      {/* 콘텐츠 */}
-      <div className="animate-fadeSlide z-[5] flex flex-col items-center text-white">
-        <div
-          ref={sectionRef}
-          className={`flex h-[60%] w-full flex-col items-center justify-center rounded-full border-[6px] border-transparent p-2 transition-all duration-500 ${
-            inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`}
-        >
-          <img
-            src={SolutionTextImg}
-            alt="Solution Text"
-            className="mb-4 h-auto w-[60%] min-w-[300px]"
-          />
-          <img
-            src={mascot}
-            alt="캐릭터"
-            className="z-10 h-auto w-[30%] min-w-[200px] rounded-full"
-          />
-        </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`right-${stage}`}
+                  variants={contentVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  className="flex w-full flex-col items-center lg:w-1/2 lg:items-start"
+                >
+                  {rightContents[stage] && (
+                    <div className="mt-0 flex flex-col items-center lg:mt-0 lg:ml-10 lg:items-start xl:ml-16">
+                      <img
+                        src={rightContents[stage].image}
+                        alt={rightContents[stage].title}
+                        className="h-auto w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px]"
+                      />
+                      <h3 className="mt-0 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
+                        {rightContents[stage].title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed whitespace-pre-line text-white/80 sm:text-base md:text-lg lg:text-xl">
+                        {rightContents[stage].description}
+                      </p>
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </>
+        )}
       </div>
     </section>
   )
 }
 
-export default SolutionSection
+export default SolutionScrollSection

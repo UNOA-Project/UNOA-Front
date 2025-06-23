@@ -61,7 +61,7 @@ const BenefitCenterSection = () => {
   }, [currentIndex])
 
   return (
-    <section ref={sectionRef} className="relative h-[450vh]">
+    <section ref={sectionRef} className="relative h-[500vh]">
       {/* 커스텀 애니메이션 직접 정의 */}
       <style>
         {`

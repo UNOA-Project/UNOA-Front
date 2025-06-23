@@ -4,7 +4,6 @@ import UserProblems from './section/UserProblems'
 import SolutionSection from './section/SolutionSection'
 import BenefitsSection from './section/BenefitsSection'
 import ChatBotSection from './section/ChatBotSection'
-import PlanComparePage from '../components/PlanCompare/PlanComparePage'
 
 function MainPage() {
   const solutionRef = useRef(null)
