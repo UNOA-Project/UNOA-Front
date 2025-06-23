@@ -87,10 +87,12 @@ const PlanComparePageMobile = () => {
       : [plan?.mediaBenefit]
 
     return (
-      <div className="flex w-full max-w-[300px] flex-col items-center gap-3 rounded-xl p-3">
-        <h3 className="h-6 text-lg leading-snug font-bold break-keep text-black lg:text-2xl xl:text-3xl">
-          {plan?.title}
-        </h3>
+      <div className="flex w-full max-w-[300px] flex-col items-center gap-3 rounded-xl p-4">
+        <div className="flex h-14 items-center justify-center">
+          <h3 className="text-md text-center leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl xl:text-3xl">
+            {plan?.title}
+          </h3>
+        </div>
 
         <div className="flex w-full items-start justify-around gap-4 rounded-md bg-white p-4">
           <Bar value={price} max={maxValues?.price} label="월 요금" delay={barDelayStart} />
@@ -106,7 +108,7 @@ const PlanComparePageMobile = () => {
           <div className="font-medium whitespace-pre-line text-[#543ed9]">{plan?.sms}</div>
         </div>
 
-        <div className="min-h-[80px] w-full pt-2 text-center md:min-h-[120px]">
+        <div className="max-h-[120px] min-h-[120px] w-full pt-2 text-center md:min-h-[120px]">
           <div className="mt-2 text-xs text-gray-500 md:text-xl xl:text-2xl">프리미엄 혜택</div>
           {premiumBenefits?.filter(Boolean).length > 0 ? (
             renderBenefitImages(premiumBenefits)
@@ -115,7 +117,7 @@ const PlanComparePageMobile = () => {
           )}
         </div>
 
-        <div className="min-h-[80px] w-full pt-2 text-center md:min-h-[120px]">
+        <div className="min-h-[90px] w-full pt-2 text-center md:min-h-[120px]">
           <div className="mt-2 text-xs text-gray-500 md:text-xl xl:text-2xl">미디어 혜택</div>
           {mediaBenefits?.filter(Boolean).length > 0 ? (
             renderBenefitImages(mediaBenefits)
@@ -218,7 +220,7 @@ const PlanComparePageMobile = () => {
             </button>
           </div>
         </div>
-        <div className="flex w-full items-start justify-around gap-4 px-4 pt-6">
+        <div className="flex w-full items-start justify-around gap-4 px-4 pt-2">
           {plans.map((plan, idx) => (
             <PlanDetailColumn
               key={plan._id}

@@ -95,7 +95,7 @@ const PlanComparePage = () => {
         className={`mx-5 flex w-full max-w-[350px] flex-1 flex-col items-center rounded-xl p-4 text-black`}
         key={plan?._id}
       >
-        <h3 className="h-12 text-sm leading-snug font-bold break-keep text-black lg:text-2xl xl:text-3xl">
+        <h3 className="h-18 text-center text-sm leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl xl:text-3xl">
           {plan?.title}
         </h3>
 
