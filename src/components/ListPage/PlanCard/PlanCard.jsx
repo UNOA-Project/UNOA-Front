@@ -4,7 +4,7 @@ import callImg from '/images/icons/call.png'
 import messageImg from '/images/icons/message.png'
 import toast from 'react-hot-toast'
 
-const PlanCard = ({ plan }) => {
+const PlanCard = ({ plan, isCompare = true }) => {
   const formatPrice = price => {
     return parseInt(price).toLocaleString()
   }
@@ -51,7 +51,7 @@ const PlanCard = ({ plan }) => {
 
   const highlightNumbers = text => {
     if (!text) return text
-    
+
     const regex = /(\d+(?:\.\d+)?(?:GB|MB|TB|KB|분|초|원|건|회|개|무제한))/g
     return text.split(regex).map((part, index) => {
       if (/^\d+(?:\.\d+)?(?:GB|MB|TB|KB|분|초|원|건|회|개)$/.test(part) || part === '무제한') {
@@ -219,9 +219,11 @@ const PlanCard = ({ plan }) => {
       )}
 
       {/* 버튼 */}
-      <button className="border-primary-purple text-primary-purple hover:bg-gray-30 mt-auto w-full rounded-lg border bg-white px-4 py-3 font-medium transition-colors duration-200">
-        비교하기
-      </button>
+      {isCompare && (
+        <button className="border-primary-purple text-primary-purple hover:bg-gray-30 mt-auto w-full rounded-lg border bg-white px-4 py-3 font-medium transition-colors duration-200">
+          비교하기
+        </button>
+      )}
     </div>
   )
 }
