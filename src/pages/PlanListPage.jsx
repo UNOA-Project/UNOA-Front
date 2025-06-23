@@ -41,9 +41,9 @@ export default function PlanListPage() {
       </div>
 
       {/* 모바일 및 중간 해상도 */}
-      <div className="block min-h-screen overflow-y-auto xl:hidden">
-        <PlanCardSystem onFilterModalState={setOnFilterModalState} />
-        {!onFilterModalState && <PlanComparePageMobile />}
+      <div className="block min-h-screen overflow-y-auto pb-[60px] xl:hidden">
+        <PlanCardSystem />
+        <PlanComparePageMobile />
       </div>
     </div>
   )
