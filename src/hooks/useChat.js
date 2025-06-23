@@ -22,6 +22,7 @@ export const useChat = (socket, isConnected) => {
   const [messages, setMessages] = useState([]) // 채팅 화면에 표시될 메시지 배열
   const [isStreaming, setIsStreaming] = useState(false) // AI가 답변을 생성 중인지 여부
   const streamingMessageIdRef = useRef(null) // 스트리밍 중인 AI 메시지의 임시 ID를 추적
+  const [simpleModeResultMessage, setSimpleModeResultMessage] = useState(null)
 
   // --- 소켓 이벤트 리스너 설정 ---
   useEffect(() => {
@@ -73,10 +74,11 @@ export const useChat = (socket, isConnected) => {
     const handleStreamEnd = (data = {}) => {
       // 간단모드 처리
       if (!streamingMessageIdRef.current) {
-        setMessages(prev => [
-          ...prev,
-          { ...data.message, recommendedPlans: data.recommendedPlans, isStreaming: false },
-        ])
+        setSimpleModeResultMessage({
+          ...data.message,
+          recommendedPlans: data.recommendedPlans,
+          isStreaming: false,
+        })
         setIsStreaming(false)
         return
       }
@@ -223,5 +225,7 @@ export const useChat = (socket, isConnected) => {
     addLocalMessage,
     resetConversation,
     sendPromptSilently,
+    simpleModeResultMessage,
+    setSimpleModeResultMessage,
   }
 }
