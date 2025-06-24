@@ -15,7 +15,6 @@ export const UserBenefitsSection = () => {
 
   const imageCategories = ['프리미엄', '미디어']
   const itemsPerPage = 3
-
   const { user } = useAuth()
 
   const categoryLabels = {
@@ -39,7 +38,6 @@ export const UserBenefitsSection = () => {
         setLoading(false)
       }
     }
-
     fetchBenefits()
   }, [user])
 
@@ -47,34 +45,25 @@ export const UserBenefitsSection = () => {
   if (error) return <p>{error}</p>
 
   const groupedMembership = membershipBenefits.reduce((acc, benefit) => {
-    if (!acc[benefit.category]) acc[benefit.category] = []
+    acc[benefit.category] = acc[benefit.category] || []
     acc[benefit.category].push(benefit)
     return acc
   }, {})
 
   const toggleCategory = category => {
-    setOpenCategories(prev => {
-      const newState = {}
-      Object.keys(prev).forEach(key => {
-        newState[key] = false
-      })
-      newState[category] = !prev[category]
-      return newState
+    setOpenCategories(prev => ({
+      ...Object.fromEntries(Object.keys(prev).map(k => [k, false])),
+      [category]: !prev[category],
+    }))
+  }
+
+  const paginate = (category, direction, total) => {
+    setBenefitPages(prev => {
+      const current = prev[category] || 0
+      const maxPage = Math.floor((total - 1) / itemsPerPage)
+      const next = direction === 'next' ? Math.min(current + 1, maxPage) : Math.max(current - 1, 0)
+      return { ...prev, [category]: next }
     })
-  }
-
-  const handleNext = (category, total) => {
-    setBenefitPages(prev => ({
-      ...prev,
-      [category]: Math.min((prev[category] || 0) + 1, Math.floor((total - 1) / itemsPerPage)),
-    }))
-  }
-
-  const handlePrev = category => {
-    setBenefitPages(prev => ({
-      ...prev,
-      [category]: Math.max((prev[category] || 0) - 1, 0),
-    }))
   }
 
   return (
@@ -89,11 +78,7 @@ export const UserBenefitsSection = () => {
                 openCategories[category] ? 'text-primary-purple' : 'text-text-main'
               }`}
             >
-              {openCategories[category] ? (
-                <ArrowIcon className="h-3 w-3 rotate-90" />
-              ) : (
-                <ArrowIcon className="h-3 w-3" />
-              )}
+              <ArrowIcon className={`h-3 w-3 ${openCategories[category] ? 'rotate-90' : ''}`} />
               {category}
             </button>
             {openCategories[category] && (
@@ -120,22 +105,20 @@ export const UserBenefitsSection = () => {
 
       <section className="mt-6">
         <h2 className="mb-3 text-lg font-bold">요금제 혜택</h2>
-
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
           {Object.entries(planBenefits).map(([category, benefits]) =>
             benefits.length > 0 ? (
               <li
                 key={category}
-                className="border-gray-90 flex h-full w-full flex-col rounded-xl border px-4 py-5"
+                className="border-gray-90 flex h-full flex-col rounded-xl border px-4 py-5"
               >
                 <h3 className="mb-2 text-base font-semibold">
                   {categoryLabels[category] || category}
                 </h3>
-
                 {imageCategories.includes(category) ? (
                   <div className="flex items-center justify-between gap-3">
                     <button
-                      onClick={() => handlePrev(category)}
+                      onClick={() => paginate(category, 'prev')}
                       disabled={(benefitPages[category] || 0) === 0}
                       className="text-sm text-gray-500 disabled:opacity-30"
                     >
@@ -158,7 +141,7 @@ export const UserBenefitsSection = () => {
                         ))}
                     </ul>
                     <button
-                      onClick={() => handleNext(category, benefits.length)}
+                      onClick={() => paginate(category, 'next', benefits.length)}
                       disabled={
                         ((benefitPages[category] || 0) + 1) * itemsPerPage >= benefits.length
                       }
@@ -170,9 +153,7 @@ export const UserBenefitsSection = () => {
                 ) : (
                   <ul className="mt-2 list-inside list-disc text-sm text-gray-700">
                     {benefits.map((b, idx) => (
-                      <li key={idx}>
-                        <span>{b.benefit}</span>
-                      </li>
+                      <li key={idx}>{b.benefit}</li>
                     ))}
                   </ul>
                 )}
@@ -190,11 +171,11 @@ export const UserBenefitsSection = () => {
           {longTermBenefits.map((b, idx) => (
             <li
               key={idx}
-              className="border-gray-90 text-md flex w-full flex-col items-center gap-3 rounded-xl border px-1 py-4 text-center sm:w-[130px]"
+              className="border-gray-90 text-md flex w-full flex-col items-center gap-3 rounded-xl border px-1 py-4 text-center sm:w-33"
             >
               <img src={`/images/benefits/${b.brand}.png`} className="w-16" alt="" />
               <div className="break-keep whitespace-normal">
-                {b.brand ? <p className="font-bold">{b.brand}</p> : null}
+                {b.brand && <p className="font-bold">{b.brand}</p>}
                 <span className="text-sm text-gray-700">{b.benefit}</span>
               </div>
             </li>
