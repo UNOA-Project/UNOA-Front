@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import mascot from '@/assets/PlanCompare.png'
 import { motion } from 'framer-motion'
+import AiCompareSummary from './AiCompareSummary'
 
 const PlanComparePage = () => {
   const [plans, setPlans] = useState([])
@@ -179,12 +180,17 @@ const PlanComparePage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="flex h-[100dvh] w-full flex-col overflow-hidden bg-[#ffffff] px-4 py-8 md:px-6 md:py-12"
+      className="flex h-full w-full flex-col overflow-y-auto bg-white px-4 py-8 md:px-6 md:py-12"
     >
       <h2 className="mt-15 mb-4 text-left text-base font-bold sm:text-lg lg:text-xl xl:text-2xl">
         요금제 비교하기
       </h2>
       <hr className="mb-6 w-full border-t-[2px] border-gray-300" />
+
+      {/* ai비교하기 */}
+      <div className="mb-8">
+        <AiCompareSummary plans={plans} />
+      </div>
 
       {plans.length === 0 ? (
         renderEmptyState()
