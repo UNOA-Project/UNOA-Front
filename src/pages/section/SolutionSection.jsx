@@ -181,7 +181,7 @@ const SolutionScrollSection = () => {
                         alt={rightContents[stage].title}
                         className="h-auto w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px]"
                       />
-                      <h3 className="mt-0 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
+                      <h3 className="mt-10 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
                         {rightContents[stage].title}
                       </h3>
                       <p className="mt-2 text-sm leading-relaxed whitespace-pre-line text-white/80 sm:text-base md:text-lg lg:text-xl">
