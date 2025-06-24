@@ -28,7 +28,7 @@ export const UserBenefits = () => {
   useEffect(() => {
     const fetchBenefits = async () => {
       try {
-        const res = await getUserBenefits(user.user.name)
+        const res = await getUserBenefits(user.user._id)
         setMembershipBenefits(res.membershipBenefits)
         setLongTermBenefits(res.longTermBenefits)
         setPlanBenefits(res.planBenefits)
