@@ -27,8 +27,9 @@
 
 @media (min-width: 768px) {
   .modalContent {
-    max-width: 400px;
-    margin: 0 16px;
+    max-width: 500px;
+    max-height: 80vh;
+    margin: 0px 16px;
     border-radius: 12px;
   }
 }
@@ -106,10 +107,10 @@
 }
 
 .applyButton {
-  background-color: #2563eb;
+  background-color: var(--color-primary-purple);
   color: white;
 }
 
 .applyButton:hover {
-  background-color: #1d4ed8;
+  background-color: #4a30db;
 }

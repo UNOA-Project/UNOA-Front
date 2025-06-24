@@ -75,12 +75,12 @@ const SolutionScrollSection = () => {
     },
     {
       image: '/images/right2.png',
-      title: '간단 모드',
+      title: '간단모드를 통한 요금제 추천',
       description: '글 입력이 어렵다면 추천 질문 버튼을 골라\n대화를 시작할 수 있어요!',
     },
     {
       image: '/images/right3.png',
-      title: '요금제 비교',
+      title: '요금제 한눈에 보고 비교까지',
       description: '다양한 요금제를 한눈에 확인할 수 있어요',
     },
   ]
@@ -181,7 +181,7 @@ const SolutionScrollSection = () => {
                         alt={rightContents[stage].title}
                         className="h-auto w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px]"
                       />
-                      <h3 className="mt-0 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
+                      <h3 className="mt-10 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
                         {rightContents[stage].title}
                       </h3>
                       <p className="mt-2 text-sm leading-relaxed whitespace-pre-line text-white/80 sm:text-base md:text-lg lg:text-xl">

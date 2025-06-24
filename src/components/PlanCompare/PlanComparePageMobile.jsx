@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import mascot from '@/assets/PlanCompare.png'
 import { motion, AnimatePresence, useAnimation } from 'framer-motion'
+import AiCompareSummary from './AiCompareSummary'
 
 const PlanComparePageMobile = () => {
   const [plans, setPlans] = useState([])
@@ -219,6 +220,9 @@ const PlanComparePageMobile = () => {
               </svg>
             </button>
           </div>
+        </div>
+        <div className="px-4 py-2">
+          <AiCompareSummary plans={plans} />
         </div>
         <div className="flex w-full items-start justify-around gap-4 px-4 pt-2">
           {plans.map((plan, idx) => (

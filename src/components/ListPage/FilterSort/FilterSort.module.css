@@ -90,8 +90,8 @@
 }
 
 .activeItem {
-  background-color: #eff6ff !important;
-  color: #2563eb;
+  background-color: var(--color-gray-100) !important;
+  color: #121212;
   font-weight: 500;
 }
 
@@ -102,8 +102,9 @@
 
 .filterLink {
   display: flex;
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 16px;
+  color: #121212;
+  font-weight:600;
   background: none;
   border: none;
   cursor: pointer;

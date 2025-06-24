@@ -43,6 +43,17 @@ export const getUserBenefits = async name => {
   const response = await axios.get(`${API_URL}/user/benefits/${name}`, null, {
     withCredentials: true,
   })
+  return response.data
+}
 
+
+export const changePassword = async ({ newPassword }) => {
+  const response = await axios.post(
+    `${API_URL}/auth/change-password`,
+    { newPassword },
+    {
+      withCredentials: true,
+    }
+  )
   return response.data
 }

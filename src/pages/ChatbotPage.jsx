@@ -15,10 +15,15 @@ function ChatbotPage() {
   const [currentMode, setCurrentMode] = useState('normal')
   const { socket, isConnected } = useSocket()
 
-  const { messages, isStreaming, sendMessage, resetConversation, sendPromptSilently } = useChat(
-    socket,
-    isConnected
-  )
+  const {
+    messages,
+    isStreaming,
+    sendMessage,
+    resetConversation,
+    sendPromptSilently,
+    simpleModeResultMessage,
+    setSimpleModeResultMessage,
+  } = useChat(socket, isConnected)
 
   //useUI는 메시지 변경뿐만 아니라 모드 변경도 감지
   const { messagesEndRef, inputRef, formatTime } = useUI(messages, currentMode)
@@ -67,6 +72,8 @@ function ChatbotPage() {
           messagesEndRef={messagesEndRef}
           inputRef={inputRef}
           sendPromptSilently={sendPromptSilently}
+          simpleModeResultMessage={simpleModeResultMessage}
+          setSimpleModeResultMessage={setSimpleModeResultMessage}
         />
       </div>
     </div>
