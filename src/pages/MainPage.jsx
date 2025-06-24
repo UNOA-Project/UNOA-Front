@@ -4,6 +4,7 @@ import UserProblems from './section/UserProblems'
 import SolutionSection from './section/SolutionSection'
 import BenefitsSection from './section/BenefitsSection'
 import ChatBotSection from './section/ChatBotSection'
+import Footer from '../components/Footer'
 
 function MainPage() {
   const solutionRef = useRef(null)
@@ -17,6 +18,7 @@ function MainPage() {
       </div>
       <BenefitsSection />
       <ChatBotSection />
+      <Footer />
     </div>
   )
 }
