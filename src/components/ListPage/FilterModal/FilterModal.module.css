@@ -107,10 +107,10 @@
 }
 
 .applyButton {
-  background-color: #2563eb;
+  background-color: var(--color-primary-purple);
   color: white;
 }
 
 .applyButton:hover {
-  background-color: #1d4ed8;
+  background-color: #4a30db;
 }
