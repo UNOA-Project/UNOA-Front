@@ -3,6 +3,7 @@ import UserNoPlan from '@/components/MyPage/UserNoPlan'
 import UserPlan from '@/components/MyPage/UserPlan'
 import NoUser from '@/components/MyPage/NoUser'
 import NoPlanBenefit from '@/components/MyPage/NoPlanBenefit'
+import { UserBenefitsSection } from '@/components/Benefits/UserBenefitsSection'
 import Footer from '@/components/Footer'
 
 export default function MyPage() {
@@ -17,7 +18,12 @@ export default function MyPage() {
       </>
     )
   } else if (user.user.isUplus) {
-    content = <UserPlan />
+    content = (
+      <>
+        <UserPlan />
+        <UserBenefitsSection />
+      </>
+    )
   } else {
     content = (
       <>
