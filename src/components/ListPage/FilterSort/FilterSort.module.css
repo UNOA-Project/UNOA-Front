@@ -90,8 +90,8 @@
 }
 
 .activeItem {
-  background-color: #eff6ff !important;
-  color: #2563eb;
+  background-color: var(--color-gray-100) !important;
+  color: #121212;
   font-weight: 500;
 }
 
