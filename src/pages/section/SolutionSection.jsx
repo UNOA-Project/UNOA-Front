@@ -75,12 +75,12 @@ const SolutionScrollSection = () => {
     },
     {
       image: '/images/right2.png',
-      title: '간단 모드',
+      title: '간단모드를 통한 요금제 추천',
       description: '글 입력이 어렵다면 추천 질문 버튼을 골라\n대화를 시작할 수 있어요!',
     },
     {
       image: '/images/right3.png',
-      title: '요금제 비교',
+      title: '요금제 한눈에 보고 비교까지',
       description: '다양한 요금제를 한눈에 확인할 수 있어요',
     },
   ]
