@@ -23,9 +23,6 @@ const AppSelector = ({ selectedApps, onToggleApp }) => {
           </div>
         ))}
       </div>
-      {selectedApps.length > 0 && (
-        <div className={styles.selectedCount}>{selectedApps.length}개 앱 선택됨</div>
-      )}
     </div>
   )
 }

@@ -3,7 +3,7 @@
 }
 
 .filterLabel {
-  color: #374151;
+  color: #121212;
   font-weight: 500;
   margin-bottom: 12px;
   font-size: 16px;
@@ -32,7 +32,7 @@
 }
 
 .filterOption.selected {
-  background-color: #dbeafe;
-  color: #2563eb;
-  border-color: #93c5fd;
+  background-color: #fff;
+  color: #121212;
+  border-color: var(--color-sub-lilac);
 }

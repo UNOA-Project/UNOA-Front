@@ -20,12 +20,20 @@
 .emptyState {
   text-align: center;
   padding: 80px 20px;
+  justify-items: center;
 }
 
-.emptyIcon {
+.unoaImgCon {
+  display: flex;
   font-size: 64px;
   margin-bottom: 16px;
   color: #9ca3af;
+  width: 80px;
+}
+
+.unoaImgCon img{
+  width: 100%;
+  object-fit: cover;
 }
 
 .emptyMessage {
@@ -35,11 +43,11 @@
 }
 
 .resetButton {
-  background-color: #2563eb;
-  color: white;
+  background-color: #fff;
+  color: #121212;
   padding: 8px 24px;
   border-radius: 8px;
-  border: none;
+  border: 2px solid var(--color-sub-lilac);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -47,7 +55,7 @@
 }
 
 .resetButton:hover {
-  background-color: #1d4ed8;
+  background-color: #e9e9e9;
 }
 
 .moreButtonContainer {
@@ -68,9 +76,9 @@
 }
 
 .moreButton:hover {
-  background-color: #f9fafb;
+  background-color: var(--color-gray-30);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 12px rgba(80, 80, 80, 0.15);
 }
 
 .moreButton:active {
@@ -82,34 +90,35 @@
   text-align: center;
   margin-top: 40px;
   padding: 24px;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  background: #fff;
   border-radius: 16px;
-  border: 1px solid #bae6fd;
+  border: 1px solid var(--color-gray-200);
 }
 
 .allLoadedMessage {
   font-size: 16px;
-  color: #0c4a6e;
+  color: #121212;
   font-weight: 500;
   margin-bottom: 16px;
 }
 
 .backToTopButton {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  color: white;
+  background: #fff;
+  color: #121212;
   padding: 12px 24px;
   border-radius: 8px;
-  border: none;
+  border:1px solid var(--color-primary-purple);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .backToTopButton:hover {
+  border:1px solid var(--color-primary-purple);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 12px rgba(80, 80, 80, 0.15);
+  background: var(--color-gray-30);
 }
 
 /* 로딩 애니메이션  */
