@@ -39,13 +39,12 @@ export const logoutUser = async () => {
   return response.data
 }
 
-export const getUserBenefits = async name => {
-  const response = await axios.get(`${API_URL}/user/benefits/${name}`, null, {
+export const getUserBenefits = async id => {
+  const response = await axios.get(`${API_URL}/user/benefits/${id}`, null, {
     withCredentials: true,
   })
   return response.data
 }
-
 
 export const changePassword = async ({ newPassword }) => {
   const response = await axios.post(
