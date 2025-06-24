@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import PlanCard from '../PlanCard/PlanCard'
 import styles from './PlanGrid.module.css'
-
+import unoaXimg from '@/assets/유노아x팻말.png'
 //요금제 카드 그리드 컴포넌트
 const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
   const [visibleCount, setVisibleCount] = useState(6) //초기에 보여줄 카드수
@@ -28,7 +28,9 @@ const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
   if (plans.length === 0) {
     return (
       <div className={styles.emptyState}>
-        <div className={styles.emptyIcon}>😔</div>
+        <div className={styles.unoaImgCon}>
+          <img src={unoaXimg} alt="유노아x팻말이미지" />
+        </div>
         <div className={styles.emptyMessage}>조건에 맞는 요금제가 없습니다</div>
         <button onClick={onResetFilters} className={styles.resetButton}>
           필터 초기화

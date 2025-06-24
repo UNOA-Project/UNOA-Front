@@ -20,12 +20,20 @@
 .emptyState {
   text-align: center;
   padding: 80px 20px;
+  justify-items: center;
 }
 
-.emptyIcon {
+.unoaImgCon {
+  display: flex;
   font-size: 64px;
   margin-bottom: 16px;
   color: #9ca3af;
+  width: 80px;
+}
+
+.unoaImgCon img{
+  width: 100%;
+  object-fit: cover;
 }
 
 .emptyMessage {
@@ -35,11 +43,11 @@
 }
 
 .resetButton {
-  background-color: #2563eb;
-  color: white;
+  background-color: #fff;
+  color: #121212;
   padding: 8px 24px;
   border-radius: 8px;
-  border: none;
+  border: 2px solid var(--color-sub-lilac);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -47,7 +55,7 @@
 }
 
 .resetButton:hover {
-  background-color: #1d4ed8;
+  background-color: #e9e9e9;
 }
 
 .moreButtonContainer {
