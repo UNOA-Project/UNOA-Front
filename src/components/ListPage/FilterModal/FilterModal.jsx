@@ -27,6 +27,7 @@ const FilterModal = ({
 
         <div className={styles.modalBody}>
           <FilterButton
+            onToggleApp={onToggleApp}
             options={filterOptions.networks}
             selected={tempFilters.network}
             onSelect={value => setTempFilters(prev => ({ ...prev, network: value }))}
