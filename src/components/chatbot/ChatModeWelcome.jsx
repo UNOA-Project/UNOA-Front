@@ -1,30 +1,17 @@
-import React from 'react'
-import WelcomeNoaIcon from '../../assets/welcomeNoa.svg?react'
+import WelcomeNoaIcon from '@/assets/welcomeNoa.svg?react'
 
 const NormalModeWelcome = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
-      }}
-    >
-      {/* 아이콘 */}
-      <WelcomeNoaIcon />
+    <div className="flex h-full w-full flex-col items-center justify-center p-4 pb-24">
+      <div className="flex justify-center sm:mb-11">
+        <WelcomeNoaIcon className="w-28 sm:w-36 md:w-40" />
+      </div>
 
-      {/* 아이콘 아래에 표시될 텍스트 */}
-      <p
-        style={{
-          marginTop: '10px', // 아이콘과의 상단 여백 (50px)
-          fontSize: '18px', // 글자 크기
-          color: '#555', // 글자 색상
-          fontWeight: '500', // 글자 두께
-        }}
-      >
-        만나서 반가워요
+      <p className="text-center text-lg font-semibold break-keep text-gray-800 sm:text-xl">
+        <span className="font-bold text-[var(--color-lguplus)]">LG U+</span> 요금제가 궁금하다면,{' '}
+        <br />
+        <span className="text-primary-purple font-bold">NOA</span>
+        에게 편하게 물어보세요!
       </p>
     </div>
   )
