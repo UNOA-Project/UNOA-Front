@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, useRef } from 'react'
 import PlanCard from '../PlanCard/PlanCard'
 import styles from './PlanGrid.module.css'
 import unoaXimg from '@/assets/유노아x팻말.png'
+
 //요금제 카드 그리드 컴포넌트
 const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
   const [visibleCount, setVisibleCount] = useState(6) //초기에 보여줄 카드수
@@ -11,20 +12,30 @@ const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
     setVisibleCount(6)
   }, [resetTrigger])
 
-  //현재 보여줄 요금제들
   const visiblePlans = useMemo(() => {
     return plans.slice(0, visibleCount)
   }, [plans, visibleCount])
 
-  //더보기 버튼 클릭 핸들러
   const handleLoadMore = () => {
     setVisibleCount(prev => prev + 6)
   }
 
-  //더 보여줄 요금제가 있는지 확인
-  const hasMore = visibleCount < plans.length
+  const scrollToTop = () => {
+    const overflowContainer = document.querySelector('.overflow-y-auto') //ListPage.jsx에서 준 속성때문에 스크롤이 안되던 현상을 해결
+    if (overflowContainer) {
+      overflowContainer.scrollTo({ top: 0, behavior: 'smooth' })
+      overflowContainer.scrollTop = 0
+    }
 
-  //요금제가 없을 때
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleBackToTop = () => {
+    setVisibleCount(6)
+    scrollToTop()
+  }
+
+  const hasMore = visibleCount < plans.length
   if (plans.length === 0) {
     return (
       <div className={styles.emptyState}>
@@ -61,13 +72,7 @@ const PlanGrid = ({ plans, onResetFilters, resetTrigger }) => {
           <div className={styles.allLoadedMessage}>
             모든 요금제를 확인했습니다 ({plans.length}개)
           </div>
-          <button
-            className={styles.backToTopButton}
-            onClick={() => {
-              setVisibleCount(6)
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-          >
+          <button className={styles.backToTopButton} onClick={handleBackToTop}>
             처음으로 돌아가기
           </button>
         </div>
