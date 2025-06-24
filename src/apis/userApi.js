@@ -38,3 +38,14 @@ export const logoutUser = async () => {
   })
   return response.data
 }
+
+export const changePassword = async ({ newPassword }) => {
+  const response = await axios.post(
+    `${API_URL}/auth/change-password`,
+    { newPassword },
+    {
+      withCredentials: true,
+    }
+  )
+  return response.data
+}
