@@ -89,27 +89,28 @@
 
 .allLoadedMessage {
   font-size: 16px;
-  color: #0c4a6e;
+  color: #121212;
   font-weight: 500;
   margin-bottom: 16px;
 }
 
 .backToTopButton {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  color: white;
+  background: #fff;
+  color: #121212;
   padding: 12px 24px;
   border-radius: 8px;
-  border: none;
+  border:1px solid var(--color-primary-purple);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .backToTopButton:hover {
+  border:1px solid var(--color-primary-purple);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 12px rgba(80, 80, 80, 0.15);
+  background: var(--color-gray-30);
 }
 
 /* 로딩 애니메이션  */
