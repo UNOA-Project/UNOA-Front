@@ -6,6 +6,7 @@ import PlanGrid from '../PlanGrid/PlanGrid'
 import FilterModal from '../FilterModal/FilterModal'
 import styles from './PlanCardSystem.module.css'
 import LoadingScreen from './../../chatbot/LoadingScreen'
+import ScrollToTopButton from '../../ScrollToTopButton'
 
 const PlanCardSystem = ({ onFilterModalState }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -243,6 +244,7 @@ const PlanCardSystem = ({ onFilterModalState }) => {
         }}
         onToggleApp={toggleApp}
       />
+      <ScrollToTopButton isOpen={isFilterOpen} />
     </div>
   )
 }
