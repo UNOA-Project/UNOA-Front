@@ -31,7 +31,7 @@ const UoaLogo = () => {
   }, [])
 
   return (
-    <div className="mx-auto flex min-h-[35vh] w-full max-w-[600px] items-center justify-center">
+    <div className="mx-auto flex min-h-[45vh] w-full max-w-[600px] items-center justify-center">
       <svg ref={svgRef} className="block h-auto w-full" viewBox="0 -10 250 70">
         <style>
           {`
