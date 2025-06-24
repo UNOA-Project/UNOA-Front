@@ -1,5 +1,5 @@
 import Modal from './Modal'
-import GradeCard from '@/components/Benefits/GradeCard'
+import GradeCard from '@/components/MyPage/GradeCard'
 
 const membershipGrades = [
   {

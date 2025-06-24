@@ -3,7 +3,7 @@ import UserNoPlan from '@/components/MyPage/UserNoPlan'
 import UserPlan from '@/components/MyPage/UserPlan'
 import NoUser from '@/components/MyPage/NoUser'
 import NoPlanBenefit from '@/components/MyPage/NoPlanBenefit'
-import { UserBenefitsSection } from '@/components/Benefits/UserBenefitsSection'
+import { UserBenefits } from '@/components/MyPage/UserBenefits'
 import Footer from '@/components/Footer'
 
 export default function MyPage() {
@@ -21,7 +21,7 @@ export default function MyPage() {
     content = (
       <>
         <UserPlan />
-        <UserBenefitsSection />
+        <UserBenefits />
       </>
     )
   } else {

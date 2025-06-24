@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logoutUser, changePassword } from '@/apis/userApi'
 import ChangePasswordModal from '@/components/MyPage/ChangePasswordModal'
-import GradeGuideModal from '../Modal/GradeGuideModal'
+import GradeGuideModal from '@/components/Modal/GradeGuideModal'
 import useToast from '@/hooks/useToast'
 
 export default function UserPlan() {

@@ -7,7 +7,7 @@ import HandImg from '@/assets/hand-sign.svg'
 import NoaYeah from '@/assets/noa-yeah.svg'
 
 import { SimpleModeForm } from './SimpleModeForm'
-import PlanCard from '../ListPage/PlanCard/PlanCard'
+import PlanCard from '@/components/ListPage/PlanCard/PlanCard'
 
 export default function SimpleMode({
   sendPromptSilently,
