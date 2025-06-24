@@ -49,13 +49,13 @@ export default function GradeGuideModal({ isOpen, onClose }) {
               <GradeCard key={item.grade} {...item} />
             ))}
           </div>
-          <ul className="list-disc pl-5 text-sm leading-relaxed text-gray-700">
+          <ul className="list-disc pl-5 text-sm leading-relaxed break-keep whitespace-normal text-gray-700">
             <li>이용 중인 모바일 요금제나 1년 동안 낸 통신 요금에 따라 3가지로 나뉘어요.</li>
             <li>
               VVIP/VIP 등급 기준에 맞는 요금제로 변경 후 정지 없이 다음달 말일까지 이용하시면
               다다음달 1일부터 등급이 올라가요.
               <br />
-              <span className="block pl-5">
+              <span className="block">
                 단, 요금제를 매월 1일에 변경하시면 다음달 1일부터 등급이 올라가요.
               </span>
             </li>
@@ -74,7 +74,7 @@ export default function GradeGuideModal({ isOpen, onClose }) {
               <GradeCard key={item.grade} {...item} />
             ))}
           </div>
-          <ul className="list-disc pl-5 text-sm leading-relaxed text-gray-700">
+          <ul className="list-disc pl-5 text-sm leading-relaxed break-keep whitespace-normal text-gray-700">
             <li>작년 11월 30일 기준으로 올해 혜택이 정해져요.</li>
           </ul>
         </section>
