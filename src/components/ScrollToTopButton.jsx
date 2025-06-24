@@ -42,7 +42,7 @@ const ScrollToTopButton = ({ isOpen }) => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed right-4 bottom-4 z-50 rounded-full bg-blue-600 p-3 shadow-lg transition-opacity duration-300 hover:bg-blue-700 sm:right-6 sm:bottom-6 sm:p-4 ${
+      className={`hover:bg-gray-30 fixed right-1.5 bottom-22.5 z-9999 rounded-full border border-gray-200 bg-white p-3 shadow-lg transition-opacity duration-300 sm:right-245.5 sm:bottom-6 sm:p-2 ${
         visible ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}
       aria-label="Scroll to top"
@@ -50,7 +50,7 @@ const ScrollToTopButton = ({ isOpen }) => {
       {/* Heroicons: chevron-up */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 text-white sm:h-6 sm:w-6"
+        className="h-5 w-5 text-black sm:h-6 sm:w-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
