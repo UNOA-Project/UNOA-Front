@@ -252,6 +252,7 @@ const PlanComparePageMobile = () => {
           dragConstraints={{ top: 0, bottom: 0 }}
           dragElastic={0.1}
           onDragEnd={onDragEnd}
+          data-mobile-compare-expanded={isOpen}
         >
           {isOpen ? <ExpandedView /> : <CollapsedView />}
         </motion.div>

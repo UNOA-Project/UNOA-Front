@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 const ScrollToTopButton = ({ isOpen }) => {
   //isOpen은 필터 모달이 띄워졌을때 비활성화 시키기 위해 사용
   const [visible, setVisible] = useState(false)
+  const [isExpandedViewOpen, setIsExpandedViewOpen] = useState(false)
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -34,7 +35,47 @@ const ScrollToTopButton = ({ isOpen }) => {
     }
   }, [])
 
-  if (isOpen) return null
+  // ExpandedView 상태 감지
+  useEffect(() => {
+    const checkExpandedViewState = () => {
+      // PlanComparePageMobile의 motion.div 요소를 찾아서 data 속성 확인
+      const mobileCompareElement = document.querySelector('[data-mobile-compare-expanded]')
+      const isExpanded =
+        mobileCompareElement?.getAttribute('data-mobile-compare-expanded') === 'true'
+      setIsExpandedViewOpen(isExpanded)
+    }
+
+    // 초기 상태 확인
+    checkExpandedViewState()
+
+    // DOM 변경 감지를 위한 MutationObserver
+    const observer = new MutationObserver(() => {
+      checkExpandedViewState()
+    })
+
+    // body의 하위 요소들을 감시
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['data-mobile-compare-expanded'],
+    })
+
+    // compareUpdated 이벤트도 감지 (기존 이벤트 활용)
+    const handleCompareUpdate = () => {
+      setTimeout(checkExpandedViewState, 100) // 약간의 딜레이를 주어 DOM 업데이트 후 확인
+    }
+
+    window.addEventListener('compareUpdated', handleCompareUpdate)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('compareUpdated', handleCompareUpdate)
+    }
+  }, [])
+
+  // 필터 모달이 열려있거나 ExpandedView가 열려있으면 숨김
+  if (isOpen || isExpandedViewOpen) return null
 
   const scrollToTop = () => {
     const overflowContainer = document.querySelector('.overflow-y-auto')
