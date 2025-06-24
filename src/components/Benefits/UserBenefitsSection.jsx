@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getUserBenefits } from '@/apis/userApi'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 import { useAuth } from '@/contexts/AuthContext'
+import LoadingScreen from '@/components/chatbot/LoadingScreen'
 
 export const UserBenefitsSection = () => {
   const [membershipBenefits, setMembershipBenefits] = useState([])
@@ -23,7 +24,6 @@ export const UserBenefitsSection = () => {
     미디어: '미디어 서비스 기본 제공(택1)',
     스마트기기: '스마트기기 혜택',
     '시그니처/가족결합': '시그니처/가족결합 혜택',
-    '피싱 해킹 안심 서비스': '피싱/해킹 안심 서비스',
   }
 
   useEffect(() => {
@@ -41,9 +41,9 @@ export const UserBenefitsSection = () => {
     }
 
     fetchBenefits()
-  }, [])
+  }, [user])
 
-  if (loading) return <p>로딩 중...</p>
+  if (loading) return <LoadingScreen />
   if (error) return <p>{error}</p>
 
   const groupedMembership = membershipBenefits.reduce((acc, benefit) => {
@@ -80,19 +80,19 @@ export const UserBenefitsSection = () => {
   return (
     <div className="border-border w-[85%] overflow-hidden rounded-xl border bg-white px-5 py-10 lg:w-[70%] 2xl:w-[50%]">
       <section>
-        <h2 className="mb-2 text-lg font-bold">멤버십 혜택</h2>
+        <h2 className="mb-3 text-lg font-bold">멤버십 혜택</h2>
         {Object.entries(groupedMembership).map(([category, benefits]) => (
-          <div key={category} className="mb-4">
+          <div key={category} className="mb-5">
             <button
               onClick={() => toggleCategory(category)}
-              className={`flex w-full items-center gap-5 rounded px-4 py-2 text-left text-base font-medium transition-colors ${
+              className={`flex w-full items-center gap-4 rounded text-left text-base font-medium transition-colors ${
                 openCategories[category] ? 'text-primary-purple' : 'text-text-main'
               }`}
             >
               {openCategories[category] ? (
-                <ArrowIcon className="h-4 w-4 rotate-90" />
+                <ArrowIcon className="h-3 w-3 rotate-90" />
               ) : (
-                <ArrowIcon className="h-4 w-4" />
+                <ArrowIcon className="h-3 w-3" />
               )}
               {category}
             </button>
@@ -105,8 +105,8 @@ export const UserBenefitsSection = () => {
                   >
                     <div className="flex flex-col gap-y-1.5">
                       <img src={`/images/benefits/${b.brand.toLowerCase()}.png`} className="w-9" />
-                      <p className="text-md font-bold">{b.brand}</p>
-                      <p className="text-sm break-keep whitespace-normal text-gray-600">
+                      <p className="text-base font-bold">{b.brand}</p>
+                      <p className="text-sm break-keep whitespace-normal text-gray-700">
                         {b.benefit}
                       </p>
                     </div>
@@ -119,7 +119,7 @@ export const UserBenefitsSection = () => {
       </section>
 
       <section className="mt-6">
-        <h2 className="mb-4 text-xl font-bold">요금제 혜택</h2>
+        <h2 className="mb-3 text-lg font-bold">요금제 혜택</h2>
 
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
           {Object.entries(planBenefits).map(([category, benefits]) =>
@@ -182,11 +182,10 @@ export const UserBenefitsSection = () => {
         </ul>
       </section>
 
-      <section>
+      <section className="mt-6">
         {longTermBenefits.length > 0 && (
-          <h2 className="mt-6 mb-2 text-xl font-bold">장기고객 혜택</h2>
+          <h2 className="mt-3 mb-2 text-lg font-bold">장기고객 혜택</h2>
         )}
-        {/* <ul className="grid grid-cols-2 gap-4 px-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4"> */}
         <ul className="flex flex-wrap gap-3">
           {longTermBenefits.map((b, idx) => (
             <li
@@ -196,7 +195,7 @@ export const UserBenefitsSection = () => {
               <img src={`/images/benefits/${b.brand}.png`} className="w-16" alt="" />
               <div className="break-keep whitespace-normal">
                 {b.brand ? <p className="font-bold">{b.brand}</p> : null}
-                <span className="text-sm">{b.benefit}</span>
+                <span className="text-sm text-gray-700">{b.benefit}</span>
               </div>
             </li>
           ))}
@@ -205,8 +204,3 @@ export const UserBenefitsSection = () => {
     </div>
   )
 }
-
-// 이미지 간격 넓히고 글 간격
-// 장기고객 혜택 좀 더 작게
-// 화살표 간격 넓게
-// 로딩페이지
