@@ -5,6 +5,7 @@ import FilterSort from '../FilterSort/FilterSort'
 import PlanGrid from '../PlanGrid/PlanGrid'
 import FilterModal from '../FilterModal/FilterModal'
 import styles from './PlanCardSystem.module.css'
+import LoadingScreen from './../../chatbot/LoadingScreen'
 
 const PlanCardSystem = ({ onFilterModalState }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -190,13 +191,7 @@ const PlanCardSystem = ({ onFilterModalState }) => {
 
   // 로딩 상태 처리
   if (loading) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loadingContainer}>
-          <p>요금제 정보를 불러오는 중...</p>
-        </div>
-      </div>
-    )
+    return <LoadingScreen />
   }
 
   // 에러 상태 처리
