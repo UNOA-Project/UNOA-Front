@@ -1,20 +1,43 @@
 import React, { useEffect, useState } from 'react'
 
-const ScrollToTopButton = () => {
+const ScrollToTopButton = ({ isOpen }) => {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const toggleVisibility = () => {
-      setVisible(window.scrollY > 300)
+      const overflowContainer = document.querySelector('.overflow-y-auto')
+
+      if (overflowContainer) {
+        setVisible(overflowContainer.scrollTop > 300)
+      }
     }
 
-    window.addEventListener('scroll', toggleVisibility)
-    return () => window.removeEventListener('scroll', toggleVisibility)
+    toggleVisibility()
+
+    const overflowContainer = document.querySelector('.overflow-y-auto')
+
+    if (overflowContainer) {
+      overflowContainer.addEventListener('scroll', toggleVisibility)
+    }
+
+    return () => {
+      if (overflowContainer) {
+        overflowContainer.removeEventListener('scroll', toggleVisibility)
+      }
+      window.removeEventListener('scroll', toggleVisibility)
+    }
   }, [])
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const overflowContainer = document.querySelector('.overflow-y-auto')
+
+    if (overflowContainer) {
+      overflowContainer.scrollTo({ top: 0, behavior: 'smooth' })
+      overflowContainer.scrollTop = 0
+    }
   }
+
+  if (isOpen) return null
 
   return (
     <button
