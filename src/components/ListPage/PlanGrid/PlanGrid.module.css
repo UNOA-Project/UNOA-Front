@@ -68,9 +68,9 @@
 }
 
 .moreButton:hover {
-  background-color: #f9fafb;
+  background-color: var(--color-gray-30);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 12px rgba(80, 80, 80, 0.15);
 }
 
 .moreButton:active {
@@ -82,9 +82,9 @@
   text-align: center;
   margin-top: 40px;
   padding: 24px;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  background: #fff;
   border-radius: 16px;
-  border: 1px solid #bae6fd;
+  border: 1px solid var(--color-gray-200);
 }
 
 .allLoadedMessage {
