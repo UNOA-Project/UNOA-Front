@@ -43,34 +43,33 @@ export const useChat = (socket, isConnected) => {
       setMessages(prev => [...prev, streamingPlaceholder])
     }
 
-    // 마크다운 오류 처리
+    // 마크다운 오류 처리 정규식을 더 간결하고 효과적으로 개선
     const preprocessMessage = content => {
       if (!content) return ''
       return (
         content
-          // 1. '* *텍스트**' 와 같이 비정상적인 별표 사용을 교정
-          .replace(/\* \*([\s\S]*?)\*\*/g, '**$1**')
-          // 2. '** 텍스트 **' 와 같이 불필요한 공백이 포함된 경우를 교정
-          .replace(/\*\*\s(.*?)\s\*\*/g, '**$1**')
-          // 3. '**텍스트**단어' 와 같이 닫는 태그가 다음 단어와 붙어있는 경우, 공백을 추가
+          // '** 텍스트  **' 와 같이 **와 텍스트 사이의 불필요한 공백을 모두 제거
+          .replace(/\*\*\s*([\s\S]*?)\s*\*\*/g, '**$1**')
+          // '**텍스트**단어' 와 같이 닫는 태그가 다음 단어와 붙어있는 경우, 공백을 추가
           .replace(/(?<=\S)\*\*(?=\S)/g, '** ')
       )
     }
 
-    // [이벤트 핸들러] AI 응답 스트림 데이터 수신
+    // AI 응답 스트림 데이터 수신
     const handleStreamChunk = chunk => {
       if (chunk && streamingMessageIdRef.current) {
         setMessages(prev =>
           prev.map(msg =>
             msg.id === streamingMessageIdRef.current
-              ? { ...msg, content: preprocessMessage(msg.content + chunk) }
+              ? { ...msg, content: msg.content + chunk }
               : msg
           )
         )
       }
     }
 
-    // [이벤트 핸들러] AI 응답 스트림 종료 및 카드 메시지 처리
+    // AI 응답 스트림 종료
+    // 스트리밍이 모두 끝난 최종 메시지에 대해 preprocessMessage를 딱 한 번만 실행
     const handleStreamEnd = (data = {}) => {
       // 간단모드 처리
       if (!streamingMessageIdRef.current) {
@@ -88,7 +87,13 @@ export const useChat = (socket, isConnected) => {
         setMessages(prev =>
           prev.map(msg =>
             msg.id === streamingMessageIdRef.current
-              ? { ...data.message, id: msg.id, isStreaming: false }
+              ? {
+                  ...data.message,
+                  id: msg.id, // 임시 ID 유지
+                  // 스트리밍이 끝난 최종 content에 전처리를 적용
+                  content: preprocessMessage(data.message.content),
+                  isStreaming: false,
+                }
               : msg
           )
         )
@@ -118,8 +123,6 @@ export const useChat = (socket, isConnected) => {
 
     // [이벤트 핸들러] 이전 대화 기록 수신
     const handleConversationHistory = history => {
-      console.log(`${history.length}개의 이전 대화 기록을 받았습니다.`)
-
       const processedMessages = []
       history.forEach(message => {
         processedMessages.push(message)
@@ -203,7 +206,6 @@ export const useChat = (socket, isConnected) => {
         history: messages, // 문맥 유지를 위해 이전 대화 내용은 포함
       }
 
-      console.log('🤫 서버로 조용히 프롬프트 전송:', payload)
       socket.emit('user-message', payload)
     },
     [socket, isConnected, isStreaming, messages]
