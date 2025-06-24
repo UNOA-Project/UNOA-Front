@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 
 const ScrollToTopButton = ({ isOpen }) => {
+  //isOpen은 필터 모달이 띄워졌을때 비활성화 시키기 위해 사용
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const toggleVisibility = () => {
       const overflowContainer = document.querySelector('.overflow-y-auto')
+      const containerScrollTop = overflowContainer ? overflowContainer.scrollTop : 0
 
-      if (overflowContainer) {
-        setVisible(overflowContainer.scrollTop > 300)
-      }
+      //모바일을 위한 변수
+      const windowScrollY = window.scrollY || window.pageYOffset || 0
+
+      setVisible(containerScrollTop > 300 || windowScrollY > 300)
     }
 
     toggleVisibility()
@@ -20,6 +23,9 @@ const ScrollToTopButton = ({ isOpen }) => {
       overflowContainer.addEventListener('scroll', toggleVisibility)
     }
 
+    //모바일을 위한 함수 (모바일은 컨테이너가 스크롤 되지 않고 window자체가 스크롤 되기 때문에)
+    window.addEventListener('scroll', toggleVisibility)
+
     return () => {
       if (overflowContainer) {
         overflowContainer.removeEventListener('scroll', toggleVisibility)
@@ -28,6 +34,8 @@ const ScrollToTopButton = ({ isOpen }) => {
     }
   }, [])
 
+  if (isOpen) return null
+
   const scrollToTop = () => {
     const overflowContainer = document.querySelector('.overflow-y-auto')
 
@@ -35,19 +43,17 @@ const ScrollToTopButton = ({ isOpen }) => {
       overflowContainer.scrollTo({ top: 0, behavior: 'smooth' })
       overflowContainer.scrollTop = 0
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-
-  if (isOpen) return null
 
   return (
     <button
       onClick={scrollToTop}
-      className={`hover:bg-gray-30 fixed right-1.5 bottom-22.5 z-9999 rounded-full border border-gray-200 bg-white p-3 shadow-lg transition-opacity duration-300 sm:right-245.5 sm:bottom-6 sm:p-2 ${
+      className={`hover:bg-gray-30 fixed right-1.5 bottom-22.5 z-9999 rounded-full border border-gray-200 bg-white p-3 shadow-lg transition-opacity duration-300 sm:right-6 sm:bottom-6 sm:p-2 ${
         visible ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}
       aria-label="Scroll to top"
     >
-      {/* Heroicons: chevron-up */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-5 w-5 text-black sm:h-6 sm:w-6"
