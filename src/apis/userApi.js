@@ -38,3 +38,11 @@ export const logoutUser = async () => {
   })
   return response.data
 }
+
+export const getUserBenefits = async name => {
+  const response = await axios.get(`${API_URL}/user/benefits/${name}`, null, {
+    withCredentials: true,
+  })
+
+  return response.data
+}
