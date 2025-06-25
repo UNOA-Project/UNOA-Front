@@ -47,16 +47,16 @@
 .loadingContainer p,
 .errorContainer p {
   font-size: 14px;
-  color: #6b7280;
+  color: #121212;
   margin-bottom: 16px;
 }
 
 .errorContainer button {
-  background-color: #2563eb;
-  color: white;
+  background-color: #fff;
+  color: black;
   padding: 8px 16px;
   border-radius: 6px;
-  border: none;
+  border: 1px solid var(--color-primary-purple);
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
@@ -64,7 +64,7 @@
 }
 
 .errorContainer button:hover {
-  background-color: #1d4ed8;
+  background-color: var(--color-gray-30);
 }
 
 @media (max-width: 480px) {
