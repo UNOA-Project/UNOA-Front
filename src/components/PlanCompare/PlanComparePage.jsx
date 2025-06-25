@@ -24,21 +24,6 @@ const PlanComparePage = () => {
     window.dispatchEvent(new CustomEvent('compareUpdated'))
   }
 
-  const getComparisonMax = (a, b) => {
-    let referenceValue
-    if (a === Infinity || b === Infinity) {
-      if (a === Infinity && b === Infinity) return 100
-      referenceValue = a === Infinity ? b : a
-    } else {
-      referenceValue = Math.max(a, b)
-    }
-
-    if (referenceValue <= 100) return 100
-    if (referenceValue <= 200) return 200
-    if (referenceValue <= 300) return 300
-    return referenceValue
-  }
-
   const imageBasePath = '/images/icons'
   const renderBenefitImages = (benefits, size = 'h-6 w-6') => (
     <div className="mt-2 flex flex-wrap justify-center gap-2">
@@ -48,31 +33,34 @@ const PlanComparePage = () => {
     </div>
   )
 
-  const Bar = ({ value, max, label, delay }) => {
-    const getBarHeight = (val, maxVal) =>
-      val === Infinity ? '100%' : maxVal > 0 ? `${(val / maxVal) * 100}%` : '0%'
+  const PlanColumn = ({ plan }) => {
+    const parseValue = val => {
+      if (!val || typeof val !== 'string') return 0
+      const lower = val.toLowerCase()
 
-    return (
-      <div className="flex flex-col items-center gap-1.5">
-        <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
-          <motion.div
-            className="absolute bottom-0 w-full bg-[#6b3ce6]"
-            initial={{ height: 0 }}
-            animate={{ height: getBarHeight(value, max) }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
-          />
-        </div>
-        <span className="text-xs font-semibold text-black">
-          {value === Infinity ? '무제한' : value.toLocaleString()}
-        </span>
-        <span className="text-[11px] font-medium text-gray-500">{label}</span>
-      </div>
-    )
-  }
+      if (lower.includes('무제한')) return Infinity
 
-  const PlanColumn = ({ plan, align }) => {
-    const parseValue = val =>
-      typeof val === 'string' && val.includes('무제한') ? Infinity : parseFloat(val || 0)
+      const matches = lower.match(/(\d+)\s*gb/g)
+      if (matches) {
+        const total = matches.reduce((sum, m) => sum + parseInt(m), 0)
+        return total
+      }
+
+      const dailyMatch = lower.match(/매일\s*(\d+)\s*gb/)
+      if (dailyMatch) {
+        return parseInt(dailyMatch[1]) * 30
+      }
+
+      if (lower.includes('kb') || lower.includes('당')) return 0
+
+      const mbMatch = lower.match(/(\d+)\s*mb/)
+      if (mbMatch) {
+        return parseInt(mbMatch[1]) / 1000
+      }
+
+      const number = parseFloat(val)
+      return isNaN(number) ? 0 : number
+    }
 
     const price = parseInt(plan?.price || 0)
     const data = parseValue(plan?.data)
@@ -88,14 +76,50 @@ const PlanComparePage = () => {
     const otherPrice = parseInt(otherPlan?.price || 0)
     const otherData = parseValue(otherPlan?.data)
 
+    const getComparisonMax = (a, b, isData = false) => {
+      let referenceValue
+      if (a === Infinity || b === Infinity) {
+        if (a === Infinity && b === Infinity) return 100
+        referenceValue = a === Infinity ? b : a
+      } else {
+        referenceValue = Math.max(a, b)
+      }
+
+      if (referenceValue <= 100) return isData ? 100 : 100
+      if (referenceValue <= 200) return isData ? 200 : 200
+      if (referenceValue <= 300) return isData ? 300 : 300
+      return referenceValue
+    }
+
     const maxPrice = getComparisonMax(price, otherPrice)
-    const maxData = getComparisonMax(data, otherData)
+    const maxData = getComparisonMax(data, otherData, true)
+
+    const getBarHeight = (val, maxVal) =>
+      val === Infinity ? '100%' : maxVal > 0 ? `${(val / maxVal) * 100}%` : '0%'
+
+    const Bar = ({ value, max, label, delay }) => (
+      <div className="flex flex-col items-center gap-1.5">
+        <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
+          <motion.div
+            className="absolute bottom-0 w-full bg-[#6b3ce6]"
+            initial={{ height: 0 }}
+            animate={{ height: getBarHeight(value, max) }}
+            transition={{ duration: 1.2, ease: [0.25, 0.8, 0.25, 1], delay }}
+          />
+        </div>
+        <span className="text-xs font-semibold text-black">
+          {label === '데이터'
+            ? plan?.data
+            : value === Infinity
+              ? '무제한'
+              : `${value.toLocaleString()}원`}
+        </span>
+        <span className="text-[11px] font-medium text-gray-500">{label}</span>
+      </div>
+    )
 
     return (
-      <div
-        className={`mx-5 flex w-full max-w-[350px] flex-1 flex-col items-center rounded-xl p-4 text-black`}
-        key={plan?._id}
-      >
+      <div className="mx-5 flex w-full max-w-[350px] flex-1 flex-col items-center rounded-xl p-4 text-black">
         <h3 className="h-18 text-center text-sm leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl xl:text-3xl">
           {plan?.title}
         </h3>
@@ -109,15 +133,21 @@ const PlanComparePage = () => {
           <div className="mt-8 text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
             음성통화
           </div>
-          <div className="text-2xl font-medium whitespace-pre-line text-[#543ed9]">
-            {plan?.voiceCall}
+          <div className="min-h-[28px] text-2xl font-medium whitespace-pre-line text-[#543ed9]">
+            {plan?.voiceCall?.trim() ? (
+              plan.voiceCall
+            ) : (
+              <span className="text-sm text-gray-400">없음</span>
+            )}
           </div>
         </div>
         <div className="w-full text-center text-sm text-gray-700 lg:text-2xl xl:text-3xl">
           <div className="mt-10 text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
             문자메시지
           </div>
-          <div className="text-2xl font-medium text-[#543ed9]">{plan?.sms}</div>
+          <div className="min-h-[28px] text-2xl font-medium whitespace-pre-line text-[#543ed9]">
+            {plan?.sms?.trim() ? plan.sms : <span className="text-sm text-gray-400">없음</span>}
+          </div>
         </div>
 
         <div className="mt-10 min-h-[120px] w-full pt-2 text-center">
@@ -172,8 +202,8 @@ const PlanComparePage = () => {
     </div>
   )
 
-  const left = plans[0] ? <PlanColumn plan={plans[0]} align="left" /> : renderEmptyCard('left')
-  const right = plans[1] ? <PlanColumn plan={plans[1]} align="right" /> : renderEmptyCard('right')
+  const left = plans[0] ? <PlanColumn plan={plans[0]} /> : renderEmptyCard('left')
+  const right = plans[1] ? <PlanColumn plan={plans[1]} /> : renderEmptyCard('right')
 
   return (
     <motion.section
@@ -187,7 +217,6 @@ const PlanComparePage = () => {
       </h2>
       <hr className="mb-6 w-full border-t-[2px] border-gray-300" />
 
-      {/* ai비교하기 */}
       <div className="mb-8">
         <AiCompareSummary plans={plans} />
       </div>

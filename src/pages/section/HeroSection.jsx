@@ -43,8 +43,6 @@ const UoaLogo = () => {
             .draw {
               stroke-linecap: round;
               stroke-linejoin: round;
-              stroke-dasharray: 3000;
-              stroke-dashoffset: 1000;
               animation: drawLine 2s ease forwards;
             }
           `}
