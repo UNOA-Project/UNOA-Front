@@ -38,10 +38,11 @@ const UoaLogo = () => {
       <svg ref={svgRef} className="block h-auto w-full" viewBox="0 -10 250 70">
         <style>
           {`
-            .draw {
-              stroke-linecap: round;
-              stroke-linejoin: round;
-            }
+       .draw {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: drawLine 2s ease forwards;
+}
           `}
         </style>
         <g transform="translate(5, 0)">
