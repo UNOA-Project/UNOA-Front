@@ -26,7 +26,7 @@ const PlanCard = ({ plan }) => {
 
   return (
     // 카드 전체 컨테이너: 사이즈(w-64), 패딩(p-5), 내부 간격(space-y-3) 축소
-    <div className="ml-3 flex w-64 flex-shrink-0 flex-col space-y-3 rounded-xl bg-white p-5 shadow-md">
+    <div className="ml-3 flex w-64 flex-shrink-0 flex-col space-y-3 rounded-xl bg-white p-5 shadow-md max-[480px]:ml-0">
       {/* 1. 요금제 제목 */}
       <h3 style={{ fontSize: smallBodyFont }} className="truncate font-bold text-gray-900">
         {plan.title}
