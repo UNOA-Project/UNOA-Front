@@ -22,7 +22,7 @@ const usePlanFilter = () => {
     const fetchPlans = async () => {
       try {
         setLoading(true)
-        const response = await axios.get('http://localhost:5000/api/plans')
+        const response = await axios.get(`${import.meta.env.VITE_BACK_URL}/api/plans`)
         setAllPlans(response.data)
         setError(null)
       } catch (err) {
