@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -17,6 +17,7 @@ const AiCompareSummary = ({ plans }) => {
   const [summary, setSummary] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
+  const MotionButton = motion.button
 
   useEffect(() => {
     // 비교할 요금제가 2개가 아니게 되면
@@ -61,12 +62,15 @@ const AiCompareSummary = ({ plans }) => {
       <h3 className="text-lg font-bold text-black">
         NOA의 <span style={{ color: 'var(--color-primary-purple, #899df4)' }}>AI</span> 요약 비교
       </h3>
-      <p style={{ color: 'var(--color-gray-800, #1f2937)' }} className="mt-1 text-sm">
+      <p
+        style={{ color: 'var(--color-gray-800, #1f2937)' }}
+        className="mt-1 text-sm break-keep whitespace-normal"
+      >
         두 요금제의{' '}
         <span style={{ color: 'var(--color-primary-purple, #899df4)', fontWeight: '600' }}>
           핵심적인 차이점
         </span>
-        을 한눈에 파악해 보세요!
+        을 <br className="hidden max-[410px]:block" /> 한눈에 파악해 보세요!
       </p>
 
       <button
@@ -79,7 +83,7 @@ const AiCompareSummary = ({ plans }) => {
 
       <AnimatePresence>
         {(isLoading || error || summary) && (
-          <motion.div
+          <MotionButton
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -98,7 +102,7 @@ const AiCompareSummary = ({ plans }) => {
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{summary}</ReactMarkdown>
               </div>
             )}
-          </motion.div>
+          </MotionButton>
         )}
       </AnimatePresence>
     </div>

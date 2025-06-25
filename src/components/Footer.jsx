@@ -1,5 +1,3 @@
-import React from 'react'
-
 import GithubIcon from '@/assets/github.svg?react'
 import FigmaIcon from '@/assets/figma.svg?react'
 import UnoalgIcon from '@/assets/UNOA_LG.svg?react'

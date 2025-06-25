@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import mascot from '@/assets/PlanCompare.png'
 import { motion } from 'framer-motion'
 import AiCompareSummary from './AiCompareSummary'
 
 const PlanComparePage = () => {
   const [plans, setPlans] = useState([])
+  const MotionButton = motion.button
 
   useEffect(() => {
     const updatePlans = () => {
@@ -100,14 +101,14 @@ const PlanComparePage = () => {
     const Bar = ({ value, max, label, delay }) => (
       <div className="flex flex-col items-center gap-1.5">
         <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
-          <motion.div
+          <MotionButton
             className="absolute bottom-0 w-full bg-[#6b3ce6]"
             initial={{ height: 0 }}
             animate={{ height: getBarHeight(value, max) }}
             transition={{ duration: 1.2, ease: [0.25, 0.8, 0.25, 1], delay }}
           />
         </div>
-        <span className="text-xs font-semibold text-black">
+        <span className="lg:text-small-body text-xs font-semibold text-black">
           {label === '데이터'
             ? plan?.data
             : value === Infinity
@@ -120,7 +121,7 @@ const PlanComparePage = () => {
 
     return (
       <div className="mx-5 flex w-full max-w-[350px] flex-1 flex-col items-center rounded-xl p-4 text-black">
-        <h3 className="h-18 text-center text-sm leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl xl:text-3xl">
+        <h3 className="h-18 text-center text-sm leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl">
           {plan?.title}
         </h3>
 
@@ -129,7 +130,7 @@ const PlanComparePage = () => {
           <Bar value={data} max={maxData} label="데이터" delay={0.2} />
         </div>
 
-        <div className="w-full text-center text-sm text-gray-700 md:text-xl lg:text-2xl xl:text-3xl">
+        <div className="w-full text-center text-sm text-gray-700 md:text-xl">
           <div className="mt-8 text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
             음성통화
           </div>
@@ -141,7 +142,7 @@ const PlanComparePage = () => {
             )}
           </div>
         </div>
-        <div className="w-full text-center text-sm text-gray-700 lg:text-2xl xl:text-3xl">
+        <div className="w-full text-center text-sm text-gray-700 lg:text-2xl">
           <div className="mt-10 text-xs text-gray-500 md:text-base lg:text-lg xl:text-xl">
             문자메시지
           </div>

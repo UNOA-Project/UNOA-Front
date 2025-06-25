@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import mascot from '@/assets/PlanCompare.png'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useAnimation } from 'framer-motion'
 import AiCompareSummary from './AiCompareSummary'
 
@@ -7,6 +6,7 @@ const PlanComparePageMobile = () => {
   const [plans, setPlans] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const controls = useAnimation()
+  const MotionButton = motion.button
 
   const variants = {
     closed: { y: 'calc(100% - 80px)' },
@@ -57,14 +57,14 @@ const PlanComparePageMobile = () => {
     return (
       <div className="flex flex-col items-center gap-1.5">
         <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
-          <motion.div
+          <MotionButton
             className="absolute bottom-0 w-full bg-[#6b3ce6]"
             initial={{ height: 0 }}
             animate={{ height: getBarHeight(value, max) }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
           />
         </div>
-        <span className="text-xs font-semibold text-black">
+        <span className="text-center text-xs font-semibold break-keep whitespace-normal text-black">
           {label === '데이터'
             ? plan?.data
             : value === Infinity
@@ -109,11 +109,11 @@ const PlanComparePageMobile = () => {
       : [plan?.mediaBenefit]
 
     return (
-      <div className="flex w-full max-w-[300px] flex-col items-center gap-3 rounded-xl p-4">
-        <div className="flex h-14 items-center justify-center">
-          <h3 className="text-md text-center leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl xl:text-3xl">
+      <div className="flex w-full max-w-[300px] flex-col items-center justify-center gap-3 rounded-xl p-4">
+        <div className="flex h-14 items-start justify-center">
+          <span className="text-body text-center leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl">
             {plan?.title}
-          </h3>
+          </span>
         </div>
 
         <div className="flex w-full items-start justify-around gap-4 rounded-md bg-white p-4">
@@ -133,7 +133,7 @@ const PlanComparePageMobile = () => {
           />
         </div>
 
-        <div className="w-full text-center text-sm text-gray-700 md:text-xl lg:text-2xl xl:text-3xl">
+        <div className="w-full text-center text-sm text-gray-700 md:text-xl">
           <div className="mt-2 text-xs text-gray-500 md:text-xl xl:text-2xl">음성통화</div>
           <div className="min-h-[28px] font-medium whitespace-pre-line text-[#543ed9]">
             {plan?.voiceCall?.trim() ? (
@@ -144,7 +144,7 @@ const PlanComparePageMobile = () => {
           </div>
         </div>
 
-        <div className="w-full text-center text-sm text-gray-700 md:text-xl lg:text-2xl xl:text-3xl">
+        <div className="w-full text-center text-sm text-gray-700 md:text-xl">
           <div className="mt-2 text-xs text-gray-500 md:text-xl xl:text-2xl">문자메시지</div>
           <div className="min-h-[28px] font-medium whitespace-pre-line text-[#543ed9]">
             {plan?.sms?.trim() ? plan.sms : <span className="text-xs text-gray-400">없음</span>}

@@ -18,9 +18,9 @@ export default function SimpleMode({
   const [result, setResult] = useState(null)
   const navigate = useNavigate()
   const [isWaiting, setIsWaiting] = useState(false)
+  const MotionButton = motion.button
 
   const handleFinish = answers => {
-    console.log('사용자 응답:', answers)
     setResult(answers)
 
     const formatted = answers
@@ -45,7 +45,6 @@ export default function SimpleMode({
   }, [simpleModeResultMessage])
   const lastMessage = simpleModeResultMessage
 
-  console.log(lastMessage)
   return (
     <>
       {!started ? (
@@ -69,14 +68,14 @@ export default function SimpleMode({
             <p className="mb-2 text-center text-sm text-gray-500 sm:mb-3 sm:text-sm">
               아래 버튼을 눌러 시작해보세요
             </p>
-            <motion.button
+            <MotionButton
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2, ease: 'easeInOut' }}
               className="bg-sub-lilac w-61 rounded-full px-6 py-3 text-lg font-semibold text-white shadow-md transition sm:px-8 sm:py-4 sm:text-xl"
               onClick={() => setStarted(true)}
             >
               시작하기
-            </motion.button>
+            </MotionButton>
             <span className="absolute right-4 -bottom-[60px] sm:right-10 lg:right-6">
               <img src={HandImg} alt="버튼을 가리키는 손가락" className="pointer-events-none" />
             </span>

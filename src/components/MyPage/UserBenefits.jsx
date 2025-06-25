@@ -32,7 +32,7 @@ export const UserBenefits = () => {
         setMembershipBenefits(res.membershipBenefits)
         setLongTermBenefits(res.longTermBenefits)
         setPlanBenefits(res.planBenefits)
-      } catch (err) {
+      } catch {
         setError('혜택을 불러오는 중 오류가 발생했습니다.')
       } finally {
         setLoading(false)

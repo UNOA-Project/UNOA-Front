@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import mascot from '@/assets/section/solution.png'
 import SolutionTextImg from '@/assets/section/Solutiontext.png'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -16,6 +16,7 @@ const SolutionScrollSection = () => {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef(null)
   const introRef = useRef(null)
+  const MotionButton = motion.button
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -97,14 +98,14 @@ const SolutionScrollSection = () => {
     >
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden text-white">
         {stage === 0 ? (
-          <motion.div
+          <MotionButton
             ref={introRef}
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0, ease: 'easeOut' }}
             className="flex w-full flex-col items-center justify-center text-center"
           >
-            <motion.div
+            <MotionButton
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.2, ease: 'easeOut' }}
@@ -118,7 +119,7 @@ const SolutionScrollSection = () => {
               <span className="mt-2 text-2xl font-bold sm:text-3xl md:text-4xl">
                 가 해결해줍니다
               </span>
-            </motion.div>
+            </MotionButton>
             <motion.img
               initial={{ opacity: 0, scale: 0.8 }}
               animate={isVisible ? { opacity: 1, scale: 1 } : {}}
@@ -127,7 +128,7 @@ const SolutionScrollSection = () => {
               alt="캐릭터"
               className="z-10 h-auto w-[160px] rounded-full sm:w-[200px] md:w-[240px]"
             />
-          </motion.div>
+          </MotionButton>
         ) : (
           <>
             <div className="absolute flex h-full w-full items-end justify-center pb-6 lg:items-center">

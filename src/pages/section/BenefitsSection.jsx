@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import mascot1 from '@/assets/section/benefit1.png'
 import mascot2 from '@/assets/section/benefit2.png'
 import mascot3 from '@/assets/section/benefit3.png'

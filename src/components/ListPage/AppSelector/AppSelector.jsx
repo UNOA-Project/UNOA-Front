@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './AppSelector.module.css'
 import { appsData } from '../../../data/appsData'
 

@@ -212,7 +212,6 @@ export const useChat = (socket, isConnected) => {
     if (!socket || !isConnected) return
     setMessages([]) // 즉각적인 UI 반영
     socket.emit(SOCKET_EVENTS.RESET_CONVERSATION)
-    console.log('서버에 대화 기록 초기화 요청을 보냈습니다.')
   }, [socket, isConnected])
 
   // 훅이 제공하는 최종 결과물들

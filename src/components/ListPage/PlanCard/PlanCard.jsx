@@ -1,4 +1,3 @@
-import React from 'react'
 import sharingImg from '/images/icons/proicons_arrow.png'
 import callImg from '/images/icons/call.png'
 import messageImg from '/images/icons/message.png'
@@ -59,7 +58,7 @@ const PlanCard = ({ plan, isCompare = true }) => {
         return (
           <span
             key={index}
-            className="text-primary-purple mr-1 ml-1 text-xl font-semibold sm:text-2xl"
+            className="text-primary-purple mr-1 ml-0.5 text-xl font-semibold sm:text-2xl"
           >
             {part}
           </span>
@@ -118,7 +117,7 @@ const PlanCard = ({ plan, isCompare = true }) => {
       <div className="mb-4 sm:mb-6">
         <div className="flex">
           <div className="font-bold text-gray-900">
-            데이터
+            데이터&nbsp;
             <span className="font-bold text-gray-900">{highlightNumbers(plan.data)}</span>
           </div>
         </div>
