@@ -180,16 +180,6 @@ const PlanCardSystem = ({ onFilterModalState }) => {
     setCurrentAgeGroup('all')
   }
 
-  const getCategoryTitle = () => {
-    const titles = {
-      '5G/LTE 요금제': '5G/LTE 요금제',
-      '온라인 다이렉트 요금제': '온라인 전용 요금제',
-      '태블릿/워치 요금제': '태블릿/스마트워치 요금제',
-      '듀얼심 요금제': '듀얼넘버 플러스',
-    }
-    return titles[appliedFilters.category] || '요금제'
-  }
-
   // 로딩 상태 처리
   if (loading) {
     return <LoadingScreen />
