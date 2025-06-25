@@ -1,5 +1,3 @@
-// hooks/useSocket.js
-
 import { useState, useEffect } from 'react'
 import io from 'socket.io-client'
 
@@ -9,10 +7,10 @@ export const useSocket = () => {
 
   useEffect(() => {
     // 소켓 연결
-    const newSocket = io('http://localhost:5000', {
-      forceNew: true, // 새로고침 시 새로운 연결을 강제합니다.
+    const newSocket = io(import.meta.env.VITE_BACK_URL, {
+      forceNew: true,
       reconnection: true,
-      timeout: 10000, // 연결 타임아웃 10초
+      timeout: 10000,
     })
 
     setSocket(newSocket)
@@ -21,8 +19,6 @@ export const useSocket = () => {
     newSocket.on('connect', () => {
       console.log('✅ 소켓 ID로 서버에 연결됨:', newSocket.id)
       setIsConnected(true)
-      // 'init-session' 이벤트는 그대로 유지합니다.
-      // 서버에 새로운 채팅 세션을 준비하라고 알리는 좋은 방법입니다.
       console.log('📋 새로운 세션 시작 요청')
       newSocket.emit('init-session')
     })
@@ -44,7 +40,7 @@ export const useSocket = () => {
       console.log('🔌 소켓 연결 정리')
       newSocket.close()
     }
-  }, []) // 이 useEffect는 처음 한 번만 실행됩니다.
+  }, [])
 
   return {
     socket,
