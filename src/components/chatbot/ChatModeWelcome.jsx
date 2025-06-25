@@ -1,4 +1,4 @@
-import WelcomeNoaIcon from '@/assets/welcomeNoa.svg?react'
+import WelcomeNoaIcon from '@/assets/WelcomeNoa.svg?react'
 
 const NormalModeWelcome = () => {
   return (
