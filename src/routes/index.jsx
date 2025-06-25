@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Layout from './Layout'
-import MainPage from '@/pages/Mainpage'
+import MainPage from '@/pages/MainPage'
 import ChatbotPage from '@/pages/ChatbotPage'
 import PlanListPage from '@/pages/PlanListPage'
 import MyPage from '@/pages/Mypage'
