@@ -10,13 +10,16 @@ const UoaLogo = () => {
     const svg = svgRef.current
     if (!svg) return
 
+    const isMobile = window.innerWidth < 768
+    const duration = isMobile ? 3.5 : 2
+
     const elements = svg.querySelectorAll('path, line')
     elements.forEach(el => {
       const length = el.getTotalLength?.()
       if (length) {
         el.style.strokeDasharray = length
         el.style.strokeDashoffset = length
-        el.style.transition = 'stroke-dashoffset 2s ease'
+        el.style.transition = `stroke-dashoffset ${duration}s ease`
       }
     })
 
@@ -27,7 +30,7 @@ const UoaLogo = () => {
           el.style.strokeDashoffset = 0
         }
       })
-    }, 2000)
+    }, 500)
   }, [])
 
   return (
@@ -35,16 +38,11 @@ const UoaLogo = () => {
       <svg ref={svgRef} className="block h-auto w-full" viewBox="0 -10 250 70">
         <style>
           {`
-            @keyframes drawLine {
-              to {
-                stroke-dashoffset: 0;
-              }
-            }
-            .draw {
-              stroke-linecap: round;
-              stroke-linejoin: round;
-              animation: drawLine 2s ease forwards;
-            }
+       .draw {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: drawLine 2s ease forwards;
+}
           `}
         </style>
         <g transform="translate(5, 0)">
@@ -89,7 +87,6 @@ const UoaLogo = () => {
   )
 }
 
-// 서브 슬로건 컴포넌트
 const SubSlogans = () => {
   const [isVisible, setVisible] = useState(false)
 
@@ -100,9 +97,7 @@ const SubSlogans = () => {
 
   return (
     <div
-      className={`mt-4 transform text-center text-[1rem] text-[#888] transition-all duration-1000 ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
-      }`}
+      className={`mt-4 transform text-center text-[1rem] text-[#888] transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
     >
       <p>추천, 분석, 혜택 정리까지 한 곳에서</p>
       <p>나에게 딱 맞는 요금제 관리 도우미</p>
@@ -110,7 +105,6 @@ const SubSlogans = () => {
   )
 }
 
-// 스크롤 안내 컴포넌트
 const Scrollecomment = () => {
   const [isVisible, setVisible] = useState(false)
 
@@ -121,9 +115,7 @@ const Scrollecomment = () => {
 
   return (
     <div
-      className={`mt-0 mb-40 pt-30 text-center text-[1rem] text-white transition-all duration-1000 ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
-      }`}
+      className={`mt-0 mb-40 pt-30 text-center text-[1rem] text-white transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
     >
       <p>scroll to view more</p>
       <img src={mouse} alt="scroll icon" className="mx-auto mt-2 w-[12px]" />
