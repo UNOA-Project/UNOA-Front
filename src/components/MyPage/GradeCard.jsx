@@ -1,4 +1,4 @@
-export default function GradeCard({ imageSrc, grade, condition, color }) {
+export default function GradeCard({ imageSrc, grade, condition }) {
   const gradeColorMap = {
     VVIP: '#e6007e',
     VIP: '#e062a7',

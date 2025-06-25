@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { getUserBenefits } from '@/apis/userApi'
-import ArrowIcon from '@/assets/arrow-right.svg?react'
 import { useAuth } from '@/contexts/AuthContext'
+import { getUserBenefits } from '@/apis/userApi'
 import LoadingScreen from '@/components/chatbot/LoadingScreen'
+import ArrowIcon from '@/assets/arrow-right.svg?react'
 
-export const UserBenefitsSection = () => {
+export const UserBenefits = () => {
   const [membershipBenefits, setMembershipBenefits] = useState([])
   const [longTermBenefits, setLongTermBenefits] = useState([])
   const [planBenefits, setPlanBenefits] = useState({})
@@ -28,7 +28,7 @@ export const UserBenefitsSection = () => {
   useEffect(() => {
     const fetchBenefits = async () => {
       try {
-        const res = await getUserBenefits(user.user.name)
+        const res = await getUserBenefits(user.user._id)
         setMembershipBenefits(res.membershipBenefits)
         setLongTermBenefits(res.longTermBenefits)
         setPlanBenefits(res.planBenefits)

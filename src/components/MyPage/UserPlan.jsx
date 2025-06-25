@@ -3,13 +3,16 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logoutUser, changePassword } from '@/apis/userApi'
 import ChangePasswordModal from '@/components/MyPage/ChangePasswordModal'
+import GradeGuideModal from '@/components/Modal/GradeGuideModal'
 import useToast from '@/hooks/useToast'
 
 export default function UserPlan() {
   const { user } = useAuth()
 
   const navigate = useNavigate()
-  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
+  const [isGradeModalOpen, setIsGradeModalOpen] = useState(false)
 
   const { showSuccessToast, showErrorToast } = useToast()
   const formatPrice = price => {
@@ -70,13 +73,16 @@ export default function UserPlan() {
         <div className="flex flex-row gap-2 max-[540px]:flex-col">
           {user.user.userId && (
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsPasswordModalOpen(true)}
               className="border-border text-small-body sm:text-body hover:text-primary-purple rounded-sm border px-2 py-2 transition-colors duration-300 sm:px-6"
             >
               비밀번호 변경
             </button>
           )}
-          <button className="border-border text-small-body sm:text-body rounded-sm border px-2 py-2 sm:px-6">
+          <button
+            onClick={() => setIsGradeModalOpen(true)}
+            className="border-border text-small-body sm:text-body hover:text-primary-purple rounded-sm border px-2 py-2 sm:px-6"
+          >
             등급기준 안내
           </button>
         </div>
@@ -128,11 +134,15 @@ export default function UserPlan() {
           )}
         </div>
       </div>
-      {isModalOpen && (
+      {isPasswordModalOpen && (
         <ChangePasswordModal
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setIsPasswordModalOpen(false)}
           onSubmit={handlePasswordChange}
         />
+      )}
+
+      {isGradeModalOpen && (
+        <GradeGuideModal isOpen={isGradeModalOpen} onClose={() => setIsGradeModalOpen(false)} />
       )}
     </div>
   )
