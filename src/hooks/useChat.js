@@ -85,17 +85,13 @@ export const useChat = (socket, isConnected) => {
       // 1. 텍스트 메시지 업데이트
       if (data.message && streamingMessageIdRef.current) {
         setMessages(prev =>
-          prev.map(msg =>
-            msg.id === streamingMessageIdRef.current
-              ? {
-                  ...data.message,
-                  id: msg.id, // 임시 ID 유지
-                  // 스트리밍이 끝난 최종 content에 전처리를 적용
-                  content: preprocessMessage(data.message.content),
-                  isStreaming: false,
-                }
-              : msg
-          )
+          prev.map(msg => {
+            if (msg.id === streamingMessageIdRef.current) {
+              const finalContent = preprocessMessage(data.message.content)
+              return { ...data.message, content: finalContent, id: msg.id, isStreaming: false }
+            }
+            return msg
+          })
         )
       }
 
