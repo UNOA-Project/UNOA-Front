@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect } from 'react'
 import axios from 'axios'
 
 const usePlanFilter = () => {
-  // 초기값을 먼저 정의
   const initialFilters = {
     category: '5G/LTE 요금제',
     network: '5G/LTE',
@@ -17,12 +16,11 @@ const usePlanFilter = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // API에서 데이터 가져오기
   useEffect(() => {
     const fetchPlans = async () => {
       try {
         setLoading(true)
-        const response = await axios.get('http://localhost:5000/api/plans')
+        const response = await axios.get(`${import.meta.env.VITE_BACK_URL}/api/plans`)
         setAllPlans(response.data)
         setError(null)
       } catch (err) {
