@@ -179,9 +179,9 @@ const SolutionScrollSection = () => {
                       <img
                         src={rightContents[stage].image}
                         alt={rightContents[stage].title}
-                        className="h-auto w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px]"
+                        className="h-auto w-[100px] sm:w-[120px] md:w-[140px] lg:w-[220px]"
                       />
-                      <h3 className="mt-10 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
+                      <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
                         {rightContents[stage].title}
                       </h3>
                       <p className="mt-2 text-sm leading-relaxed whitespace-pre-line text-white/80 sm:text-base md:text-lg lg:text-xl">

@@ -4,46 +4,50 @@ import TextAnimation from './TextAnimation'
 
 const UoaLogo = () => {
   const svgRef = useRef(null)
-  const [isDrawn, setDrawn] = useState(false)
 
   useEffect(() => {
     const svg = svgRef.current
     if (!svg) return
 
     const elements = svg.querySelectorAll('path, line')
-    elements.forEach(el => {
-      const length = el.getTotalLength?.()
-      if (length) {
-        el.style.strokeDasharray = length
-        el.style.strokeDashoffset = length
-        el.style.transition = 'stroke-dashoffset 2s ease'
-      }
-    })
 
-    setTimeout(() => {
-      setDrawn(true)
+    const animate = () => {
       elements.forEach(el => {
-        if (el.style.strokeDashoffset !== undefined) {
-          el.style.strokeDashoffset = 0
+        const length = el.getTotalLength?.()
+        if (length) {
+          el.style.setProperty('--stroke-length', length)
         }
       })
-    }, 2000)
+
+      svg.style.opacity = '1'
+      svg.style.position = 'static'
+    }
+
+    const frame1 = requestAnimationFrame(() => {
+      requestAnimationFrame(animate)
+    })
+
+    return () => cancelAnimationFrame(frame1)
   }, [])
 
   return (
     <div className="mx-auto flex min-h-[45vh] w-full max-w-[600px] items-center justify-center">
-      <svg ref={svgRef} className="block h-auto w-full" viewBox="0 -10 250 70">
+      <svg ref={svgRef} className="absolute block h-auto w-full opacity-0" viewBox="0 -10 250 70">
         <style>
           {`
+            .draw {
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-dasharray: var(--stroke-length, 300);
+              stroke-dashoffset: var(--stroke-length, 300);
+              animation: drawLine 2s ease forwards;
+              animation-delay: 0.2s;
+            }
+
             @keyframes drawLine {
               to {
                 stroke-dashoffset: 0;
               }
-            }
-            .draw {
-              stroke-linecap: round;
-              stroke-linejoin: round;
-              animation: drawLine 2s ease forwards;
             }
           `}
         </style>
@@ -89,12 +93,11 @@ const UoaLogo = () => {
   )
 }
 
-// 서브 슬로건 컴포넌트
 const SubSlogans = () => {
   const [isVisible, setVisible] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 2000)
+    const timer = setTimeout(() => setVisible(true), 2200)
     return () => clearTimeout(timer)
   }, [])
 
@@ -110,12 +113,11 @@ const SubSlogans = () => {
   )
 }
 
-// 스크롤 안내 컴포넌트
 const Scrollecomment = () => {
   const [isVisible, setVisible] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 2500)
+    const timer = setTimeout(() => setVisible(true), 2700)
     return () => clearTimeout(timer)
   }, [])
 
@@ -135,9 +137,9 @@ function HeroSection() {
   const sloganText = '한 번에 쉽게, 나한테 딱 맞게'
 
   return (
-    <section className="flex flex-col items-center justify-center bg-black px-8 pt-[10%] text-center">
+    <section className="relative flex flex-col items-center justify-center bg-black px-8 pt-[10%] text-center">
       <UoaLogo />
-      <TextAnimation text={sloganText} startDelay={500} />
+      <TextAnimation text={sloganText} startDelay={700} />
       <SubSlogans />
       <Scrollecomment />
     </section>
