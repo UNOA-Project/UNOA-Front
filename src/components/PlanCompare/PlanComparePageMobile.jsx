@@ -50,8 +50,7 @@ const PlanComparePageMobile = () => {
       ))}
     </div>
   )
-
-  const Bar = ({ value, max, label, delay }) => {
+  const Bar = ({ value, max, label, delay, plan }) => {
     const getBarHeight = (val, maxVal) =>
       val === Infinity ? '100%' : maxVal > 0 ? `${(val / maxVal) * 100}%` : '0%'
 
@@ -66,7 +65,11 @@ const PlanComparePageMobile = () => {
           />
         </div>
         <span className="text-xs font-semibold text-black">
-          {value === Infinity ? '무제한' : value.toLocaleString()}
+          {label === '데이터'
+            ? plan?.data
+            : value === Infinity
+              ? '무제한'
+              : `${value.toLocaleString()}원`}
         </span>
         <span className="text-[11px] font-medium text-gray-500">{label}</span>
       </div>
@@ -74,8 +77,26 @@ const PlanComparePageMobile = () => {
   }
 
   const PlanDetailColumn = ({ plan, maxValues, onRemove, barDelayStart = 0 }) => {
-    const parseValue = val =>
-      typeof val === 'string' && val.includes('무제한') ? Infinity : parseFloat(val || 0)
+    const parseValue = val => {
+      if (!val || typeof val !== 'string') return 0
+      const lower = val.toLowerCase()
+
+      if (lower.includes('무제한')) return Infinity
+
+      const dailyMatch = lower.match(/매일\s*(\d+)\s*gb/)
+      if (dailyMatch) return parseInt(dailyMatch[1]) * 30
+
+      const matches = lower.match(/(\d+)\s*gb/g)
+      if (matches) return matches.reduce((sum, m) => sum + parseInt(m), 0)
+
+      if (lower.includes('kb') || lower.includes('당')) return 0
+
+      const mbMatch = lower.match(/(\d+)\s*mb/)
+      if (mbMatch) return parseInt(mbMatch[1]) / 1000
+
+      const number = parseFloat(val)
+      return isNaN(number) ? 0 : number
+    }
 
     const price = parseInt(plan?.price || 0)
     const data = parseValue(plan?.data)
@@ -96,17 +117,38 @@ const PlanComparePageMobile = () => {
         </div>
 
         <div className="flex w-full items-start justify-around gap-4 rounded-md bg-white p-4">
-          <Bar value={price} max={maxValues?.price} label="월 요금" delay={barDelayStart} />
-          <Bar value={data} max={maxValues?.data} label="데이터" delay={barDelayStart + 0.1} />
+          <Bar
+            plan={plan}
+            value={price}
+            max={maxValues?.price}
+            label="월 요금"
+            delay={barDelayStart}
+          />
+          <Bar
+            plan={plan}
+            value={data}
+            max={maxValues?.data}
+            label="데이터"
+            delay={barDelayStart + 0.1}
+          />
         </div>
 
         <div className="w-full text-center text-sm text-gray-700 md:text-xl lg:text-2xl xl:text-3xl">
           <div className="mt-2 text-xs text-gray-500 md:text-xl xl:text-2xl">음성통화</div>
-          <div className="font-medium whitespace-pre-line text-[#543ed9]">{plan?.voiceCall}</div>
+          <div className="min-h-[28px] font-medium whitespace-pre-line text-[#543ed9]">
+            {plan?.voiceCall?.trim() ? (
+              plan.voiceCall
+            ) : (
+              <span className="text-xs text-gray-400">없음</span>
+            )}
+          </div>
         </div>
+
         <div className="w-full text-center text-sm text-gray-700 md:text-xl lg:text-2xl xl:text-3xl">
           <div className="mt-2 text-xs text-gray-500 md:text-xl xl:text-2xl">문자메시지</div>
-          <div className="font-medium whitespace-pre-line text-[#543ed9]">{plan?.sms}</div>
+          <div className="min-h-[28px] font-medium whitespace-pre-line text-[#543ed9]">
+            {plan?.sms?.trim() ? plan.sms : <span className="text-xs text-gray-400">없음</span>}
+          </div>
         </div>
 
         <div className="max-h-[120px] min-h-[120px] w-full pt-2 text-center md:min-h-[120px]">
@@ -184,8 +226,26 @@ const PlanComparePageMobile = () => {
       return referenceValue
     }
 
-    const parseValue = val =>
-      typeof val === 'string' && val.includes('무제한') ? Infinity : parseFloat(val || 0)
+    const parseValue = val => {
+      if (!val || typeof val !== 'string') return 0
+      const lower = val.toLowerCase()
+
+      if (lower.includes('무제한')) return Infinity
+
+      const dailyMatch = lower.match(/매일\s*(\d+)\s*gb/)
+      if (dailyMatch) return parseInt(dailyMatch[1]) * 20
+
+      const matches = lower.match(/(\d+)\s*gb/g)
+      if (matches) return matches.reduce((sum, m) => sum + parseInt(m), 0)
+
+      if (lower.includes('kb') || lower.includes('당')) return 0
+
+      const mbMatch = lower.match(/(\d+)\s*mb/)
+      if (mbMatch) return parseInt(mbMatch[1]) / 1000
+
+      const number = parseFloat(val)
+      return isNaN(number) ? 0 : number
+    }
 
     const priceA = parseInt(plans[0]?.price || 0)
     const priceB = parseInt(plans[1]?.price || 0)
