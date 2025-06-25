@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const ScrollToTopButton = ({ isOpen }) => {
+const ScrollToTopButton = ({ isOpen, className }) => {
   //isOpen은 필터 모달이 띄워졌을때 비활성화 시키기 위해 사용
   const [visible, setVisible] = useState(false)
   const [isExpandedViewOpen, setIsExpandedViewOpen] = useState(false)
@@ -90,9 +90,9 @@ const ScrollToTopButton = ({ isOpen }) => {
   return (
     <button
       onClick={scrollToTop}
-      className={`hover:bg-gray-30 fixed right-1.5 bottom-22.5 z-9999 rounded-full border border-gray-200 bg-white p-3 shadow-lg transition-opacity duration-300 sm:right-6 sm:bottom-6 sm:p-2 ${
+      className={`hover:bg-gray-30 fixed z-9999 rounded-full border border-gray-200 bg-white p-3 shadow-lg transition-opacity duration-300 sm:right-6 sm:bottom-6 sm:p-2 ${
         visible ? 'opacity-100' : 'pointer-events-none opacity-0'
-      }`}
+      } ${className ?? 'right-1.5 bottom-22.5'}`}
       aria-label="Scroll to top"
     >
       <svg

@@ -9,10 +9,12 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   flex-shrink: 0;
+  width: 100%;
 }
 
 .messageInput {
   flex: 1;
+  min-width: 0;
   padding: 0.5rem;
   border-radius: 8px;
   font-size: var(--text-body);
@@ -116,4 +118,13 @@
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .messageInput {
+    padding: 0.5rem 0;
+  }
+  .inputForm {
+    gap: 0.2rem;
+  }
 }

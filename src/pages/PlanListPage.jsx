@@ -10,7 +10,7 @@ export default function PlanListPage() {
     <div className="w-full">
       {/* ✅ Toaster 실제 렌더링 */}
       <Toaster
-        position="bottom-center"
+        position="top-center"
         reverseOrder={false}
         toastOptions={{
           duration: 1500,
@@ -28,11 +28,12 @@ export default function PlanListPage() {
             },
           },
         }}
+        containerClassName="mt-15"
       />
 
       {/* PC 화면 (xl 이상) */}
       <div className="fixed inset-0 hidden w-full xl:flex">
-        <div className="h-full w-1/2 overflow-y-auto border-r border-gray-200 pt-[60px]">
+        <div className="h-full w-1/2 overflow-y-auto border-r border-gray-200 bg-[#F9FAFB] pt-[60px]">
           <PlanCardSystem />
         </div>
         <div className="h-full w-1/2 overflow-hidden">
@@ -41,7 +42,7 @@ export default function PlanListPage() {
       </div>
 
       {/* 모바일 및 중간 해상도 */}
-      <div className="block min-h-screen overflow-y-auto pb-[60px] xl:hidden">
+      <div className="block min-h-screen overflow-y-auto bg-[#F9FAFB] pb-[60px] xl:hidden">
         <PlanCardSystem onFilterModalState={setOnFilterModalState} />
         {!onFilterModalState && <PlanComparePageMobile />}
       </div>

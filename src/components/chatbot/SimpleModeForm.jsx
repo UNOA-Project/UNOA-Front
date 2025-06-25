@@ -7,6 +7,7 @@ import { questions } from '@/data/questions'
 export const SimpleModeForm = ({ onFinish }) => {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState([])
+  const MotionButton = motion.button
 
   const handleSelect = choice => {
     const newAnswers = [...answers]
@@ -81,7 +82,7 @@ export const SimpleModeForm = ({ onFinish }) => {
       <div className="flex flex-grow flex-col items-center">
         <div className="flex w-full max-w-[320px] flex-col items-center gap-[1vh]">
           {questions[step].choices.map((choice, i) => (
-            <motion.button
+            <MotionButton
               key={i}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -93,7 +94,7 @@ export const SimpleModeForm = ({ onFinish }) => {
               }`}
             >
               {choice}
-            </motion.button>
+            </MotionButton>
           ))}
         </div>
       </div>

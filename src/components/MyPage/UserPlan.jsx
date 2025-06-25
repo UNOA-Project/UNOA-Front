@@ -55,7 +55,7 @@ export default function UserPlan() {
           다시 로그인해주세요.
         </>
       )
-      setIsModalOpen(false)
+      setIsPasswordModalOpen(false)
       navigate('/login')
     } catch (err) {
       showErrorToast(err.response?.data?.message || '비밀번호 변경에 실패했습니다.')

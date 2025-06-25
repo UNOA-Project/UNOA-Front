@@ -5,6 +5,7 @@ import NoUser from '@/components/MyPage/NoUser'
 import NoPlanBenefit from '@/components/MyPage/NoPlanBenefit'
 import { UserBenefits } from '@/components/MyPage/UserBenefits'
 import Footer from '@/components/Footer'
+import ScrollToTopButton from '@/components/ScrollToTopButton'
 
 export default function MyPage() {
   const { user } = useAuth()
@@ -22,6 +23,7 @@ export default function MyPage() {
       <>
         <UserPlan />
         <UserBenefits />
+        <ScrollToTopButton className="right-5 bottom-7 sm:bottom-6" />
       </>
     )
   } else {

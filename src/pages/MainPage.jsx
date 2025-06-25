@@ -5,6 +5,7 @@ import SolutionSection from './section/SolutionSection'
 import BenefitsSection from './section/BenefitsSection'
 import ChatBotSection from './section/ChatBotSection'
 import Footer from '../components/Footer'
+import ScrollToTopButton from '@/components/ScrollToTopButton'
 
 function MainPage() {
   const solutionRef = useRef(null)
@@ -19,6 +20,7 @@ function MainPage() {
       <BenefitsSection />
       <ChatBotSection />
       <Footer />
+      <ScrollToTopButton className="right-5 bottom-7 sm:bottom-6" />
     </div>
   )
 }

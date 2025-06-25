@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import PlanCard from '../PlanCard/PlanCard'
 import styles from './PlanGrid.module.css'
 import unoaXimg from '@/assets/유노아x팻말.png'

@@ -101,3 +101,13 @@
   word-break: break-word;
   white-space: pre-wrap;
 }
+
+@media (max-width: 480px) {
+  .messageWrapper[data-role='assistant'] {
+    padding-left: 0; /* 화면 끝과의 여백 */
+  }
+
+  .messageWrapper[data-role='user'] {
+    padding-right: 0; /* 화면 끝과의 여백 */
+  }
+}

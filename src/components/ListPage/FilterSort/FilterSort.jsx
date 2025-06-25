@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './FilterSort.module.css'
 
 const FilterSort = ({
@@ -126,7 +126,7 @@ const FilterSort = ({
       </div>
 
       <button onClick={onFilterOpen} className={styles.filterLink}>
-        <img src="../../../images/icons/filter_icon.png" alt="" />
+        <img src="/images/icons/filter_icon.svg" alt="" />
         필터
       </button>
     </div>

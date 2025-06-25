@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react'
-import mouse from '@/assets/section/mouse.png'
+import { useRef, useEffect, useState } from 'react'
 import TextAnimation from './TextAnimation'
+import { motion } from 'framer-motion'
 
 const UoaLogo = () => {
   const svgRef = useRef(null)
@@ -103,7 +103,7 @@ const SubSlogans = () => {
 
   return (
     <div
-      className={`mt-4 transform text-center text-[1rem] text-[#888] transition-all duration-1000 ${
+      className={`text-body sm:text-card-title mt-4 transform text-center text-gray-300 transition-all duration-1000 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
       }`}
     >
@@ -115,6 +115,7 @@ const SubSlogans = () => {
 
 const Scrollecomment = () => {
   const [isVisible, setVisible] = useState(false)
+  const MotionButton = motion.button
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 2700)
@@ -123,12 +124,20 @@ const Scrollecomment = () => {
 
   return (
     <div
-      className={`mt-0 mb-40 pt-30 text-center text-[1rem] text-white transition-all duration-1000 ${
+      className={`text-small-body text-gray-20 sm:text-body mt-0 mb-50 pt-25 text-center transition-all duration-1000 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
       }`}
     >
-      <p>scroll to view more</p>
-      <img src={mouse} alt="scroll icon" className="mx-auto mt-2 w-[12px]" />
+      <p className="font-thin">scroll to view more</p>
+      <div className="mx-auto mt-2 flex flex-col items-center sm:mt-3">
+        <div className="flex h-6.5 w-4 items-start justify-center rounded-full border-1 border-white p-1.5 sm:h-8 sm:w-5">
+          <MotionButton
+            className="h-1 w-0.5 rounded-full bg-white sm:h-1.5"
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.2 }}
+          />
+        </div>
+      </div>
     </div>
   )
 }

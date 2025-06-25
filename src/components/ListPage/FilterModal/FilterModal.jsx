@@ -1,4 +1,3 @@
-import React from 'react'
 import FilterButton from '../FilterButton/FilterButton'
 import AppSelector from '../AppSelector/AppSelector'
 import { filterOptions } from './../../../data/appsData'
@@ -27,7 +26,6 @@ const FilterModal = ({
 
         <div className={styles.modalBody}>
           <FilterButton
-            onToggleApp={onToggleApp}
             options={filterOptions.networks}
             selected={tempFilters.network}
             onSelect={value => setTempFilters(prev => ({ ...prev, network: value }))}
