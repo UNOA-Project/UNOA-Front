@@ -87,6 +87,14 @@ export default function UserPlan() {
           </button>
         </div>
       </div>
+      <div className="mx-2 flex justify-center sm:mx-4">
+        <span className="text-main sm:text-body text-small-body text-center">
+          ⓘ 현재는 테스트용 더미 데이터가 사용되고 있어, <br className="hidden max-[960px]:block" />
+          <strong className="text-error">실제 LG U+ 가입 여부와 무관</strong>하게{' '}
+          <br className="hidden max-[500px]:block" /> 요금제 예시가 표시됩니다.
+        </span>
+      </div>
+
       <div className="mx-2 flex flex-col items-stretch justify-between gap-4 sm:flex-row md:mx-8 lg:mx-10">
         <div className="border-border flex w-full flex-col gap-4 rounded-lg border px-6 py-4 text-center max-[340px]:px-4 sm:w-[60%]">
           <span className="max-[340px]:text-body text-card-title font-semibold">
