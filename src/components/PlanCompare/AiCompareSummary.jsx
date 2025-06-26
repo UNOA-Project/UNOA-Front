@@ -17,7 +17,7 @@ const AiCompareSummary = ({ plans }) => {
   const [summary, setSummary] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  const MotionButton = motion.button
+  const Motion = motion.div
 
   useEffect(() => {
     // 비교할 요금제가 2개가 아니게 되면
@@ -83,7 +83,7 @@ const AiCompareSummary = ({ plans }) => {
 
       <AnimatePresence>
         {(isLoading || error || summary) && (
-          <MotionButton
+          <Motion
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -102,7 +102,7 @@ const AiCompareSummary = ({ plans }) => {
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{summary}</ReactMarkdown>
               </div>
             )}
-          </MotionButton>
+          </Motion>
         )}
       </AnimatePresence>
     </div>

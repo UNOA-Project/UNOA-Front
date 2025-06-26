@@ -115,7 +115,11 @@ const SubSlogans = () => {
 
 const Scrollecomment = () => {
   const [isVisible, setVisible] = useState(false)
+<<<<<<< refactor-메인페이지-피드백-반영
   const MotionButton = motion.div
+=======
+  const Motion = motion.div
+>>>>>>> main
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 2700)
@@ -131,7 +135,7 @@ const Scrollecomment = () => {
       <p className="font-thin">scroll to view more</p>
       <div className="mx-auto mt-2 flex flex-col items-center sm:mt-3">
         <div className="flex h-6.5 w-4 items-start justify-center rounded-full border-1 border-white p-1.5 sm:h-8 sm:w-5">
-          <MotionButton
+          <Motion
             className="h-1 w-0.5 rounded-full bg-white sm:h-1.5"
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.2 }}
