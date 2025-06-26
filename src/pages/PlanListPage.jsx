@@ -13,7 +13,7 @@ export default function PlanListPage() {
         position="top-center"
         reverseOrder={false}
         toastOptions={{
-          duration: 1500,
+          duration: 2500,
           className: 'with-progress',
           style: {
             background: '#fff',

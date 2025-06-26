@@ -19,7 +19,7 @@ export default function LoginPage() {
   const { login } = useAuth()
 
   const navigate = useNavigate()
-  const { showErrorToast } = useToast()
+  const { showErrorToast, showDefaultToast } = useToast()
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -48,7 +48,8 @@ export default function LoginPage() {
 
       setUserId('')
       setPassword('')
-      navigate('/')
+      showDefaultToast('NOA가 요금제를 추천해드릴게요!')
+      navigate('/chatbot')
     } catch {
       showErrorToast(
         <>

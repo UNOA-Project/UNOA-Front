@@ -77,8 +77,14 @@ export default function KakaoExtraInfoPage() {
 
       await login()
 
-      showDefaultToast(`${name}님, 환영합니다! 🎉`)
-      navigate('/')
+      showDefaultToast(
+        <>
+          {name}님, 환영합니다! 🎉
+          <br />
+          NOA가 요금제를 추천해드릴게요{' '}
+        </>
+      )
+      navigate('/chatbot')
     } catch (err) {
       if (err.response?.status === 400) {
         showErrorToast('로그인 시간이 만료되었습니다.')

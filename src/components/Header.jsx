@@ -20,8 +20,8 @@ export default function Header() {
     : 'text-primary-purple relative font-bold'
 
   const navItems = [
-    { to: '/planlist', label: '요금제 한눈에 보기' },
     { to: '/chatbot', label: '요금제 추천 받기' },
+    { to: '/planlist', label: '요금제 한눈에 보기' },
     { to: '/mypage', label: '마이페이지' },
   ]
 
