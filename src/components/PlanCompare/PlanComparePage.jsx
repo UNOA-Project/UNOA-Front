@@ -5,7 +5,7 @@ import AiCompareSummary from './AiCompareSummary'
 
 const PlanComparePage = () => {
   const [plans, setPlans] = useState([])
-  const MotionButton = motion.button
+  const Motion = motion.div
 
   useEffect(() => {
     const updatePlans = () => {
@@ -101,7 +101,7 @@ const PlanComparePage = () => {
     const Bar = ({ value, max, label, delay }) => (
       <div className="flex flex-col items-center gap-1.5">
         <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
-          <MotionButton
+          <Motion
             className="absolute bottom-0 w-full bg-[#6b3ce6]"
             initial={{ height: 0 }}
             animate={{ height: getBarHeight(value, max) }}
