@@ -7,6 +7,7 @@ const FilterSort = ({
   onAgeGroupChange,
   currentSort,
   currentAgeGroup,
+  selectedCategory,
 }) => {
   const [isSortOpen, setIsSortOpen] = useState(false)
   const [isAgeOpen, setIsAgeOpen] = useState(false)
@@ -29,7 +30,7 @@ const FilterSort = ({
     { value: '30', label: '30대' },
     { value: '40', label: '40대' },
     { value: '50', label: '50대' },
-    { value: '60', label: '60대' },
+    { value: '60', label: '60대 이상' },
   ]
 
   //외부 클릭시 드롭다운 닫기
@@ -99,30 +100,32 @@ const FilterSort = ({
           )}
         </div>
         {/* 나이대 드롭다운 */}
-        <div className={styles.dropdown} ref={ageRef}>
-          <button className={styles.dropdownButton} onClick={() => setIsAgeOpen(!isAgeOpen)}>
-            {getCurrentAgeLabel()}
-            <span className={`${styles.arrow} ${isAgeOpen ? styles.arrowUp : ''}`}>
-              <img src="../../../images/icons/down_arrow.png" alt="아래화살표" />
-            </span>
-          </button>
+        {selectedCategory !== '5G/LTE 요금제' ? null : (
+          <div className={styles.dropdown} ref={ageRef}>
+            <button className={styles.dropdownButton} onClick={() => setIsAgeOpen(!isAgeOpen)}>
+              {getCurrentAgeLabel()}
+              <span className={`${styles.arrow} ${isAgeOpen ? styles.arrowUp : ''}`}>
+                <img src="../../../images/icons/down_arrow.png" alt="아래화살표" />
+              </span>
+            </button>
 
-          {isAgeOpen && (
-            <div className={styles.dropdownMenu}>
-              {ageOptions.map(option => (
-                <button
-                  key={option.value}
-                  className={`${styles.dropdownItem} ${
-                    currentAgeGroup === option.value ? styles.activeItem : ''
-                  }`}
-                  onClick={() => handleAgeSelect(option.value)}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+            {isAgeOpen && (
+              <div className={styles.dropdownMenu}>
+                {ageOptions.map(option => (
+                  <button
+                    key={option.value}
+                    className={`${styles.dropdownItem} ${
+                      currentAgeGroup === option.value ? styles.activeItem : ''
+                    }`}
+                    onClick={() => handleAgeSelect(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <button onClick={onFilterOpen} className={styles.filterLink}>
