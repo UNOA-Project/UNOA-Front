@@ -18,7 +18,6 @@ const logos = [
   '/logos/gs25.png',
   '/logos/brandB.png',
   '/logos/touslesjours.png',
-  '/logos/onestore.png',
   '/logos/megabox.png',
   '/logos/gsfresh.png',
   '/logos/uplus.png',

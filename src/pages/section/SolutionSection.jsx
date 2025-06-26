@@ -16,7 +16,7 @@ const SolutionScrollSection = () => {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef(null)
   const introRef = useRef(null)
-  const MotionButton = motion.button
+  const MotionButton = motion.div
 
   useEffect(() => {
     const observer = new IntersectionObserver(
