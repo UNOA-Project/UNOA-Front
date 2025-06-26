@@ -115,7 +115,7 @@ const SubSlogans = () => {
 
 const Scrollecomment = () => {
   const [isVisible, setVisible] = useState(false)
-  const MotionButton = motion.button
+  const MotionButton = motion.div
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 2700)
