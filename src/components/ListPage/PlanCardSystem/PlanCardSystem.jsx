@@ -138,17 +138,22 @@ const PlanCardSystem = ({ onFilterModalState }) => {
     //나이대 필터 적용
     if (currentAgeGroup !== 'all') {
       sortedPlans = sortedPlans.filter(plan => {
-        if (!plan.ageGroup) return false
+        if (
+          !plan.ageGroup ||
+          plan.ageGroup === 'all' ||
+          plan.ageGroup === '전체' ||
+          plan.ageGroup === '' ||
+          plan.ageGroup === null
+        ) {
+          return true
+        }
 
         const planAge = parseInt(plan.ageGroup)
         const filterAge = parseInt(currentAgeGroup)
 
-        // 나이대 범위 매칭 (±5년 범위)
         if (currentAgeGroup === '60') {
-          // 60대 이상
           return planAge >= 60
         } else {
-          // 20대, 30대, 40대, 50대
           return planAge >= filterAge && planAge < filterAge + 10
         }
       })
@@ -207,6 +212,7 @@ const PlanCardSystem = ({ onFilterModalState }) => {
         />
 
         <FilterSort
+          selectedCategory={appliedFilters.category}
           onFilterOpen={() => setIsFilterOpen(true)}
           onSortChange={handleSortChange}
           onAgeGroupChange={handleAgeGroupChange}
