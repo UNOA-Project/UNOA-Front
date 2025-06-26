@@ -6,7 +6,7 @@ const PlanComparePageMobile = () => {
   const [plans, setPlans] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const controls = useAnimation()
-  const MotionButton = motion.button
+  const Motion = motion.div
 
   const variants = {
     closed: { y: 'calc(100% - 80px)' },
@@ -57,7 +57,7 @@ const PlanComparePageMobile = () => {
     return (
       <div className="flex h-40 flex-col items-center gap-1.5">
         <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
-          <MotionButton
+          <Motion
             className="absolute bottom-0 w-full bg-[#6b3ce6]"
             initial={{ height: 0 }}
             animate={{ height: getBarHeight(value, max) }}
