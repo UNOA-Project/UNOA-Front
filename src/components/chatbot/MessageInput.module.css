@@ -1,3 +1,4 @@
+/* 챗봇 입력창 기본 스타일 */
 .inputForm {
   display: flex;
   align-items: center;
@@ -31,7 +32,6 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,26 +41,76 @@
   transform: translateY(-2px);
 }
 
+.sendButton {
+  color: #543ed9;
+  transition: all 0.2s ease;
+}
+
 .sendButton:hover:not(:disabled) {
   transform: translateY(-2px);
+  color: #543ed9;
 }
 
 .sendButton:disabled {
   cursor: not-allowed;
   transform: none;
+  color: #9f9dad;
 }
 
-/* FAQ 관련 스타일 */
+.faqCallout {
+  position: absolute;
+  bottom: 100%;
+  left: 0.75rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: calc(100% - 1.5rem);
+
+  -webkit-user-select: none; /* Safari, Chrome */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE, Edge */
+  user-select: none;
+}
+
+.faqCalloutText {
+  background-color: #c298ee;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-size: var(--text-small-body, 0.875rem);
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+}
+
+.faqCalloutArrow {
+  width: 0;
+  height: 0;
+  margin-left: 1.2rem; /* 화살표 위치 */
+  margin-top: -1px; /* 말풍선 테두리와 자연스럽게 연결 */
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #c298ee;
+}
+
+@media (max-width: 640px) {
+  .faqCalloutText {
+    font-size: var(--text-caption, 0.75rem);
+    padding: 0.5rem 0.75rem 0.7rem 0.75rem;
+  }
+}
+/* --- ▼ FAQ 관련 스타일 ▼ --- */
 .inputContainerWrapper {
   position: relative;
 }
 
 .faqContainer {
   position: absolute;
-  bottom: 75%;
+  bottom: 75%; /* 입력창 높이에 따라 조정될 수 있습니다 */
   left: 0;
   width: 100%;
-  background-color: rgba(255, 255, 255);
+  background-color: white;
   padding-top: 0.3rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -71,6 +121,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  transition:
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out;
 }
 
 .faqButton {
@@ -96,21 +149,18 @@
   transform: translateY(100%);
 }
 
-/* FAQ 헤더 스타일 */
 .faqHeader {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-/* "추천질문" 텍스트 스타일 */
 .faqTitle {
-  font-weight: medium;
+  font-weight: 500; /* 'medium' 대신 '500' 사용 */
   color: var(--color-text-secondary);
   font-size: var(--text-small-body);
 }
 
-/* FAQ 닫기 버튼  */
 .faqCloseButton {
   cursor: pointer;
   align-items: center;
