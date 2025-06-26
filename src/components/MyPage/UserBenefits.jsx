@@ -4,6 +4,18 @@ import { getUserBenefits } from '@/apis/userApi'
 import LoadingScreen from '@/components/chatbot/LoadingScreen'
 import ArrowIcon from '@/assets/arrow-right.svg?react'
 
+const categoryOrder = [
+  '푸드',
+  '문화/여가',
+  '생활/편의',
+  '엑티비티',
+  '쇼핑',
+  '여행/교통',
+  '뷰티/건강',
+  '교육',
+  'APP/기기',
+]
+
 export const UserBenefits = () => {
   const [membershipBenefits, setMembershipBenefits] = useState([])
   const [longTermBenefits, setLongTermBenefits] = useState([])
@@ -11,7 +23,7 @@ export const UserBenefits = () => {
   const [benefitPages, setBenefitPages] = useState({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [openCategories, setOpenCategories] = useState({})
+  const [activeTab, setActiveTab] = useState(categoryOrder[0])
 
   const imageCategories = ['프리미엄', '미디어']
   const itemsPerPage = 3
@@ -50,12 +62,10 @@ export const UserBenefits = () => {
     return acc
   }, {})
 
-  const toggleCategory = category => {
-    setOpenCategories(prev => ({
-      ...Object.fromEntries(Object.keys(prev).map(k => [k, false])),
-      [category]: !prev[category],
-    }))
-  }
+  const sorted = categoryOrder.reduce((acc, key) => {
+    if (groupedMembership[key]) acc[key] = groupedMembership[key]
+    return acc
+  }, {})
 
   const paginate = (category, direction, total) => {
     setBenefitPages(prev => {
@@ -70,37 +80,30 @@ export const UserBenefits = () => {
     <div className="border-border w-[85%] overflow-hidden rounded-xl border bg-white px-5 py-10 lg:w-[70%] 2xl:w-[50%]">
       <section>
         <h2 className="mb-3 text-lg font-bold">멤버십 혜택</h2>
-        {Object.entries(groupedMembership).map(([category, benefits]) => (
-          <div key={category} className="mb-5">
+        <div className="mb-4 flex flex-wrap gap-2">
+          {Object.keys(sorted).map(category => (
             <button
-              onClick={() => toggleCategory(category)}
-              className={`flex w-full items-center gap-4 rounded text-left text-base font-medium transition-colors ${
-                openCategories[category] ? 'text-primary-purple' : 'text-text-main'
+              key={category}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                activeTab === category ? 'bg-primary-purple text-white' : 'bg-gray-50 text-gray-600'
               }`}
+              onClick={() => setActiveTab(category)}
             >
-              <ArrowIcon className={`h-3 w-3 ${openCategories[category] ? 'rotate-90' : ''}`} />
-              {category}
+              {categoryLabels[category] || category}
             </button>
-            {openCategories[category] && (
-              <div className="mt-2 grid grid-cols-1 gap-4 px-2 sm:grid-cols-4">
-                {benefits.map((b, idx) => (
-                  <div
-                    key={idx}
-                    className="border-gray-90 flex items-center gap-4 rounded-xl border p-4"
-                  >
-                    <div className="flex flex-col gap-y-1.5">
-                      <img src={`/images/benefits/${b.brand.toLowerCase()}.png`} className="w-9" />
-                      <p className="text-base font-bold">{b.brand}</p>
-                      <p className="text-sm break-keep whitespace-normal text-gray-700">
-                        {b.benefit}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+          ))}
+        </div>
+        <div className="grid grid-cols-1 gap-4 px-2 sm:grid-cols-4">
+          {sorted[activeTab].map((b, idx) => (
+            <div key={idx} className="border-gray-90 flex items-center gap-4 rounded-xl border p-4">
+              <div className="flex flex-col gap-y-1.5">
+                <img src={`/images/benefits/${b.brand.toLowerCase()}.png`} className="w-9" />
+                <p className="text-base font-bold">{b.brand}</p>
+                <p className="text-sm break-keep whitespace-normal text-gray-700">{b.benefit}</p>
               </div>
-            )}
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="mt-6">
