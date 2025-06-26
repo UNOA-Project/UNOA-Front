@@ -57,7 +57,7 @@ const AiCompareSummary = ({ plans }) => {
   `
 
   return (
-    <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-6 text-center">
+    <div className="flex flex-col items-center rounded-xl border border-indigo-100 bg-indigo-50 p-6 text-center">
       <style>{customProseStyles}</style>
       <h3 className="text-lg font-bold text-black">
         NOA의 <span style={{ color: 'var(--color-primary-purple, #899df4)' }}>AI</span> 요약 비교
