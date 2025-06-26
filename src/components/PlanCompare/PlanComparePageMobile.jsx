@@ -55,7 +55,7 @@ const PlanComparePageMobile = () => {
       val === Infinity ? '100%' : maxVal > 0 ? `${(val / maxVal) * 100}%` : '0%'
 
     return (
-      <div className="flex flex-col items-center gap-1.5">
+      <div className="flex h-40 flex-col items-center gap-1.5">
         <div className="relative h-24 w-5 overflow-hidden rounded-md bg-gray-200">
           <MotionButton
             className="absolute bottom-0 w-full bg-[#6b3ce6]"
@@ -111,7 +111,7 @@ const PlanComparePageMobile = () => {
     return (
       <div className="flex w-full max-w-[300px] flex-col items-center justify-center gap-3 rounded-xl p-4">
         <div className="flex h-14 items-start justify-center">
-          <span className="text-body text-center leading-snug font-bold break-keep whitespace-normal text-black lg:text-2xl">
+          <span className="text-body text-center leading-snug font-bold break-keep whitespace-normal text-black lg:text-xl">
             {plan?.title}
           </span>
         </div>
@@ -190,7 +190,7 @@ const PlanComparePageMobile = () => {
       } px-6 ${plans.length >= 1 ? 'cursor-pointer' : 'cursor-default'}`}
     >
       {plans.length === 2 ? (
-        <div className="flex items-center justify-center gap-2 px-4 py-2 text-base text-sm font-bold">
+        <div className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold">
           선택된 요금제 비교하기
           <svg
             xmlns="http://www.w3.org/2000/svg"
