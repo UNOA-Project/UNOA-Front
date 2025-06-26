@@ -116,14 +116,19 @@ export const UserBenefits = () => {
                 className="border-gray-90 flex h-full flex-col rounded-xl border px-4 py-5"
               >
                 <h3 className="mb-2 text-base font-semibold">
-                  {categoryLabels[category] || category}
+                  {(categoryLabels[category] || category).replace(
+                    /\(택1\)/,
+                    benefits.length === 1 ? '' : '(택1)'
+                  )}
                 </h3>
                 {imageCategories.includes(category) ? (
                   <div className="flex items-center justify-between gap-3">
                     <button
                       onClick={() => paginate(category, 'prev')}
                       disabled={(benefitPages[category] || 0) === 0}
-                      className="text-sm text-gray-500 disabled:opacity-30"
+                      className={`text-sm text-gray-500 disabled:opacity-30 ${
+                        benefits.length <= 3 ? 'invisible' : ''
+                      }`}
                     >
                       <ArrowIcon className="rotate-180" />
                     </button>
@@ -136,7 +141,7 @@ export const UserBenefits = () => {
                         .map((b, idx) => (
                           <li key={idx}>
                             <img
-                              src={`/images/icons/${b.benefit}.png`}
+                              src={`/images/icons/${b.benefit.trim()}.png`}
                               alt={b.benefit}
                               className="w-16 sm:w-16"
                             />
@@ -148,7 +153,9 @@ export const UserBenefits = () => {
                       disabled={
                         ((benefitPages[category] || 0) + 1) * itemsPerPage >= benefits.length
                       }
-                      className="text-sm text-gray-500 disabled:opacity-30"
+                      className={`text-sm text-gray-500 disabled:opacity-30 ${
+                        benefits.length <= 3 ? 'invisible' : ''
+                      }`}
                     >
                       <ArrowIcon />
                     </button>
