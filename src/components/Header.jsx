@@ -35,7 +35,14 @@ export default function Header() {
       className={`${isHome ? 'absolute' : 'fixed'} top-0 left-0 z-50 w-full ${headerBgClass} ${headerShadow}`}
     >
       <div className="md:px-8lg:px-16 mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" onClick={() => setIsMenuOpen(false)} className="lg:hidden">
+        <Link
+          to="/"
+          onClick={() => {
+            setIsMenuOpen(false)
+            location.reload()
+          }}
+          className="lg:hidden"
+        >
           <img src={Logo} alt="U+NOA 로고" className="h-8" />
         </Link>
 
